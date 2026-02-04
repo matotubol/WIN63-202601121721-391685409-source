@@ -1,0 +1,14 @@
+package com.sulake.iid
+{
+   import com.sulake.core.runtime.IID;
+   
+   public class IIDHabboGameManager implements IID
+   {
+      
+      public function IIDHabboGameManager()
+      {
+         super();
+      }
+   }
+}
+
