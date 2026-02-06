@@ -4,10 +4,10 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
    import com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection.VariableValueTableObject;
    import com.sulake.habbo.window.utils.tableview.ITableObject;
    import com.sulake.habbo.window.utils.tableview.TableCell;
-   import package_117.class_2567;
+   import package_117.WiredGetUserPermanentVariablesComposer;
    import package_189.WiredVariable;
    import package_201.WiredUserVariablesElement;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class VariableManagementOverviewTableObject implements ITableObject
    {
@@ -59,12 +59,12 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
       
       private function onClickUsername() : void
       {
-         var_55.send(new class_1879(var_347.entityId,true));
+         var_55.send(new GetExtendedProfileMessageComposer(var_347.entityId,true));
       }
       
       private function onClickManage() : void
       {
-         var_55.send(new class_2567(var_347.entityType,var_347.entityId));
+         var_55.send(new WiredGetUserPermanentVariablesComposer(var_347.entityType,var_347.entityId));
       }
       
       private function localize(param1:String) : String

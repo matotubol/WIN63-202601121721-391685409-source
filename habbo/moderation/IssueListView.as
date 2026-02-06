@@ -8,7 +8,7 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.events.WindowMouseEvent;
    import flash.display.BitmapData;
    import flash.utils.getTimer;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class IssueListView
    {

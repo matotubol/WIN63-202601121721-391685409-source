@@ -2,10 +2,10 @@ package com.sulake.habbo.roomevents
 {
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.core.runtime.class_13;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3133;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3645;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2795;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_3453;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredEnvironmentMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredClickUserResponseEvent;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredClickUserResponseEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredEnvironmentMessageEventParser;
    import com.sulake.habbo.roomevents.events.WiredUserClickHandledEvent;
    
    public class WiredEnvironment implements class_13
@@ -24,23 +24,23 @@ package com.sulake.habbo.roomevents
          super();
          name_1 = param1;
          _messageEvents = [];
-         _messageEvents.push(new class_3133(onWiredEnvironmentEvent));
-         _messageEvents.push(new class_3645(onWiredClickUserResponseEvent));
+         _messageEvents.push(new WiredEnvironmentMessageEvent(onWiredEnvironmentEvent));
+         _messageEvents.push(new WiredClickUserResponseEvent(onWiredClickUserResponseEvent));
          for each(var _loc2_ in _messageEvents)
          {
             name_1.communication.addHabboConnectionMessageEvent(_loc2_);
          }
       }
       
-      private function onWiredEnvironmentEvent(param1:class_3133) : void
+      private function onWiredEnvironmentEvent(param1:WiredEnvironmentMessageEvent) : void
       {
-         var _loc2_:class_3453 = param1.getParser();
+         var _loc2_:WiredEnvironmentMessageEventParser = param1.getParser();
          var_2167 = _loc2_.hasClickUserWired;
       }
       
-      private function onWiredClickUserResponseEvent(param1:class_3645) : void
+      private function onWiredClickUserResponseEvent(param1:WiredClickUserResponseEvent) : void
       {
-         var _loc2_:class_2795 = param1.getParser();
+         var _loc2_:WiredClickUserResponseEventParser = param1.getParser();
          name_1.events.dispatchEvent(new WiredUserClickHandledEvent("WIRED_USER_CLICK_HANDLED",_loc2_.index,_loc2_.openMenu));
       }
       

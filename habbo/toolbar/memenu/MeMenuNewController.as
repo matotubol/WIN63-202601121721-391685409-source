@@ -7,8 +7,8 @@ package com.sulake.habbo.toolbar.memenu
    import com.sulake.habbo.toolbar.abstractsubmenu.AbstractSubMenuController;
    import com.sulake.habbo.toolbar.events.HabboToolbarEvent;
    import com.sulake.habbo.utils.HabboWebTools;
-   import package_53.class_3520;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class MeMenuNewController extends AbstractSubMenuController
    {
@@ -39,7 +39,7 @@ package com.sulake.habbo.toolbar.memenu
          switch(param1)
          {
             case "profile":
-               toolbar.connection.send(new class_1879(toolbar.sessionDataManager.userId));
+               toolbar.connection.send(new GetExtendedProfileMessageComposer(toolbar.sessionDataManager.userId));
                break;
             case "minimail":
                HabboWebTools.openMinimail("#mail/inbox/");
@@ -49,7 +49,7 @@ package com.sulake.habbo.toolbar.memenu
                break;
             case "talents":
                var _loc3_:String = toolbar.sessionDataManager.currentTalentTrack;
-               toolbar.connection.send(new class_3520(null));
+               toolbar.connection.send(new GetTalentTrackMessageComposer(null));
                break;
             case "achievements":
                toolbar.questEngine.showAchievements();

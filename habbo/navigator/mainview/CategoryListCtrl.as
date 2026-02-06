@@ -10,7 +10,7 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.habbo.navigator.IViewCtrl;
    import com.sulake.habbo.navigator.UserCountRenderer;
    import com.sulake.habbo.navigator.Util;
-   import package_42.class_3364;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3364;
    
    public class CategoryListCtrl implements IViewCtrl
    {

@@ -26,8 +26,8 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.iid.IIDHabboHelp;
    import com.sulake.iid.IIDHabboNavigator;
    import com.sulake.iid.IIDHabboToolbar;
-   import package_187.class_3355;
-   import package_53.class_3520;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3355;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
    
    public class HabboTalent extends AbstractView implements IHabboTalent, ILinkEventTracker
    {
@@ -264,11 +264,11 @@ package com.sulake.habbo.friendbar.talent
             {
                case "citizenship":
                   _tracking.trackTalentTrackOpen("citizenship","citizenshiplink");
-                  send(new class_3520("citizenship"));
+                  send(new GetTalentTrackMessageComposer("citizenship"));
                   break;
                case "helper":
                   _tracking.trackTalentTrackOpen("helper","helperlink");
-                  send(new class_3520("helper"));
+                  send(new GetTalentTrackMessageComposer("helper"));
             }
          }
       }

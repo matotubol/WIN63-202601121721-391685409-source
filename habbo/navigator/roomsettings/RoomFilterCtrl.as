@@ -9,8 +9,8 @@ package com.sulake.habbo.navigator.roomsettings
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.class_42;
-   import package_104.class_2363;
-   import package_104.class_2740;
+   import com.sulake.habbo.communication.messages.outgoing.roomsettings.UpdateRoomFilterMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.roomsettings.GetCustomRoomFilterMessageComposer;
    
    public class RoomFilterCtrl implements class_13
    {
@@ -39,7 +39,7 @@ package com.sulake.habbo.navigator.roomsettings
       public function startRoomFilterEdit(param1:int) : void
       {
          _flatId = param1;
-         _navigator.send(new class_2740(_flatId));
+         _navigator.send(new GetCustomRoomFilterMessageComposer(_flatId));
          refreshWindow();
       }
       
@@ -146,8 +146,8 @@ package com.sulake.habbo.navigator.roomsettings
       {
          if(var_1078 != null && var_1078.text.length > 0)
          {
-            _navigator.send(new class_2363(_flatId,class_2363.var_5312,param1));
-            _navigator.send(new class_2740(_flatId));
+            _navigator.send(new UpdateRoomFilterMessageComposer(_flatId,UpdateRoomFilterMessageComposer.var_5312,param1));
+            _navigator.send(new GetCustomRoomFilterMessageComposer(_flatId));
             var_1078.text = "bobba";
          }
       }
@@ -171,7 +171,7 @@ package com.sulake.habbo.navigator.roomsettings
          {
             var_516.splice(var_516.indexOf(_loc3_),1);
          }
-         _navigator.send(new class_2363(_flatId,class_2363.var_5325,_loc3_));
+         _navigator.send(new UpdateRoomFilterMessageComposer(_flatId,UpdateRoomFilterMessageComposer.var_5325,_loc3_));
       }
       
       private function refreshColorsAfterClick(param1:IItemListWindow) : void

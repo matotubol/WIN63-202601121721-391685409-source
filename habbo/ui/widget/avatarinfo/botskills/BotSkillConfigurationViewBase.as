@@ -5,8 +5,8 @@ package com.sulake.habbo.ui.widget.avatarinfo.botskills
    import com.sulake.habbo.ui.widget.avatarinfo.AvatarInfoWidget;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_110.class_3615;
-   import package_160.class_2716;
+   import com.sulake.habbo.communication.messages.incoming.room.bots.BotCommandConfigurationEvent;
+   import com.sulake.habbo.communication.messages.outgoing.room.bots.GetBotCommandConfigurationDataComposer;
    
    public class BotSkillConfigurationViewBase implements class_2534
    {
@@ -54,10 +54,10 @@ package com.sulake.habbo.ui.widget.avatarinfo.botskills
          var_1504 = param1;
          if(!var_1601)
          {
-            var_1601 = new class_3615(onBotCommandConfigurationEvent);
+            var_1601 = new BotCommandConfigurationEvent(onBotCommandConfigurationEvent);
             var_16.handler.container.connection.addMessageEvent(var_1601);
          }
-         var_16.handler.container.connection.send(new class_2716(var_1504,skillType));
+         var_16.handler.container.connection.send(new GetBotCommandConfigurationDataComposer(var_1504,skillType));
          if(!_window)
          {
             var _loc3_:XML = var_16.assets.getAssetByName(windowAssetName).content as XML;
@@ -101,7 +101,7 @@ package com.sulake.habbo.ui.widget.avatarinfo.botskills
          return -1;
       }
       
-      private function onBotCommandConfigurationEvent(param1:class_3615) : void
+      private function onBotCommandConfigurationEvent(param1:BotCommandConfigurationEvent) : void
       {
          if(param1.getParser().botId == var_1504 && param1.getParser().commandId == skillType)
          {

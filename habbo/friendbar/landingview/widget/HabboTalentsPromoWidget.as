@@ -5,7 +5,7 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.ILandingViewWidget;
-   import package_53.class_3520;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
    
    public class HabboTalentsPromoWidget implements ILandingViewWidget
    {
@@ -52,7 +52,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          if(param1.type == "WME_CLICK")
          {
             _landingView.tracking.trackTalentTrackOpen(_landingView.sessionDataManager.currentTalentTrack,"landingpagepromo");
-            _landingView.send(new class_3520(_landingView.sessionDataManager.currentTalentTrack));
+            _landingView.send(new GetTalentTrackMessageComposer(_landingView.sessionDataManager.currentTalentTrack));
          }
       }
    }

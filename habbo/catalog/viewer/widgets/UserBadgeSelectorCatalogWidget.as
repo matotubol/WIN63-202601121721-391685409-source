@@ -17,7 +17,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.habbo.room.IStuffData;
    import com.sulake.habbo.room.object.data.StringArrayStuffData;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_168.class_2864;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.BadgesEvent;
    
    public class UserBadgeSelectorCatalogWidget extends CatalogWidget implements class_2612
    {
@@ -61,7 +61,7 @@ package com.sulake.habbo.catalog.viewer.widgets
          _gridItemLayout = _loc1_.content as XML;
          resetBadgeSelectorGrid();
          events.addEventListener("WIDGETS_INITIALIZED",onWidgetsInitialized);
-         var_3292 = new class_2864(onUserBadgesUpdated);
+         var_3292 = new BadgesEvent(onUserBadgesUpdated);
          _catalog.connection.addMessageEvent(var_3292);
          return true;
       }

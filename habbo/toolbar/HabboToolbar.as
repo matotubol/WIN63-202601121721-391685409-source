@@ -76,8 +76,8 @@ package com.sulake.habbo.toolbar
    import flash.events.TimerEvent;
    import flash.geom.Rectangle;
    import flash.utils.Timer;
-   import package_4.class_1757;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class HabboToolbar extends class_17 implements IHabboToolbar
    {
@@ -323,7 +323,7 @@ package com.sulake.habbo.toolbar
       override protected function initComponent() : void
       {
          var_37 = _communicationManager.connection;
-         _communicationManager.addHabboConnectionMessageEvent(new class_1757(onUserRights));
+         _communicationManager.addHabboConnectionMessageEvent(new UserRightsMessageEvent(onUserRights));
          var_5195 = new BottomBackgroundBorder(this);
          var_18 = new BottomBarLeft(this,_windowManager,assets,events);
          var_18.window.visible = false;
@@ -587,7 +587,7 @@ package com.sulake.habbo.toolbar
             _loc5_.iconName = param1;
             events.dispatchEvent(_loc5_);
          }
-         var _loc3_:class_2196 = new class_2196("Toolbar",param1,"client.toolbar.clicked");
+         var _loc3_:EventLogMessageComposer = new EventLogMessageComposer("Toolbar",param1,"client.toolbar.clicked");
          if(var_37)
          {
             var_37.send(_loc3_);

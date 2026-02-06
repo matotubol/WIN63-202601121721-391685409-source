@@ -2,7 +2,7 @@ package com.sulake.habbo.game.snowwar.leaderboard
 {
    import com.sulake.core.communication.messages.IMessageComposer;
    import com.sulake.habbo.game.snowwar.SnowWarEngine;
-   import package_108.Game2GetWeeklyLeaderboardComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.score.Game2GetWeeklyLeaderboardComposer;
    
    public class WeeklyTotalLeaderboardTable extends TotalLeaderboardTable
    {

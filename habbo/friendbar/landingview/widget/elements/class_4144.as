@@ -1,12 +1,12 @@
 package com.sulake.habbo.friendbar.landingview.widget.elements
 {
    import com.sulake.core.window.class_1741;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2813;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredRewardResultMessageEvent;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.elements.class_4118;
    import com.sulake.habbo.friendbar.landingview.widget.GenericWidget;
-   import package_168.class_3071;
-   import package_43.class_2754;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.IsBadgeRequestFulfilledEvent;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.GetIsBadgeRequestFulfilledComposer;
    
    public class class_4144 extends class_4135 implements class_4118
    {
@@ -30,8 +30,8 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          {
             var_3848 = param3[5] == "true";
          }
-         param1.communicationManager.addHabboConnectionMessageEvent(new class_3071(onInfo));
-         param1.communicationManager.addHabboConnectionMessageEvent(new class_2813(onReward));
+         param1.communicationManager.addHabboConnectionMessageEvent(new IsBadgeRequestFulfilledEvent(onInfo));
+         param1.communicationManager.addHabboConnectionMessageEvent(new WiredRewardResultMessageEvent(onReward));
       }
       
       override protected function onClick() : void
@@ -43,7 +43,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       override public function refresh() : void
       {
          super.refresh();
-         landingView.send(new class_2754(var_2106));
+         landingView.send(new GetIsBadgeRequestFulfilledComposer(var_2106));
       }
       
       public function isFloating(param1:Boolean) : Boolean
@@ -51,7 +51,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          return var_3848;
       }
       
-      private function onInfo(param1:class_3071) : void
+      private function onInfo(param1:IsBadgeRequestFulfilledEvent) : void
       {
          if(param1.getParser().requestCode == var_2106)
          {
@@ -59,11 +59,11 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          }
       }
       
-      private function onReward(param1:class_2813) : void
+      private function onReward(param1:WiredRewardResultMessageEvent) : void
       {
          if(window)
          {
-            landingView.send(new class_2754(var_2106));
+            landingView.send(new GetIsBadgeRequestFulfilledComposer(var_2106));
          }
       }
    }

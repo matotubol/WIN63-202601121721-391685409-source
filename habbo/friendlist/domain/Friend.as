@@ -4,7 +4,7 @@ package com.sulake.habbo.friendlist.domain
    import com.sulake.core.window.class_1812;
    import com.sulake.habbo.friendlist.class_1927;
    import flash.display.BitmapData;
-   import package_14.class_2083;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_2083;
    
    public class Friend implements class_1927, class_13
    {

@@ -3,10 +3,10 @@ package com.sulake.habbo.tracking
    import com.sulake.core.runtime.class_13;
    import com.sulake.core.utils.class_55;
    import flash.utils.getTimer;
-   import package_164.class_2797;
-   import package_68.class_2163;
-   import package_71.class_2763;
-   import package_71.class_2834;
+   import com.sulake.habbo.communication.messages.parser.tracking.LatencyPingResponseMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.tracking.LatencyPingResponseMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.LatencyPingRequestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.LatencyPingReportMessageComposer;
    
    public class LatencyTracker implements class_13
    {
@@ -83,11 +83,11 @@ package com.sulake.habbo.tracking
       {
          _lastTestTime = getTimer();
          var_1084.add(var_3126,_lastTestTime);
-         _habboTracking.send(new class_2763(var_3126));
+         _habboTracking.send(new LatencyPingRequestMessageComposer(var_3126));
          var_3126 = var_3126 + 1;
       }
       
-      public function onPingResponse(param1:class_2163) : void
+      public function onPingResponse(param1:LatencyPingResponseMessageEvent) : void
       {
          var _loc7_:int = 0;
          var _loc2_:int = 0;
@@ -99,7 +99,7 @@ package com.sulake.habbo.tracking
          {
             return;
          }
-         var _loc4_:class_2797 = param1.getParser();
+         var _loc4_:LatencyPingResponseMessageEventParser = param1.getParser();
          var _loc9_:int = var_1084.getValue(_loc4_.requestId);
          var_1084.remove(_loc4_.requestId);
          var _loc6_:int = getTimer() - _loc9_;
@@ -135,7 +135,7 @@ package com.sulake.habbo.tracking
             if(Math.abs(_loc5_ - var_3692) > var_3990 || var_3692 == 0)
             {
                var_3692 = _loc5_;
-               var _loc11_:class_2834 = new class_2834(_loc5_,_loc3_,var_329.length);
+               var _loc11_:LatencyPingReportMessageComposer = new LatencyPingReportMessageComposer(_loc5_,_loc3_,var_329.length);
                _habboTracking.send(null);
             }
             var_329 = [];

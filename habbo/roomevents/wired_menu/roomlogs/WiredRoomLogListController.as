@@ -19,10 +19,10 @@ package com.sulake.habbo.roomevents.wired_menu.roomlogs
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_172.class_2990;
-   import package_192.class_3529;
+   import package_172.WiredRoomLogsEvent;
+   import package_192.WiredGetRoomLogsComposer;
    import package_203.WiredLogPage;
-   import package_203.class_3785;
+   import package_203.WiredRoomLogsEventParser;
    
    public class WiredRoomLogListController extends class_17 implements class_2746
    {
@@ -54,16 +54,16 @@ package com.sulake.habbo.roomevents.wired_menu.roomlogs
          super(param2,param3,param4);
          _roomEvents = param1;
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_2990(onGetPage));
+         _messageEvents.push(new WiredRoomLogsEvent(onGetPage));
          for each(var _loc5_ in _messageEvents)
          {
             addMessageEvent(_loc5_);
          }
       }
       
-      private function onGetPage(param1:class_2990) : void
+      private function onGetPage(param1:WiredRoomLogsEvent) : void
       {
-         var _loc2_:class_3785 = param1.getParser();
+         var _loc2_:WiredRoomLogsEventParser = param1.getParser();
          if(_loc2_.page.amount != WiredRoomLogsConfig.PAGE_SIZE)
          {
             return;
@@ -85,7 +85,7 @@ package com.sulake.habbo.roomevents.wired_menu.roomlogs
          var_2559 = false;
       }
       
-      public function send(param1:class_3529, param2:Boolean = false) : void
+      public function send(param1:WiredGetRoomLogsComposer, param2:Boolean = false) : void
       {
          if(!param2)
          {

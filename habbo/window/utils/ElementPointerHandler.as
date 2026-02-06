@@ -1,14 +1,14 @@
 package com.sulake.habbo.window.utils
 {
    import com.sulake.habbo.window.HabboWindowManagerComponent;
-   import package_26.class_3237;
+   import com.sulake.habbo.communication.messages.incoming.notifications.ElementPointerMessageEvent;
    
    public class ElementPointerHandler
    {
       
       private var _windowManager:HabboWindowManagerComponent;
       
-      private var var_3740:class_3237;
+      private var var_3740:ElementPointerMessageEvent;
       
       public function ElementPointerHandler(param1:HabboWindowManagerComponent)
       {
@@ -16,12 +16,12 @@ package com.sulake.habbo.window.utils
          _windowManager = param1;
          if(_windowManager.communication != null)
          {
-            var_3740 = new class_3237(onElementPointerMessage);
+            var_3740 = new ElementPointerMessageEvent(onElementPointerMessage);
             _windowManager.communication.addHabboConnectionMessageEvent(var_3740);
          }
       }
       
-      private function onElementPointerMessage(param1:class_3237) : void
+      private function onElementPointerMessage(param1:ElementPointerMessageEvent) : void
       {
          var _loc2_:String = param1.getParser().key;
          if(_loc2_ == null || _loc2_ == "")

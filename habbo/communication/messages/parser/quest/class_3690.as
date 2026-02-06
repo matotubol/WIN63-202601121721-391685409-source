@@ -2,7 +2,7 @@ package com.sulake.habbo.communication.messages.parser.quest
 {
    import com.sulake.core.communication.messages.IMessageDataWrapper;
    import com.sulake.core.communication.messages.IMessageParser;
-   import package_62.class_4101;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_4101;
    
    [SecureSWF(rename="true")]
    public class class_3690 implements IMessageParser

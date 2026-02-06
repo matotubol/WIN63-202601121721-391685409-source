@@ -21,7 +21,7 @@ package com.sulake.habbo.game.snowwar.ui
    import flash.events.TimerEvent;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_41.class_3027;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2LeaveGameMessageComposer;
    
    public class GameLobbyWindowCtrl implements class_13, class_259
    {
@@ -109,7 +109,7 @@ package com.sulake.habbo.game.snowwar.ui
       {
          if(param1)
          {
-            var_49.communication.connection.send(new class_3027());
+            var_49.communication.connection.send(new Game2LeaveGameMessageComposer());
          }
          disposeCountdownTimer();
          var_1353 = -1;

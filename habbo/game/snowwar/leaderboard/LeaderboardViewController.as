@@ -19,7 +19,7 @@ package com.sulake.habbo.game.snowwar.leaderboard
    import flash.display.BitmapData;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_202.class_3963;
+   import com.sulake.habbo.communication.messages.parser.game.score.class_3963;
    
    public class LeaderboardViewController implements class_13, class_259
    {

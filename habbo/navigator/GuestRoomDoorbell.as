@@ -7,8 +7,8 @@ package com.sulake.habbo.navigator
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.WindowMouseEvent;
    import flash.geom.Point;
-   import package_42.class_1945;
-   import package_72.class_2589;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.QuitMessageComposer;
    
    public class GuestRoomDoorbell
    {
@@ -161,7 +161,7 @@ package com.sulake.habbo.navigator
          }
          if(var_3562 && _navigator != null)
          {
-            _navigator.send(new class_2589());
+            _navigator.send(new QuitMessageComposer());
          }
          _window.dispose();
          _window = null;

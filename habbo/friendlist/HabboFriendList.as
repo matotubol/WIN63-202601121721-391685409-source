@@ -19,7 +19,7 @@ package com.sulake.habbo.friendlist
    import com.sulake.habbo.avatar.class_259;
    import com.sulake.habbo.avatar.class_48;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2057;
+   import com.sulake.habbo.communication.messages.outgoing.quest.FriendRequestQuestCompleteMessageComposer;
    import com.sulake.habbo.friendlist.domain.*;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.messenger.class_46;
@@ -44,12 +44,12 @@ package com.sulake.habbo.friendlist
    import flash.utils.Dictionary;
    import flash.utils.Timer;
    import flash.utils.getTimer;
-   import package_11.*;
-   import package_14.*;
-   import package_28.*;
-   import package_4.class_1757;
-   import package_4.class_2005;
-   import package_44.class_1913;
+   import com.sulake.habbo.communication.messages.parser.friendlist.*;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.*;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.*;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.UserObjectEventParser;
    
    public class HabboFriendList extends class_17 implements class_258, class_259, ILinkEventTracker
    {
@@ -135,11 +135,11 @@ package com.sulake.habbo.friendlist
       
       override protected function initComponent() : void
       {
-         _communication.addHabboConnectionMessageEvent(new class_2005(onUserObject));
-         _communication.addHabboConnectionMessageEvent(new class_2096(onMessengerInit));
-         _communication.addHabboConnectionMessageEvent(new class_1915(onFriendsListFragment));
+         _communication.addHabboConnectionMessageEvent(new UserObjectEvent(onUserObject));
+         _communication.addHabboConnectionMessageEvent(new MessengerInitEvent(onMessengerInit));
+         _communication.addHabboConnectionMessageEvent(new FriendListFragmentMessageEvent(onFriendsListFragment));
          context.addLinkEventTracker(this);
-         send(new class_2059());
+         send(new MessengerInitMessageComposer());
       }
       
       override public function dispose() : void
@@ -247,9 +247,9 @@ package com.sulake.habbo.friendlist
          {
             return false;
          }
-         send(new class_2194(param2));
+         send(new RequestFriendMessageComposer(param2));
          searchResults.setFriendRequestSent(param1);
-         send(new class_2057());
+         send(new FriendRequestQuestCompleteMessageComposer());
          return true;
       }
       
@@ -381,13 +381,13 @@ package com.sulake.habbo.friendlist
       
       private function onUserObject(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1913 = (param1 as class_2005).getParser();
+         var _loc2_:UserObjectEventParser = (param1 as UserObjectEvent).getParser();
          var_2699 = _loc2_.id;
       }
       
       private function onFriendsListFragment(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2166 = (param1 as class_1915).getParser();
+         var _loc2_:FriendListFragmentMessageEventParser = (param1 as FriendListFragmentMessageEvent).getParser();
          for each(var _loc3_ in _loc2_.friendFragment)
          {
             var_143.addFriend(new Friend(_loc3_));
@@ -403,7 +403,7 @@ package com.sulake.habbo.friendlist
       private function onMessengerInit(param1:IMessageEvent) : void
       {
          var_18 = new FriendListView(this);
-         var _loc2_:class_2243 = (param1 as class_2096).getParser();
+         var _loc2_:MessengerInitEventParser = (param1 as MessengerInitEvent).getParser();
          var_193 = new FriendRequests(new FriendRequestsDeps(this),_loc2_.userFriendLimit,_loc2_.extendedFriendLimit);
          var_143.addCategory(new FriendCategory(0,getText("friendlist.friends")));
          var_143.addCategory(new FriendCategory(-1,getText("friendlist.friends.offlinecaption")));
@@ -444,32 +444,32 @@ package com.sulake.habbo.friendlist
       
       private function registerListeners() : void
       {
-         _communication.addHabboConnectionMessageEvent(new class_1757(onUserRights));
-         _communication.addHabboConnectionMessageEvent(new class_1806(onAcceptFriendResult));
-         _communication.addHabboConnectionMessageEvent(new class_2140(onFriendRequests));
-         _communication.addHabboConnectionMessageEvent(new class_1822(onHabboSearchResult));
-         _communication.addHabboConnectionMessageEvent(new class_2009(onMessengerError));
-         _communication.addHabboConnectionMessageEvent(new class_1937(onFriendListUpdate));
-         _communication.addHabboConnectionMessageEvent(new class_1769(onFollowFriendFailed));
-         _communication.addHabboConnectionMessageEvent(new class_2248(onRoomInviteError));
-         _communication.addHabboConnectionMessageEvent(new class_1820(onNewFriendRequest));
+         _communication.addHabboConnectionMessageEvent(new UserRightsMessageEvent(onUserRights));
+         _communication.addHabboConnectionMessageEvent(new AcceptFriendResultEvent(onAcceptFriendResult));
+         _communication.addHabboConnectionMessageEvent(new FriendRequestsEvent(onFriendRequests));
+         _communication.addHabboConnectionMessageEvent(new HabboSearchResultEvent(onHabboSearchResult));
+         _communication.addHabboConnectionMessageEvent(new MessengerErrorEvent(onMessengerError));
+         _communication.addHabboConnectionMessageEvent(new FriendListUpdateEvent(onFriendListUpdate));
+         _communication.addHabboConnectionMessageEvent(new FollowFriendFailedEvent(onFollowFriendFailed));
+         _communication.addHabboConnectionMessageEvent(new RoomInviteErrorEvent(onRoomInviteError));
+         _communication.addHabboConnectionMessageEvent(new NewFriendRequestEvent(onNewFriendRequest));
       }
       
       private function getFriendRequests() : void
       {
          class_21.log("Sending friend requests request");
-         send(new class_1894());
+         send(new GetFriendRequestsMessageComposer());
       }
       
       protected function sendFriendListUpdate(param1:Event) : void
       {
          class_21.log("Sending update request");
-         send(new class_1873());
+         send(new FriendListUpdateMessageComposer());
       }
       
       private function onFriendRequests(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1765 = (param1 as class_2140).getParser();
+         var _loc2_:FriendRequestsEventParser = (param1 as FriendRequestsEvent).getParser();
          var_193.clearAndUpdateView(false);
          for each(var _loc3_ in _loc2_.reqs)
          {
@@ -485,7 +485,7 @@ package com.sulake.habbo.friendlist
       private function onNewFriendRequest(param1:IMessageEvent) : void
       {
          class_21.log("Received new friend request");
-         var _loc2_:class_1965 = (param1 as class_1820).getParser();
+         var _loc2_:NewFriendRequestEventParser = (param1 as NewFriendRequestEvent).getParser();
          var _loc4_:FriendRequest = new FriendRequest(_loc2_.req);
          var_193.addRequestAndUpdateView(_loc4_);
          var _loc3_:FriendListTab = var_817.findTab(2);
@@ -495,7 +495,7 @@ package com.sulake.habbo.friendlist
       
       private function onAcceptFriendResult(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1997 = (param1 as class_1806).getParser();
+         var _loc2_:AcceptFriendResultEventParser = (param1 as AcceptFriendResultEvent).getParser();
          for each(var _loc3_ in _loc2_.failures)
          {
             friendRequests.acceptFailed(_loc3_.senderId);
@@ -505,14 +505,14 @@ package com.sulake.habbo.friendlist
       
       private function onHabboSearchResult(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1939 = (param1 as class_1822).getParser();
+         var _loc2_:HabboSearchResultEventParser = (param1 as HabboSearchResultEvent).getParser();
          _avatarSearchResults.searchReceived(_loc2_.friends,_loc2_.others);
          var_18.refresh("search");
       }
       
       private function onMessengerError(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1889 = (param1 as class_2009).getParser();
+         var _loc2_:MessengerErrorEventParser = (param1 as MessengerErrorEvent).getParser();
          showAlertView(_loc2_.errorCode,_loc2_.clientMessageId);
       }
       
@@ -547,7 +547,7 @@ package com.sulake.habbo.friendlist
       
       private function onRoomInviteError(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2092 = (param1 as class_2248).getParser();
+         var _loc2_:RoomInviteErrorEventParser = (param1 as RoomInviteErrorEvent).getParser();
          var _loc3_:String = "Received room invite error: errorCode: " + _loc2_.errorCode + ", recipients: " + Util.arrayToString(_loc2_.failedRecipients);
          simpleAlert("${friendlist.alert.title}",_loc3_);
       }
@@ -560,7 +560,7 @@ package com.sulake.habbo.friendlist
       
       private function onFollowFriendFailed(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1851 = (param1 as class_1769).getParser();
+         var _loc2_:FollowFriendFailedEventParser = (param1 as FollowFriendFailedEvent).getParser();
          var _loc3_:String = getFollowFriendErrorText(_loc2_.errorCode);
          class_21.log("Received follow friend failed: " + _loc2_.errorCode + ", " + _loc3_);
          simpleAlert("${friendlist.alert.title}",_loc3_);
@@ -852,7 +852,7 @@ package com.sulake.habbo.friendlist
       
       public function setRelationshipStatus(param1:int, param2:int) : void
       {
-         send(new class_2245(param1,param2));
+         send(new SetRelationshipStatusMessageComposer(param1,param2));
       }
       
       public function getRelationshipStatus(param1:int) : int

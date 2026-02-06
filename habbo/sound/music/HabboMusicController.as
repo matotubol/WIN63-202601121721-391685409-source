@@ -15,14 +15,14 @@ package com.sulake.habbo.sound.music
    import flash.events.TimerEvent;
    import flash.utils.Timer;
    import flash.utils.getTimer;
-   import package_106.class_2373;
-   import package_106.class_2684;
-   import package_154.class_3558;
-   import package_154.class_3586;
-   import package_154.class_3637;
-   import package_60.class_2389;
-   import package_60.class_3204;
-   import package_60.class_3507;
+   import com.sulake.habbo.communication.messages.parser.sound.TraxSongInfoMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.sound.UserSongDisksInventoryMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.sound.TraxSongInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.sound.UserSongDisksInventoryMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.sound.class_3637;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetNowPlayingMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetSongInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetUserSongDisksMessageComposer;
    
    public class HabboMusicController implements class_1912, class_13
    {
@@ -78,8 +78,8 @@ package com.sulake.habbo.sound.music
          name_1 = param2;
          _roomEvents = param3;
          var_37 = param4;
-         _messageEvents.push(new class_3558(onSongInfoMessage));
-         _messageEvents.push(new class_3586(onSongDiskInventoryMessage));
+         _messageEvents.push(new TraxSongInfoMessageEvent(onSongInfoMessage));
+         _messageEvents.push(new UserSongDisksInventoryMessageEvent(onSongDiskInventoryMessage));
          for each(var _loc6_ in _messageEvents)
          {
             var_37.addMessageEvent(_loc6_);
@@ -441,7 +441,7 @@ package com.sulake.habbo.sound.music
          {
             return;
          }
-         var_37.send(new class_3507());
+         var_37.send(new GetUserSongDisksMessageComposer());
       }
       
       public function getSongDiskInventorySize() : int
@@ -534,7 +534,7 @@ package com.sulake.habbo.sound.music
          {
             return;
          }
-         var_37.send(new class_3204(var_1216));
+         var_37.send(new GetSongInfoMessageComposer(var_1216));
          class_21.log("Requested song info\'s : " + var_1216);
          var_1216 = [];
       }
@@ -549,8 +549,8 @@ package com.sulake.habbo.sound.music
          var _loc12_:SongDataEntry = null;
          var _loc5_:int = 0;
          var _loc6_:int = 0;
-         var _loc3_:class_3558 = param1 as class_3558;
-         var _loc2_:class_2373 = _loc3_.getParser() as class_2373;
+         var _loc3_:TraxSongInfoMessageEvent = param1 as TraxSongInfoMessageEvent;
+         var _loc2_:TraxSongInfoMessageEventParser = _loc3_.getParser() as TraxSongInfoMessageEventParser;
          var _loc7_:Array = _loc2_.songs;
          _loc8_ = 0;
          while(_loc8_ < _loc7_.length)
@@ -681,8 +681,8 @@ package com.sulake.habbo.sound.music
          var _loc4_:int = 0;
          var _loc5_:int = 0;
          var _loc6_:int = 0;
-         var _loc3_:class_3586 = param1 as class_3586;
-         var _loc2_:class_2684 = _loc3_.getParser() as class_2684;
+         var _loc3_:UserSongDisksInventoryMessageEvent = param1 as UserSongDisksInventoryMessageEvent;
+         var _loc2_:UserSongDisksInventoryMessageEventParser = _loc3_.getParser() as UserSongDisksInventoryMessageEventParser;
          var_711.reset();
          _loc4_ = 0;
          while(_loc4_ < _loc2_.songDiskCount)
@@ -718,7 +718,7 @@ package com.sulake.habbo.sound.music
       {
          disposeRoomPlaylist();
          var_692 = new JukeboxPlayListController(_soundManager,this,name_1,var_37) as class_3073;
-         var_37.send(new class_2389());
+         var_37.send(new GetNowPlayingMessageComposer());
       }
       
       private function onJukeboxDispose(param1:Event) : void

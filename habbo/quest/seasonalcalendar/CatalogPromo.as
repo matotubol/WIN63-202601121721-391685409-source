@@ -19,10 +19,10 @@ package com.sulake.habbo.quest.seasonalcalendar
    import flash.display.BitmapData;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_10.class_2101;
-   import package_10.class_2104;
-   import package_10.class_3114;
-   import package_13.class_2526;
+   import com.sulake.habbo.communication.messages.incoming.catalog.CatalogPublishedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2104;
+   import com.sulake.habbo.communication.messages.incoming.catalog.SeasonalCalendarDailyOfferMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetSeasonalCalendarDailyComposer;
    
    public class CatalogPromo implements class_13, class_1829, class_59
    {
@@ -41,7 +41,7 @@ package com.sulake.habbo.quest.seasonalcalendar
       
       private var var_2228:int = -1;
       
-      private var var_3631:class_3114 = null;
+      private var var_3631:SeasonalCalendarDailyOfferMessageEvent = null;
       
       private var var_1874:IMessageEvent = null;
       
@@ -104,11 +104,11 @@ package com.sulake.habbo.quest.seasonalcalendar
          var_37 = _questEngine.communication.connection;
          if(var_37 != null)
          {
-            var_1874 = new class_3114(onDailyOfferMessage);
-            var_2028 = new class_2101(onCatalogPublished);
+            var_1874 = new SeasonalCalendarDailyOfferMessageEvent(onDailyOfferMessage);
+            var_2028 = new CatalogPublishedMessageEvent(onCatalogPublished);
             var_37.addMessageEvent(var_1874);
             var_37.addMessageEvent(var_2028);
-            var_37.send(new class_2526());
+            var_37.send(new GetSeasonalCalendarDailyComposer());
          }
       }
       
@@ -165,7 +165,7 @@ package com.sulake.habbo.quest.seasonalcalendar
          }
       }
       
-      private function onDailyOfferMessage(param1:class_3114) : void
+      private function onDailyOfferMessage(param1:SeasonalCalendarDailyOfferMessageEvent) : void
       {
          _window.findChildByName("buy_button").enable();
          var _loc2_:class_1949 = _questEngine.sessionDataManager.getProductData(param1.offer.localizationId);
@@ -224,7 +224,7 @@ package com.sulake.habbo.quest.seasonalcalendar
       {
          if(var_37 != null)
          {
-            var_37.send(new class_2526());
+            var_37.send(new GetSeasonalCalendarDailyComposer());
          }
       }
    }

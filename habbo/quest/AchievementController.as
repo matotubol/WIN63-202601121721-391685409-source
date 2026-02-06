@@ -14,9 +14,9 @@ package com.sulake.habbo.quest
    import flash.geom.Point;
    import flash.utils.Dictionary;
    import flash.utils.Timer;
-   import package_163.class_3303;
-   import package_194.class_3626;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.class_3303;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.achievements.GetAchievementsComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class AchievementController implements class_13, class_31
    {
@@ -232,7 +232,7 @@ package com.sulake.habbo.quest
       {
          if(var_143 == null)
          {
-            _questEngine.send(new class_3626());
+            _questEngine.send(new GetAchievementsComposer());
          }
       }
       
@@ -240,7 +240,7 @@ package com.sulake.habbo.quest
       {
          if(var_143 == null)
          {
-            _questEngine.send(new class_3626());
+            _questEngine.send(new GetAchievementsComposer());
             var_2822 = true;
          }
          else
@@ -593,7 +593,7 @@ package com.sulake.habbo.quest
          var_92 = var_191.achievements[0];
          class_21.log("Category: " + var_191.code);
          this.refresh();
-         _questEngine.send(new class_2196("Achievements",var_191.code,"Category selected"));
+         _questEngine.send(new EventLogMessageComposer("Achievements",var_191.code,"Category selected"));
       }
       
       public function selectCategoryInternalLink(param1:String) : void
@@ -638,7 +638,7 @@ package com.sulake.habbo.quest
          var _loc3_:int = param2.id;
          var_92 = var_191.achievements[_loc3_];
          this.refresh();
-         _questEngine.send(new class_2196("Achievements",var_92.achievementId.toString(),"Achievement selected"));
+         _questEngine.send(new EventLogMessageComposer("Achievements",var_92.achievementId.toString(),"Achievement selected"));
       }
       
       private function onBack(param1:class_1758, param2:class_1741) : void

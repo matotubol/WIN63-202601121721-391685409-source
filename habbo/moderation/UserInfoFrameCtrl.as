@@ -4,7 +4,7 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.class_1741;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class UserInfoFrameCtrl implements class_13, ITrackedWindow
    {

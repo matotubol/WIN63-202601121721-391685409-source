@@ -4,7 +4,7 @@ package com.sulake.habbo.quest
    import com.sulake.core.runtime.class_31;
    import com.sulake.core.utils.class_55;
    import com.sulake.habbo.quest.seasonalcalendar.MainWindow;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class QuestController implements class_13, class_31
    {

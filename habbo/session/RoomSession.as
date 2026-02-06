@@ -5,54 +5,54 @@ package com.sulake.habbo.session
    import com.sulake.core.utils.class_55;
    import com.sulake.habbo.tracking.class_53;
    import flash.utils.getTimer;
-   import package_102.class_2357;
-   import package_102.class_2550;
-   import package_102.class_3178;
-   import package_107.class_2935;
-   import package_107.class_3129;
-   import package_107.class_3154;
-   import package_107.class_3399;
-   import package_107.class_3560;
-   import package_112.class_3244;
-   import package_115.Game2GameChatMessageComposer;
-   import package_125.class_2453;
-   import package_125.class_2604;
-   import package_125.class_2816;
-   import package_125.class_2867;
-   import package_125.class_2895;
-   import package_125.class_2951;
-   import package_125.class_3036;
-   import package_125.class_3546;
-   import package_150.class_2652;
-   import package_150.class_3421;
-   import package_28.class_3357;
-   import package_32.class_3348;
-   import package_55.class_2325;
-   import package_55.class_2333;
-   import package_55.class_2399;
-   import package_55.class_2722;
-   import package_55.class_2851;
-   import package_55.class_2854;
-   import package_55.class_2945;
-   import package_55.class_3438;
-   import package_55.class_3536;
-   import package_55.class_3554;
-   import package_59.class_2064;
-   import package_59.class_3264;
-   import package_59.class_3287;
-   import package_59.class_3301;
-   import package_59.class_3488;
-   import package_66.class_3276;
-   import package_71.class_2196;
-   import package_72.class_2203;
-   import package_72.class_2346;
-   import package_72.class_2589;
-   import package_94.class_2667;
-   import package_94.class_2921;
-   import package_94.class_3047;
-   import package_94.class_3197;
-   import package_94.class_3222;
-   import package_94.class_3571;
+   import com.sulake.habbo.communication.messages.outgoing.poll.PollAnswerComposer;
+   import com.sulake.habbo.communication.messages.outgoing.poll.PollStartComposer;
+   import com.sulake.habbo.communication.messages.outgoing.poll.PollRejectComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.SignMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.DanceMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.ChangeMottoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.ChangePostureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.AvatarExpressionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nux.NewUserExperienceScriptProceedComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.arena.Game2GameChatMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.MuteUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.LetUserInMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.AmbassadorAlertMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.UnmuteUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.RemoveRightsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.AssignRightsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.BanUserWithDurationMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.KickUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userclassification.RoomUsersClassificationMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userclassification.PeerUsersClassificationMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.VisitUserMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_3348;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.HarvestPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.RemovePetFromFlatMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.CompostPlantMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.TogglePetBreedingPermissionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.SetClothingChangeDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.RemoveSaddleFromPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.GetPetCommandsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.TogglePetRidingPermissionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.MountPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.ChatMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.ShoutMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.CancelTypingMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.WhisperMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.StartTypingMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.CustomizePetWithFurniComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.OpenFlatConnectionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.ChangeQueueMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.QuitMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.OpenPetPackageMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RoomDimmerChangeStateMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RoomDimmerGetPresetsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.PresentOpenMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RoomDimmerSavePresetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.CreditFurniRedeemMessageComposer;
    
    public class RoomSession implements IRoomSession
    {
@@ -276,7 +276,7 @@ package com.sulake.habbo.session
          {
             return false;
          }
-         var_37.send(new class_2203(var_1951,var_2861));
+         var_37.send(new OpenFlatConnectionMessageComposer(var_1951,var_2861));
          return true;
       }
       
@@ -300,7 +300,7 @@ package com.sulake.habbo.session
          else
          {
             param1 = param1.replace(/&#[0-9]+;/g,"");
-            var_37.send(new class_2064(param1,param2,var_3197));
+            var_37.send(new ChatMessageComposer(param1,param2,var_3197));
             var_1729.add(var_3197,getTimer());
             var_3197 = var_3197 + 1;
          }
@@ -308,7 +308,7 @@ package com.sulake.habbo.session
       
       public function sendChangeMottoMessage(param1:String) : void
       {
-         var_37.send(new class_3154(param1));
+         var_37.send(new ChangeMottoMessageComposer(param1));
       }
       
       public function receivedChatWithTrackingId(param1:int) : void
@@ -330,229 +330,229 @@ package com.sulake.habbo.session
       
       public function sendShoutMessage(param1:String, param2:int = 0) : void
       {
-         var_37.send(new class_3264(param1,param2));
+         var_37.send(new ShoutMessageComposer(param1,param2));
       }
       
       public function sendWhisperMessage(param1:String, param2:String, param3:int = 0) : void
       {
-         var_37.send(new class_3301(param1,param2,param3));
+         var_37.send(new WhisperMessageComposer(param1,param2,param3));
       }
       
       public function sendChatTypingMessage(param1:Boolean) : void
       {
          if(param1)
          {
-            var_37.send(new class_3488());
+            var_37.send(new StartTypingMessageComposer());
          }
          else
          {
-            var_37.send(new class_3287());
+            var_37.send(new CancelTypingMessageComposer());
          }
       }
       
       public function sendAvatarExpressionMessage(param1:int) : void
       {
-         var_37.send(new class_3560(param1));
+         var_37.send(new AvatarExpressionMessageComposer(param1));
       }
       
       public function sendSignMessage(param1:int) : void
       {
          if(param1 >= 0 && param1 <= 17)
          {
-            var_37.send(new class_2935(param1));
+            var_37.send(new SignMessageComposer(param1));
          }
       }
       
       public function sendDanceMessage(param1:int) : void
       {
-         var_37.send(new class_3129(param1));
+         var_37.send(new DanceMessageComposer(param1));
       }
       
       public function sendChangePostureMessage(param1:int) : void
       {
-         var_37.send(new class_3399(param1));
+         var_37.send(new ChangePostureMessageComposer(param1));
       }
       
       public function sendCreditFurniRedeemMessage(param1:int) : void
       {
-         var_37.send(new class_3571(param1));
+         var_37.send(new CreditFurniRedeemMessageComposer(param1));
       }
       
       public function sendPresentOpenMessage(param1:int) : void
       {
-         var_37.send(new class_3197(param1));
+         var_37.send(new PresentOpenMessageComposer(param1));
       }
       
       public function sendOpenPetPackageMessage(param1:int, param2:String) : void
       {
-         var_37.send(new class_2667(param1,param2));
+         var_37.send(new OpenPetPackageMessageComposer(param1,param2));
       }
       
       public function sendRoomDimmerGetPresetsMessage(param1:int) : void
       {
-         var_37.send(new class_3047(param1));
+         var_37.send(new RoomDimmerGetPresetsMessageComposer(param1));
       }
       
       public function sendRoomDimmerSavePresetMessage(param1:int, param2:int, param3:uint, param4:int, param5:Boolean, param6:int) : void
       {
          var _loc7_:String = "000000" + param3.toString(16).toUpperCase();
          var _loc8_:String = "#" + _loc7_.substr(_loc7_.length - 6);
-         var_37.send(new class_3222(param1,param2,_loc8_,param4,param5,param6));
+         var_37.send(new RoomDimmerSavePresetMessageComposer(param1,param2,_loc8_,param4,param5,param6));
       }
       
       public function sendRoomDimmerChangeStateMessage(param1:int) : void
       {
-         var_37.send(new class_2921(param1));
+         var_37.send(new RoomDimmerChangeStateMessageComposer(param1));
       }
       
       public function sendConversionPoint(param1:String, param2:String, param3:String, param4:String = null, param5:int = 0) : void
       {
-         var_37.send(new class_2196(param1,param2,param3,param4,param5));
+         var_37.send(new EventLogMessageComposer(param1,param2,param3,param4,param5));
       }
       
       public function sendPollStartMessage(param1:int) : void
       {
-         var_37.send(new class_2550(param1));
+         var_37.send(new PollStartComposer(param1));
       }
       
       public function sendPollRejectMessage(param1:int) : void
       {
-         var_37.send(new class_3178(param1));
+         var_37.send(new PollRejectComposer(param1));
       }
       
       public function sendPollAnswerMessage(param1:int, param2:int, param3:Array) : void
       {
-         var_37.send(new class_2357(param1,param2,param3));
+         var_37.send(new PollAnswerComposer(param1,param2,param3));
       }
       
       public function sendPeerUsersClassificationMessage(param1:String) : void
       {
-         var_37.send(new class_3421(param1));
+         var_37.send(new PeerUsersClassificationMessageComposer(param1));
       }
       
       public function sendRoomUsersClassificationMessage(param1:String) : void
       {
-         var_37.send(new class_2652(param1));
+         var_37.send(new RoomUsersClassificationMessageComposer(param1));
       }
       
       public function sendVisitFlatMessage(param1:int) : void
       {
-         var_37.send(new class_2203(param1));
+         var_37.send(new OpenFlatConnectionMessageComposer(param1));
       }
       
       public function sendVisitUserMessage(param1:String) : void
       {
-         var_37.send(new class_3357(param1));
+         var_37.send(new VisitUserMessageComposer(param1));
       }
       
       public function ambassadorAlert(param1:int) : void
       {
-         var_37.send(new class_2816(param1));
+         var_37.send(new AmbassadorAlertMessageComposer(param1));
       }
       
       public function kickUser(param1:int) : void
       {
-         var_37.send(new class_3546(param1));
+         var_37.send(new KickUserMessageComposer(param1));
       }
       
       public function banUserWithDuration(param1:int, param2:String) : void
       {
-         var_37.send(new class_3036(param1,param2,roomId));
+         var_37.send(new BanUserWithDurationMessageComposer(param1,param2,roomId));
       }
       
       public function muteUser(param1:int, param2:int) : void
       {
-         var_37.send(new class_2453(param1,param2,roomId));
+         var_37.send(new MuteUserMessageComposer(param1,param2,roomId));
       }
       
       public function unmuteUser(param1:int) : void
       {
-         var_37.send(new class_2867(param1,roomId));
+         var_37.send(new UnmuteUserMessageComposer(param1,roomId));
       }
       
       public function assignRights(param1:int) : void
       {
-         var_37.send(new class_2951(param1));
+         var_37.send(new AssignRightsMessageComposer(param1));
       }
       
       public function removeRights(param1:int) : void
       {
          var _loc3_:Array = [];
          _loc3_.push(param1);
-         var _loc2_:class_2895 = new class_2895(_loc3_);
+         var _loc2_:RemoveRightsMessageComposer = new RemoveRightsMessageComposer(_loc3_);
          var_37.send(_loc2_);
       }
       
       public function letUserIn(param1:String, param2:Boolean) : void
       {
-         var_37.send(new class_2604(param1,param2));
+         var_37.send(new LetUserInMessageComposer(param1,param2));
       }
       
       public function pickUpPet(param1:int) : void
       {
-         var_37.send(new class_2333(param1));
+         var_37.send(new RemovePetFromFlatMessageComposer(param1));
       }
       
       public function mountPet(param1:int) : void
       {
-         var_37.send(new class_3554(param1,true));
+         var_37.send(new MountPetMessageComposer(param1,true));
       }
       
       public function togglePetRidingPermission(param1:int) : void
       {
-         var_37.send(new class_3536(param1));
+         var_37.send(new TogglePetRidingPermissionMessageComposer(param1));
       }
       
       public function togglePetBreedingPermission(param1:int) : void
       {
-         var_37.send(new class_2722(param1));
+         var_37.send(new TogglePetBreedingPermissionMessageComposer(param1));
       }
       
       public function dismountPet(param1:int) : void
       {
-         var_37.send(new class_3554(param1,false));
+         var_37.send(new MountPetMessageComposer(param1,false));
       }
       
       public function removeSaddleFromPet(param1:int) : void
       {
-         var_37.send(new class_2854(param1));
+         var_37.send(new RemoveSaddleFromPetMessageComposer(param1));
       }
       
       public function harvestPet(param1:int) : void
       {
-         var_37.send(new class_2325(param1));
+         var_37.send(new HarvestPetMessageComposer(param1));
       }
       
       public function compostPlant(param1:int) : void
       {
-         var_37.send(new class_2399(param1));
+         var_37.send(new CompostPlantMessageComposer(param1));
       }
       
       public function requestPetCommands(param1:int) : void
       {
-         var_37.send(new class_3438(param1));
+         var_37.send(new GetPetCommandsMessageComposer(param1));
       }
       
       public function useProductForPet(param1:int, param2:int) : void
       {
-         var_37.send(new class_3276(param1,param2));
+         var_37.send(new CustomizePetWithFurniComposer(param1,param2));
       }
       
       public function plantSeed(param1:int) : void
       {
-         var_37.send(new class_2945(param1));
+         var_37.send(new UseFurnitureMessageComposer(param1));
       }
       
       public function sendScriptProceed() : void
       {
-         var_37.send(new class_3244());
+         var_37.send(new NewUserExperienceScriptProceedComposer());
       }
       
       public function quit() : void
       {
          if(var_37 != null)
          {
-            var_37.send(new class_2589());
+            var_37.send(new QuitMessageComposer());
          }
       }
       
@@ -562,7 +562,7 @@ package com.sulake.habbo.session
          {
             return;
          }
-         var_37.send(new class_2346(param1));
+         var_37.send(new ChangeQueueMessageComposer(param1));
       }
       
       public function sendUpdateClothingChangeFurniture(param1:int, param2:String, param3:String) : void
@@ -571,7 +571,7 @@ package com.sulake.habbo.session
          {
             return;
          }
-         var _loc4_:class_2851 = new class_2851(param1,param2,param3);
+         var _loc4_:SetClothingChangeDataMessageComposer = new SetClothingChangeDataMessageComposer(param1,param2,param3);
          var_37.send(_loc4_);
          _loc4_.dispose();
          _loc4_ = null;

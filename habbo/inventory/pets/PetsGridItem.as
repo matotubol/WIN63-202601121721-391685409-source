@@ -9,7 +9,7 @@ package com.sulake.habbo.inventory.pets
    import com.sulake.habbo.window.class_38;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_105.class_2838;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.class_2838;
    
    public class PetsGridItem
    {

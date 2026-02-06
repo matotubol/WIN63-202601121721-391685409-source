@@ -8,12 +8,12 @@ package com.sulake.habbo.sound.music
    import com.sulake.habbo.sound.events.SoundCompleteEvent;
    import flash.events.Event;
    import flash.events.IEventDispatcher;
-   import package_106.class_3870;
-   import package_106.class_3880;
-   import package_154.class_2666;
-   import package_154.class_3136;
-   import package_154.class_3168;
-   import package_60.class_3060;
+   import com.sulake.habbo.communication.messages.parser.sound.PlayListMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.sound.PlayListSongAddedMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.sound.PlayListSongAddedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.sound.class_3136;
+   import com.sulake.habbo.communication.messages.incoming.sound.PlayListMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetSoundMachinePlayListMessageComposer;
    
    public class SoundMachinePlayListController implements class_3073
    {
@@ -47,8 +47,8 @@ package com.sulake.habbo.sound.music
          var_37 = param5;
          var_424 = param2;
          _messageEvents = [];
-         _messageEvents.push(new class_3168(onPlayListMessage));
-         _messageEvents.push(new class_2666(onPlayListSongAddedMessage));
+         _messageEvents.push(new PlayListMessageEvent(onPlayListMessage));
+         _messageEvents.push(new PlayListSongAddedMessageEvent(onPlayListSongAddedMessage));
          for each(var _loc6_ in _messageEvents)
          {
             var_37.addMessageEvent(_loc6_);
@@ -315,7 +315,7 @@ package com.sulake.habbo.sound.music
          {
             return;
          }
-         var_37.send(new class_3060());
+         var_37.send(new GetSoundMachinePlayListMessageComposer());
       }
       
       private function convertParserPlayList(param1:Array) : Array
@@ -330,8 +330,8 @@ package com.sulake.habbo.sound.music
       
       private function onPlayListMessage(param1:IMessageEvent) : void
       {
-         var _loc5_:class_3168 = param1 as class_3168;
-         var _loc4_:class_3870 = _loc5_.getParser() as class_3870;
+         var _loc5_:PlayListMessageEvent = param1 as PlayListMessageEvent;
+         var _loc4_:PlayListMessageEventParser = _loc5_.getParser() as PlayListMessageEventParser;
          var _loc6_:int = _loc4_.synchronizationCount;
          var _loc3_:Array = convertParserPlayList(_loc4_.playList);
          if(_loc3_ == null || _loc3_.length == 0)
@@ -370,8 +370,8 @@ package com.sulake.habbo.sound.music
       
       private function onPlayListSongAddedMessage(param1:IMessageEvent) : void
       {
-         var _loc4_:class_2666 = param1 as class_2666;
-         var _loc3_:class_3880 = _loc4_.getParser() as class_3880;
+         var _loc4_:PlayListSongAddedMessageEvent = param1 as PlayListSongAddedMessageEvent;
+         var _loc3_:PlayListSongAddedMessageEventParser = _loc4_.getParser() as PlayListSongAddedMessageEventParser;
          var _loc2_:SongDataEntry = new SongDataEntry(_loc3_.entry.id,_loc3_.entry.length,_loc3_.entry.name,_loc3_.entry.creator,null);
          if(_loc2_ == null)
          {

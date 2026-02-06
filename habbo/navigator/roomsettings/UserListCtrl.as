@@ -8,10 +8,10 @@ package com.sulake.habbo.navigator.roomsettings
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.class_42;
    import com.sulake.habbo.utils.class_2323;
-   import package_125.class_2895;
-   import package_125.class_2951;
-   import package_32.class_2565;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.RemoveRightsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.AssignRightsMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_2565;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class UserListCtrl implements class_13
    {
@@ -137,13 +137,13 @@ package com.sulake.habbo.navigator.roomsettings
          var _loc3_:class_1812 = class_1812(param1.target);
          if(var_3571)
          {
-            _navigator.send(new class_2951(_loc3_.id));
+            _navigator.send(new AssignRightsMessageComposer(_loc3_.id));
          }
          else
          {
             _loc2_ = [];
             _loc2_.push(_loc3_.id);
-            _navigator.send(new class_2895(_loc2_));
+            _navigator.send(new RemoveRightsMessageComposer(_loc2_));
          }
       }
       
@@ -177,7 +177,7 @@ package com.sulake.habbo.navigator.roomsettings
       private function onUserInfoMouseClick(param1:class_1758) : void
       {
          _navigator.trackGoogle("extendedProfile","navigator_roomSettingsUsersList");
-         _navigator.send(new class_1879(param1.target.id));
+         _navigator.send(new GetExtendedProfileMessageComposer(param1.target.id));
       }
    }
 }

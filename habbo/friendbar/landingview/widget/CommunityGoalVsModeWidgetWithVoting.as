@@ -3,7 +3,7 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.core.window.class_1741;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
-   import package_185.class_3313;
+   import com.sulake.habbo.communication.messages.incoming.landingview.votes.CommunityVoteReceivedEvent;
    
    public class CommunityGoalVsModeWidgetWithVoting extends CommunityGoalVsModeWidget
    {
@@ -26,7 +26,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          var_2426.procedure = onVoteOptionOneClick;
          var_2214 = var_156.findChildByName("community_vote_two_button");
          var_2214.procedure = onVoteOptionTwoClick;
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_3313(onInfo));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new CommunityVoteReceivedEvent(onInfo));
       }
       
       override public function refresh() : void
@@ -65,7 +65,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          }
       }
       
-      private function onInfo(param1:class_3313) : void
+      private function onInfo(param1:CommunityVoteReceivedEvent) : void
       {
          if(param1.getParser().acknowledged)
          {

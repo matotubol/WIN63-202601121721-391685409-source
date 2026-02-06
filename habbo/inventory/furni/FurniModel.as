@@ -35,11 +35,11 @@ package com.sulake.habbo.inventory.furni
    import flash.events.TimerEvent;
    import flash.utils.Dictionary;
    import flash.utils.Timer;
-   import package_119.class_3149;
-   import package_72.class_2203;
-   import package_73.class_2208;
-   import package_73.class_2499;
-   import package_73.class_3315;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.class_3149;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.OpenFlatConnectionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.furni.RequestRoomPropertySet;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.furni.RequestFurniInventoryComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.furni.RequestFurniInventoryWhenNotInRoomComposer;
    
    public class FurniModel implements IInventoryModel
    {
@@ -356,11 +356,11 @@ package com.sulake.habbo.inventory.furni
          {
             if(_isInRoom)
             {
-               _loc1_.send(new class_2499());
+               _loc1_.send(new RequestFurniInventoryComposer());
             }
             else
             {
-               _loc1_.send(new class_3315());
+               _loc1_.send(new RequestFurniInventoryWhenNotInRoomComposer());
             }
          }
       }
@@ -755,7 +755,7 @@ package com.sulake.habbo.inventory.furni
             {
                return false;
             }
-            _communication.connection.send(new class_2208(_loc3_.id));
+            _communication.connection.send(new RequestRoomPropertySet(_loc3_.id));
          }
          else
          {
@@ -851,7 +851,7 @@ package com.sulake.habbo.inventory.furni
          {
             return;
          }
-         _loc3_.send(new class_2203(_loc1_.flatId));
+         _loc3_.send(new OpenFlatConnectionMessageComposer(_loc1_.flatId));
          _roomItemToSelect = _loc1_;
       }
       

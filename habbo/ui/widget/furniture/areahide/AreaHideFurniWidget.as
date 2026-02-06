@@ -14,8 +14,8 @@ package com.sulake.habbo.ui.widget.furniture.areahide
    import com.sulake.habbo.ui.handler.FurnitureAreaHideWidgetHandler;
    import com.sulake.habbo.ui.widget.RoomWidgetBase;
    import com.sulake.habbo.window.class_38;
-   import package_55.class_2945;
-   import package_94.class_2916;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetAreaHideDataComposer;
    
    public class AreaHideFurniWidget extends RoomWidgetBase
    {
@@ -239,7 +239,7 @@ package com.sulake.habbo.ui.widget.furniture.areahide
       
       private function onClickOnOff() : void
       {
-         handler.container.connection.send(new class_2945(var_2042));
+         handler.container.connection.send(new UseFurnitureMessageComposer(var_2042));
       }
       
       private function onClickApply() : void
@@ -254,7 +254,7 @@ package com.sulake.habbo.ui.widget.furniture.areahide
       
       private function updateData() : void
       {
-         handler.container.connection.send(new class_2916(var_2042,var_1509,var_1754,_width,_length,invisibilityCheckbox.isSelected,wallItemsEnabledCheckbox.isSelected,invertEnabledCheckbox.isSelected));
+         handler.container.connection.send(new SetAreaHideDataComposer(var_2042,var_1509,var_1754,_width,_length,invisibilityCheckbox.isSelected,wallItemsEnabledCheckbox.isSelected,invertEnabledCheckbox.isSelected));
          var_1708 = false;
       }
       

@@ -30,8 +30,8 @@ package com.sulake.habbo.ui.widget.infostand
    import flash.events.TimerEvent;
    import flash.geom.Rectangle;
    import flash.utils.Timer;
-   import package_13.class_1848;
-   import package_13.class_2128;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.BuildersClubPlaceRoomItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.BuildersClubPlaceWallItemMessageComposer;
    
    public class InfoStandWidget extends RoomWidgetBase
    {
@@ -512,14 +512,14 @@ package com.sulake.habbo.ui.widget.infostand
                   {
                      return;
                   }
-                  handler.container.connection.send(new class_1848(-1,furniData.bcOfferId,furniData.extraParam,param1.x,param1.y,param1.direction));
+                  handler.container.connection.send(new BuildersClubPlaceRoomItemMessageComposer(-1,furniData.bcOfferId,furniData.extraParam,param1.x,param1.y,param1.direction));
                   break;
                case 10:
                   if(!param1.placedOnWall)
                   {
                      return;
                   }
-                  handler.container.connection.send(new class_2128(-1,furniData.bcOfferId,furniData.extraParam,param1.wallLocation));
+                  handler.container.connection.send(new BuildersClubPlaceWallItemMessageComposer(-1,furniData.bcOfferId,furniData.extraParam,param1.wallLocation));
             }
             requestItemToMover();
          }

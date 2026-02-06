@@ -9,7 +9,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.roomevents.wired_menu.WiredMenuController;
    import com.sulake.habbo.window.class_38;
-   import package_97.class_4089;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.class_4089;
    
    public class WiredErrorInfoView implements class_13
    {

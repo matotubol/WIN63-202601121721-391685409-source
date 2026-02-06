@@ -16,13 +16,13 @@ package com.sulake.habbo.phonenumber
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDSessionDataManager;
    import flash.utils.getTimer;
-   import package_113.class_2772;
-   import package_113.class_2810;
-   import package_113.class_3100;
-   import package_113.class_3311;
-   import package_166.class_2818;
-   import package_166.class_3195;
-   import package_166.class_3220;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.SetPhoneNumberVerificationStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.VerifyCodeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.ResetPhoneNumberStateMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.TryPhoneNumberMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.gifts.TryVerificationCodeResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.gifts.TryPhoneNumberResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.gifts.PhoneCollectionStateMessageEvent;
    
    public class HabboPhoneNumber extends class_17
    {
@@ -79,15 +79,15 @@ package com.sulake.habbo.phonenumber
          if(getBoolean("sms.identity.verification.enabled"))
          {
             var_37 = _communicationManager.connection;
-            var_37.addMessageEvent(new class_3220(onStateMessage));
-            var_37.addMessageEvent(new class_3195(onPhoneNumberResultMessage));
-            var_37.addMessageEvent(new class_2818(onVerificationCodeResultMessage));
+            var_37.addMessageEvent(new PhoneCollectionStateMessageEvent(onStateMessage));
+            var_37.addMessageEvent(new TryPhoneNumberResultMessageEvent(onPhoneNumberResultMessage));
+            var_37.addMessageEvent(new TryVerificationCodeResultMessageEvent(onVerificationCodeResultMessage));
          }
       }
       
       public function sendTryPhoneNumber(param1:String, param2:String) : void
       {
-         var_37.send(new class_3311(param1,param2));
+         var_37.send(new TryPhoneNumberMessageComposer(param1,param2));
       }
       
       public function sendTryVerificationCode(param1:String) : void
@@ -97,12 +97,12 @@ package com.sulake.habbo.phonenumber
             return;
          }
          param1 = param1.toUpperCase();
-         var_37.send(new class_2810(param1));
+         var_37.send(new VerifyCodeMessageComposer(param1));
       }
       
       public function setNeverAgain() : void
       {
-         var_37.send(new class_2772(2));
+         var_37.send(new SetPhoneNumberVerificationStatusMessageComposer(2));
          destroyCollectView();
       }
       
@@ -137,10 +137,10 @@ package com.sulake.habbo.phonenumber
       public function requestPhoneNumberCollectionReset() : void
       {
          destroyVerifyView();
-         var_37.send(new class_3100());
+         var_37.send(new ResetPhoneNumberStateMessageComposer());
       }
       
-      private function onPhoneNumberResultMessage(param1:class_3195) : void
+      private function onPhoneNumberResultMessage(param1:TryPhoneNumberResultMessageEvent) : void
       {
          switch(param1.getParser().resultCode - 1)
          {
@@ -171,7 +171,7 @@ package com.sulake.habbo.phonenumber
          }
       }
       
-      private function onVerificationCodeResultMessage(param1:class_2818) : void
+      private function onVerificationCodeResultMessage(param1:TryVerificationCodeResultMessageEvent) : void
       {
          switch(param1.getParser().resultCode - 2)
          {
@@ -193,7 +193,7 @@ package com.sulake.habbo.phonenumber
          }
       }
       
-      private function onStateMessage(param1:class_3220) : void
+      private function onStateMessage(param1:PhoneCollectionStateMessageEvent) : void
       {
          var _loc2_:int = param1.getParser().collectionStatusCode;
          var _loc3_:int = param1.getParser().phoneStatusCode;

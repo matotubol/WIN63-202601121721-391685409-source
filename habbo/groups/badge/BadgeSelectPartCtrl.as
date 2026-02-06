@@ -9,7 +9,7 @@ package com.sulake.habbo.groups.badge
    import com.sulake.habbo.groups.HabboGroupsManager;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_3.class_2862;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2862;
    
    public class BadgeSelectPartCtrl implements class_13
    {

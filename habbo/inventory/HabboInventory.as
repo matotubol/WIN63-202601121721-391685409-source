@@ -41,11 +41,11 @@ package com.sulake.habbo.inventory
    import flash.events.Event;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_43.class_1907;
-   import package_45.GetNftCreditsMessageComposer;
-   import package_45.GetSilverMessageComposer;
-   import package_77.class_2233;
-   import package_9.class_2081;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.GetBadgePointLimitsComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nft.GetNftCreditsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nft.GetSilverMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.purse.GetCreditsInfoComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.ScrGetUserInfoMessageComposer;
    
    public class HabboInventory extends class_17 implements class_61, ILinkEventTracker
    {
@@ -189,11 +189,11 @@ package com.sulake.habbo.inventory
          context.addLinkEventTracker(this);
          var_827 = new UnseenItemTracker(_communication,events,this);
          var_18 = new InventoryMainView(this,_windowManager,assets);
-         _communication.connection.send(new class_2233());
+         _communication.connection.send(new GetCreditsInfoComposer());
          _communication.connection.send(new GetNftCreditsMessageComposer());
          _communication.connection.send(new GetSilverMessageComposer());
-         _communication.connection.send(new class_2081("habbo_club"));
-         _communication.connection.send(new class_1907());
+         _communication.connection.send(new ScrGetUserInfoMessageComposer("habbo_club"));
+         _communication.connection.send(new GetBadgePointLimitsComposer());
       }
       
       override public function dispose() : void
@@ -412,7 +412,7 @@ package com.sulake.habbo.inventory
       
       private function onPurseTimer(param1:TimerEvent) : void
       {
-         _communication.connection.send(new class_2081("habbo_club"));
+         _communication.connection.send(new ScrGetUserInfoMessageComposer("habbo_club"));
       }
       
       private function roomSessionEventHandler(param1:RoomSessionEvent) : void

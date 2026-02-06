@@ -25,28 +25,28 @@ package com.sulake.habbo.game.snowwar
    import com.sulake.habbo.game.snowwar.gameobjects.SnowballMachineGameObject;
    import com.sulake.habbo.game.snowwar.gameobjects.SnowballPileGameObject;
    import com.sulake.habbo.game.snowwar.gameobjects.TreeGameObject;
-   import package_118.Game2FriendsLeaderboardEvent;
-   import package_118.Game2TotalGroupLeaderboardEvent;
-   import package_118.Game2TotalLeaderboardEvent;
-   import package_118.Game2WeeklyFriendsLeaderboardEvent;
-   import package_118.Game2WeeklyGroupLeaderboardEvent;
-   import package_118.Game2WeeklyLeaderboardEvent;
-   import package_144.Game2AccountGameStatusMessageEvent;
-   import package_144.Game2GameCancelledMessageEvent;
-   import package_144.Game2GameDirectoryStatusMessageEvent;
-   import package_144.Game2InArenaQueueMessageEvent;
-   import package_144.Game2JoiningGameFailedMessageEvent;
-   import package_144.Game2StartCounterMessageEvent;
-   import package_144.Game2StartingGameFailedMessageEvent;
-   import package_144.Game2StopCounterMessageEvent;
-   import package_144.Game2UserBlockedMessageEvent;
-   import package_144.Game2UserLeftGameMessageEvent;
-   import package_144.class_2723;
-   import package_144.class_2731;
-   import package_144.class_3101;
-   import package_144.class_3356;
-   import package_148.class_2625;
-   import package_148.class_3583;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2FriendsLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2TotalGroupLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2TotalLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2WeeklyFriendsLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2WeeklyGroupLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.score.Game2WeeklyLeaderboardEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2AccountGameStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2GameCancelledMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2GameDirectoryStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2InArenaQueueMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2JoiningGameFailedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2StartCounterMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2StartingGameFailedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2StopCounterMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2UserBlockedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2UserLeftGameMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2GameStartedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2UserJoinedGameMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2GameLongDataMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.directory.Game2GameCreatedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.ingame.Game2GameStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.ingame.Game2FullGameStatusMessageEvent;
    import package_197.CreateSnowballEventData;
    import package_197.HumanGetsSnowballsFromMachineEventData;
    import package_197.HumanLeftGameEventData;
@@ -56,58 +56,58 @@ package com.sulake.habbo.game.snowwar
    import package_197.MachineCreatesSnowballEventData;
    import package_197.NewMoveTargetEventData;
    import package_197.SnowWarGameEventData;
-   import package_198.Game2AccountGameStatusMessageParser;
-   import package_198.Game2GameDirectoryStatusMessageParser;
-   import package_198.Game2InArenaQueueMessageParser;
-   import package_198.Game2JoiningGameFailedMessageParser;
-   import package_198.Game2StartCounterMessageParser;
-   import package_198.Game2UserBlockedMessageParser;
-   import package_198.Game2UserLeftGameMessageParser;
-   import package_198.class_3730;
-   import package_198.class_3767;
-   import package_198.class_3975;
-   import package_198.class_4040;
-   import package_202.Game2GroupLeaderboardParser;
-   import package_202.Game2LeaderboardParser;
-   import package_202.Game2WeeklyGroupLeaderboardParser;
-   import package_202.Game2WeeklyLeaderboardParser;
-   import package_209.class_3977;
-   import package_209.class_3998;
-   import package_3.class_2238;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2AccountGameStatusMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2GameDirectoryStatusMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2InArenaQueueMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2JoiningGameFailedMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2StartCounterMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2UserBlockedMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2UserLeftGameMessageParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2UserJoinedGameMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2GameLongDataMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2GameStartedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.directory.Game2GameCreatedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.score.Game2GroupLeaderboardParser;
+   import com.sulake.habbo.communication.messages.parser.game.score.Game2LeaderboardParser;
+   import com.sulake.habbo.communication.messages.parser.game.score.Game2WeeklyGroupLeaderboardParser;
+   import com.sulake.habbo.communication.messages.parser.game.score.Game2WeeklyLeaderboardParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.ingame.Game2FullGameStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.ingame.Game2GameStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.users.ScrSendUserInfoEvent;
    import package_38.HumanGameObjectData;
    import package_38.SnowWarGameObjectData;
    import package_38.SnowballGameObjectData;
    import package_38.SnowballMachineGameObjectData;
    import package_38.SnowballPileGameObjectData;
    import package_38.TreeGameObjectData;
-   import package_39.class_1980;
-   import package_41.Game2GetAccountGameStatusMessageComposer;
-   import package_56.class_2054;
-   import package_56.class_2431;
-   import package_56.class_2465;
-   import package_56.class_2475;
-   import package_56.class_2497;
-   import package_56.class_2572;
-   import package_56.class_2575;
-   import package_56.class_2701;
-   import package_56.class_3004;
-   import package_56.class_3164;
-   import package_56.class_3370;
-   import package_56.class_3440;
-   import package_56.class_3562;
-   import package_57.class_2055;
-   import package_57.class_3671;
-   import package_57.class_3750;
-   import package_57.class_3751;
-   import package_57.class_3818;
-   import package_57.class_3867;
-   import package_57.class_3885;
-   import package_57.class_3946;
-   import package_57.class_3957;
-   import package_57.class_3981;
-   import package_57.class_4019;
-   import package_57.class_4057;
-   import package_57.class_4066;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2GetAccountGameStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageStartingMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2GameEndingMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2ArenaEnteredMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2PlayerRematchesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2EnterArenaFailedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2PlayerExitedGameArenaMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageEndingMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2EnterArenaMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageStillLoadingMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2GameRejoinMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageLoadMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2GameChatFromPlayerMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageRunningMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageStartingMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2PlayerExitedGameArenaMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2GameEndingMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2GameRejoinMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageStillLoadingMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2GameChatFromPlayerMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageRunningMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageLoadMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageEndingMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2EnterArenaMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2EnterArenaFailedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2ArenaEnteredMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2PlayerRematchesMessageEventParser;
    
    [SecureSWF(rename="true")]
    public class class_1762 implements class_13
@@ -123,27 +123,27 @@ package com.sulake.habbo.game.snowwar
          var_21 = param1;
          var _loc2_:class_57 = var_21.communication;
          _loc2_.addHabboConnectionMessageEvent(new Game2WeeklyFriendsLeaderboardEvent(onWeeklyFriendsLeaderboard));
-         _loc2_.addHabboConnectionMessageEvent(new class_2731(onUserJoined));
-         _loc2_.addHabboConnectionMessageEvent(new class_3004(onStageStillLoading));
+         _loc2_.addHabboConnectionMessageEvent(new Game2UserJoinedGameMessageEvent(onUserJoined));
+         _loc2_.addHabboConnectionMessageEvent(new Game2StageStillLoadingMessageEvent(onStageStillLoading));
          _loc2_.addHabboConnectionMessageEvent(new Game2GameDirectoryStatusMessageEvent(onGameDirectoryStatus));
-         _loc2_.addHabboConnectionMessageEvent(new class_3356(onGameCreated));
-         _loc2_.addHabboConnectionMessageEvent(new class_3370(onStageLoad));
-         _loc2_.addHabboConnectionMessageEvent(new class_2575(onStageEnding));
-         _loc2_.addHabboConnectionMessageEvent(new class_2054(onStageStarting));
-         _loc2_.addHabboConnectionMessageEvent(new class_2572(onPlayerExitedArena));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameCreatedMessageEvent(onGameCreated));
+         _loc2_.addHabboConnectionMessageEvent(new Game2StageLoadMessageEvent(onStageLoad));
+         _loc2_.addHabboConnectionMessageEvent(new Game2StageEndingMessageEvent(onStageEnding));
+         _loc2_.addHabboConnectionMessageEvent(new Game2StageStartingMessageEvent(onStageStarting));
+         _loc2_.addHabboConnectionMessageEvent(new Game2PlayerExitedGameArenaMessageEvent(onPlayerExitedArena));
          _loc2_.addHabboConnectionMessageEvent(new Game2UserBlockedMessageEvent(onPlayerBlockStatusChange));
-         _loc2_.addHabboConnectionMessageEvent(new class_2625(onGameStatus));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameStatusMessageEvent(onGameStatus));
          _loc2_.addHabboConnectionMessageEvent(new Game2StartingGameFailedMessageEvent(onStartingGameFailed));
-         _loc2_.addHabboConnectionMessageEvent(new class_3101(onGameLongData));
-         _loc2_.addHabboConnectionMessageEvent(new class_1980(onRoomEnter));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameLongDataMessageEvent(onGameLongData));
+         _loc2_.addHabboConnectionMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
          _loc2_.addHabboConnectionMessageEvent(new Game2TotalGroupLeaderboardEvent(onTotalGroupLeaderboard));
-         _loc2_.addHabboConnectionMessageEvent(new class_3440(onGameChat));
-         _loc2_.addHabboConnectionMessageEvent(new class_3562(onStageRunning));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameChatFromPlayerMessageEvent(onGameChat));
+         _loc2_.addHabboConnectionMessageEvent(new Game2StageRunningMessageEvent(onStageRunning));
          _loc2_.addHabboConnectionMessageEvent(new Game2UserLeftGameMessageEvent(onUserLeft));
          _loc2_.addHabboConnectionMessageEvent(new Game2GameCancelledMessageEvent(onGameCancelled));
-         _loc2_.addHabboConnectionMessageEvent(new class_2701(onEnterArena));
-         _loc2_.addHabboConnectionMessageEvent(new class_2475(onPlayerRematches));
-         _loc2_.addHabboConnectionMessageEvent(new class_2723(onGameStarted));
+         _loc2_.addHabboConnectionMessageEvent(new Game2EnterArenaMessageEvent(onEnterArena));
+         _loc2_.addHabboConnectionMessageEvent(new Game2PlayerRematchesMessageEvent(onPlayerRematches));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameStartedMessageEvent(onGameStarted));
          _loc2_.addHabboConnectionMessageEvent(new Game2StopCounterMessageEvent(onLobbyCounterStop));
          _loc2_.addHabboConnectionMessageEvent(new Game2WeeklyLeaderboardEvent(onWeeklyLeaderboard));
          _loc2_.addHabboConnectionMessageEvent(new Game2InArenaQueueMessageEvent(onInArenaQueue));
@@ -151,14 +151,14 @@ package com.sulake.habbo.game.snowwar
          _loc2_.addHabboConnectionMessageEvent(new Game2StartCounterMessageEvent(onLobbyCounterStart));
          _loc2_.addHabboConnectionMessageEvent(new Game2TotalLeaderboardEvent(onTotalLeaderboard));
          _loc2_.addHabboConnectionMessageEvent(new Game2FriendsLeaderboardEvent(onFriendsLeaderboard));
-         _loc2_.addHabboConnectionMessageEvent(new class_2465(onArenaEntered));
-         _loc2_.addHabboConnectionMessageEvent(new class_2238(onSubscriptionStatus));
+         _loc2_.addHabboConnectionMessageEvent(new Game2ArenaEnteredMessageEvent(onArenaEntered));
+         _loc2_.addHabboConnectionMessageEvent(new ScrSendUserInfoEvent(onSubscriptionStatus));
          _loc2_.addHabboConnectionMessageEvent(new Game2AccountGameStatusMessageEvent(onAccountGameStatus));
-         _loc2_.addHabboConnectionMessageEvent(new class_2497(onEnterArenaFailed));
+         _loc2_.addHabboConnectionMessageEvent(new Game2EnterArenaFailedMessageEvent(onEnterArenaFailed));
          _loc2_.addHabboConnectionMessageEvent(new Game2WeeklyGroupLeaderboardEvent(onWeeklyGroupLeaderboard));
-         _loc2_.addHabboConnectionMessageEvent(new class_3164(onRejoinGame));
-         _loc2_.addHabboConnectionMessageEvent(new class_3583(onFullGameStatus));
-         _loc2_.addHabboConnectionMessageEvent(new class_2431(onGameEnding));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameRejoinMessageEvent(onRejoinGame));
+         _loc2_.addHabboConnectionMessageEvent(new Game2FullGameStatusMessageEvent(onFullGameStatus));
+         _loc2_.addHabboConnectionMessageEvent(new Game2GameEndingMessageEvent(onGameEnding));
       }
       
       public function dispose() : void
@@ -172,9 +172,9 @@ package com.sulake.habbo.game.snowwar
          return var_1134;
       }
       
-      private function onEnterArena(param1:class_2701) : void
+      private function onEnterArena(param1:Game2EnterArenaMessageEvent) : void
       {
-         var _loc3_:class_3981 = param1.getParser();
+         var _loc3_:Game2EnterArenaMessageEventParser = param1.getParser();
          var_21.initArena(_loc3_.gameType,_loc3_.fieldType,_loc3_.numberOfTeams,_loc3_.players);
          var _loc2_:SynchronizedGameArena = var_21.gameArena;
          var _loc4_:class_2693 = _loc2_.getCurrentStage();
@@ -182,9 +182,9 @@ package com.sulake.habbo.game.snowwar
          var_21.mainView.close(false);
       }
       
-      private function onEnterArenaFailed(param1:class_2497) : void
+      private function onEnterArenaFailed(param1:Game2EnterArenaFailedMessageEvent) : void
       {
-         var _loc2_:class_4019 = param1.getParser();
+         var _loc2_:Game2EnterArenaFailedMessageEventParser = param1.getParser();
          var _loc3_:String = "snowwar.error.generic";
          switch(_loc2_.reason - 1)
          {
@@ -194,43 +194,43 @@ package com.sulake.habbo.game.snowwar
          var_21.alert("${" + _loc3_ + "}");
       }
       
-      private function onArenaEntered(param1:class_2465) : void
+      private function onArenaEntered(param1:Game2ArenaEnteredMessageEvent) : void
       {
-         var _loc2_:class_4057 = param1.getParser();
+         var _loc2_:Game2ArenaEnteredMessageEventParser = param1.getParser();
          var _loc3_:Game2PlayerData = _loc2_.player;
       }
       
-      private function onStageLoad(param1:class_3370) : void
+      private function onStageLoad(param1:Game2StageLoadMessageEvent) : void
       {
-         var _loc2_:class_3946 = param1.getParser();
+         var _loc2_:Game2StageLoadMessageEventParser = param1.getParser();
          var_21.initView();
       }
       
-      private function onStageStillLoading(param1:class_3004) : void
+      private function onStageStillLoading(param1:Game2StageStillLoadingMessageEvent) : void
       {
-         var _loc2_:class_3818 = param1.getParser();
+         var _loc2_:Game2StageStillLoadingMessageEventParser = param1.getParser();
          var_21.stageLoading(_loc2_.percentage,_loc2_.finishedPlayers);
       }
       
-      private function onStageStarting(param1:class_2054) : void
+      private function onStageStarting(param1:Game2StageStartingMessageEvent) : void
       {
-         var _loc3_:class_2055 = param1.getParser();
+         var _loc3_:Game2StageStartingMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On stage start: " + _loc3_.countDown);
          var _loc2_:GameObjectsData = _loc3_.gameObjects;
          initializeGameObjects(_loc2_);
          var_21.startStage(_loc3_.countDown);
       }
       
-      private function onStageRunning(param1:class_3562) : void
+      private function onStageRunning(param1:Game2StageRunningMessageEvent) : void
       {
-         var _loc2_:class_3885 = param1.getParser();
+         var _loc2_:Game2StageRunningMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On stage running: " + _loc2_.timeToStageEnd);
          var_21.stageRunning(_loc2_.timeToStageEnd);
       }
       
-      private function onStageEnding(param1:class_2575) : void
+      private function onStageEnding(param1:Game2StageEndingMessageEvent) : void
       {
-         var _loc2_:class_3957 = param1.getParser();
+         var _loc2_:Game2StageEndingMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On stage ending: " + _loc2_.timeToNextState);
          if(_loc2_.timeToNextState == 0)
          {
@@ -238,29 +238,29 @@ package com.sulake.habbo.game.snowwar
          }
       }
       
-      private function onGameEnding(param1:class_2431) : void
+      private function onGameEnding(param1:Game2GameEndingMessageEvent) : void
       {
-         var _loc2_:class_3750 = param1.getParser();
+         var _loc2_:Game2GameEndingMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On game ending: " + _loc2_.timeToNextState);
          var_21.gameOver(_loc2_.timeToNextState,_loc2_.teams,_loc2_.generalStats,_loc2_.gameResult);
       }
       
-      private function onPlayerExitedArena(param1:class_2572) : void
+      private function onPlayerExitedArena(param1:Game2PlayerExitedGameArenaMessageEvent) : void
       {
-         var _loc2_:class_3671 = param1.getParser();
+         var _loc2_:Game2PlayerExitedGameArenaMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On player exited arena. userId:" + _loc2_.userId + " gameObjectId:" + _loc2_.playerGameObjectId);
       }
       
-      private function onRejoinGame(param1:class_3164) : void
+      private function onRejoinGame(param1:Game2GameRejoinMessageEvent) : void
       {
-         var _loc2_:class_3751 = param1.getParser();
+         var _loc2_:Game2GameRejoinMessageEventParser = param1.getParser();
          HabboGamesCom.log("Rejoin game! Room Before game: " + _loc2_.roomBeforeGame);
          var_21.rejoinGame(_loc2_.roomBeforeGame);
       }
       
-      private function onPlayerRematches(param1:class_2475) : void
+      private function onPlayerRematches(param1:Game2PlayerRematchesMessageEvent) : void
       {
-         var _loc2_:class_4066 = param1.getParser();
+         var _loc2_:Game2PlayerRematchesMessageEventParser = param1.getParser();
          HabboGamesCom.log("User " + _loc2_.userId + " rematches");
          var_21.playerRematches(_loc2_.userId);
       }
@@ -289,16 +289,16 @@ package com.sulake.habbo.game.snowwar
          var_21.gamesLeft(_loc2_.gameTypeId,_loc2_.hasUnlimitedGames,_loc2_.freeGamesLeft);
       }
       
-      private function onGameCreated(param1:class_3356) : void
+      private function onGameCreated(param1:Game2GameCreatedMessageEvent) : void
       {
-         var _loc2_:class_4040 = param1.getParser();
+         var _loc2_:Game2GameCreatedMessageEventParser = param1.getParser();
          var _loc3_:GameLobbyData = _loc2_.gameLobbyData;
          var_21.createLobby(_loc3_);
       }
       
-      private function onGameStarted(param1:class_2723) : void
+      private function onGameStarted(param1:Game2GameStartedMessageEvent) : void
       {
-         var _loc2_:class_3975 = param1.getParser();
+         var _loc2_:Game2GameStartedMessageEventParser = param1.getParser();
          HabboGamesCom.log("Game started!");
          var_21.gameStarted(_loc2_.lobbyData);
       }
@@ -329,9 +329,9 @@ package com.sulake.habbo.game.snowwar
          }
       }
       
-      private function onUserJoined(param1:class_2731) : void
+      private function onUserJoined(param1:Game2UserJoinedGameMessageEvent) : void
       {
-         var _loc2_:class_3730 = param1.getParser();
+         var _loc2_:Game2UserJoinedGameMessageEventParser = param1.getParser();
          var_21.userJoined(_loc2_.user);
       }
       
@@ -341,9 +341,9 @@ package com.sulake.habbo.game.snowwar
          var_21.userLeft(_loc2_.userId);
       }
       
-      private function onGameLongData(param1:class_3101) : void
+      private function onGameLongData(param1:Game2GameLongDataMessageEvent) : void
       {
-         var _loc2_:class_3767 = param1.getParser();
+         var _loc2_:Game2GameLongDataMessageEventParser = param1.getParser();
          var _loc3_:GameLobbyData = _loc2_.gameLobbyData;
          HabboGamesCom.log("Long data received: " + [_loc3_.fieldType,_loc3_.numberOfTeams,_loc3_.maximumPlayers]);
          var_21.createLobby(_loc3_);
@@ -379,10 +379,10 @@ package com.sulake.habbo.game.snowwar
          var_21.mainView.changeBlockStatus(_loc2_.playerBlockLength);
       }
       
-      private function onFullGameStatus(param1:class_3583) : void
+      private function onFullGameStatus(param1:Game2FullGameStatusMessageEvent) : void
       {
          var _loc4_:GameStatusData = null;
-         var _loc3_:class_3977 = param1.getParser();
+         var _loc3_:Game2FullGameStatusMessageEventParser = param1.getParser();
          var _loc2_:SynchronizedGameArena = var_21.gameArena;
          HabboGamesCom.log("On full game status: ");
          var _loc5_:FullGameStatusData = _loc3_.fullStatus;
@@ -396,9 +396,9 @@ package com.sulake.habbo.game.snowwar
          }
       }
       
-      private function onGameStatus(param1:class_2625) : void
+      private function onGameStatus(param1:Game2GameStatusMessageEvent) : void
       {
-         var _loc2_:class_3998 = param1.getParser();
+         var _loc2_:Game2GameStatusMessageEventParser = param1.getParser();
          HabboGamesCom.log("[HabbosnowWarEngine] On game status: ");
          handleGameStatus(_loc2_.status);
       }
@@ -661,16 +661,16 @@ package com.sulake.habbo.game.snowwar
          return null;
       }
       
-      private function onGameChat(param1:class_3440) : void
+      private function onGameChat(param1:Game2GameChatFromPlayerMessageEvent) : void
       {
-         var _loc2_:class_3867 = param1.getParser();
+         var _loc2_:Game2GameChatFromPlayerMessageEventParser = param1.getParser();
          if(var_21 != null)
          {
             var_21.addChatMessage(_loc2_.userId,_loc2_.chatMessage);
          }
       }
       
-      private function onSubscriptionStatus(param1:class_2238) : void
+      private function onSubscriptionStatus(param1:ScrSendUserInfoEvent) : void
       {
          if(var_21 != null)
          {
@@ -686,7 +686,7 @@ package com.sulake.habbo.game.snowwar
          }
       }
       
-      private function onRoomEnter(param1:class_1980) : void
+      private function onRoomEnter(param1:RoomEntryInfoMessageEvent) : void
       {
          var_21.promoteGame();
       }

@@ -7,7 +7,7 @@ package com.sulake.habbo.catalog.earnings
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_2001;
    import com.sulake.habbo.window.class_38;
-   import package_158.class_3206;
+   import com.sulake.habbo.communication.messages.parser.vault.class_3206;
    
    public class EarningsView implements class_13
    {

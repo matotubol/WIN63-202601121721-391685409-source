@@ -15,10 +15,10 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.habbo.catalog.viewer.widgets.events.SelectProductEvent;
    import com.sulake.habbo.room.events.RoomEngineEvent;
    import com.sulake.room.utils.RoomId;
-   import package_10.class_2968;
-   import package_3.class_2794;
-   import package_42.class_2482;
-   import package_6.class_3861;
+   import com.sulake.habbo.communication.messages.incoming.catalog.RoomAdPurchaseInfoEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2794;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_2482;
+   import com.sulake.habbo.communication.messages.parser.catalog.RoomAdPurchaseInfoEventParser;
    
    public class RoomAdsCatalogWidget extends CatalogWidget implements class_2612
    {
@@ -56,7 +56,7 @@ package com.sulake.habbo.catalog.viewer.widgets
          var _loc4_:IConnection = _catalog.connection;
          if(var_1683 == null)
          {
-            var_1683 = new class_2968(onPurchaseInfoEvent);
+            var_1683 = new RoomAdPurchaseInfoEvent(onPurchaseInfoEvent);
             _loc4_.addMessageEvent(var_1683);
          }
          _catalog.getRoomAdsPurchaseInfo();
@@ -211,8 +211,8 @@ package com.sulake.habbo.catalog.viewer.widgets
          {
             return;
          }
-         var _loc7_:class_2968 = param1 as class_2968;
-         var _loc3_:class_3861 = _loc7_.getParser();
+         var _loc7_:RoomAdPurchaseInfoEvent = param1 as RoomAdPurchaseInfoEvent;
+         var _loc3_:RoomAdPurchaseInfoEventParser = _loc7_.getParser();
          var _loc6_:class_2261 = window.findChildByName("room_drop_menu") as class_2261;
          _rooms = _loc3_.rooms;
          var_3598 = _loc3_.isVip;

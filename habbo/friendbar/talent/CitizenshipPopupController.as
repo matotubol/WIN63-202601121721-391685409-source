@@ -8,8 +8,8 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.habbo.window.utils.IModalDialog;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_39.class_1980;
-   import package_53.class_3520;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
    
    public class CitizenshipPopupController implements class_13
    {
@@ -20,7 +20,7 @@ package com.sulake.habbo.friendbar.talent
       
       private var _disposed:Boolean;
       
-      private var var_2607:class_1980;
+      private var var_2607:RoomEntryInfoMessageEvent;
       
       private var var_4143:Boolean;
       
@@ -28,7 +28,7 @@ package com.sulake.habbo.friendbar.talent
       {
          super();
          _habboTalent = param1;
-         var_2607 = new class_1980(onRoomEnter);
+         var_2607 = new RoomEntryInfoMessageEvent(onRoomEnter);
          _habboTalent.communicationManager.addHabboConnectionMessageEvent(var_2607);
       }
       
@@ -105,7 +105,7 @@ package com.sulake.habbo.friendbar.talent
             case "show_citizenship":
                hide();
                _habboTalent.tracking.trackTalentTrackOpen("citizenship","citizenshippopup");
-               _habboTalent.send(new class_3520("citizenship"));
+               _habboTalent.send(new GetTalentTrackMessageComposer("citizenship"));
          }
       }
    }

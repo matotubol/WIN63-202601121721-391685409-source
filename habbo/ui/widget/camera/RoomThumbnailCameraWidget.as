@@ -10,7 +10,7 @@ package com.sulake.habbo.ui.widget.camera
    import com.sulake.core.window.components.class_2251;
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2077;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomThumbnailMessageComposer;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.room.IRoomEngine;
    import com.sulake.habbo.room.events.RoomEngineEvent;
@@ -158,7 +158,7 @@ package com.sulake.habbo.ui.widget.camera
       
       private function windowProcedure(param1:class_1758, param2:class_1741) : void
       {
-         var _loc3_:class_2077 = null;
+         var _loc3_:RenderRoomThumbnailMessageComposer = null;
          var _loc4_:WindowMouseEvent = param1 as WindowMouseEvent;
          if(_loc4_ && _loc4_.type == "WME_CLICK")
          {

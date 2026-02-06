@@ -10,8 +10,8 @@ package com.sulake.habbo.roomevents.wired_menu
    import com.sulake.core.runtime.events.ILinkEventTracker;
    import com.sulake.habbo.avatar.class_48;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3094;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.class_3518;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredSetPreferencesMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.WiredPermissionsEventParser;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.room.IRoomEngine;
    import com.sulake.habbo.room.events.RoomEngineEvent;
@@ -38,10 +38,10 @@ package com.sulake.habbo.roomevents.wired_menu
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_167.class_3249;
-   import package_192.class_3529;
-   import package_27.class_1809;
-   import package_97.class_2350;
+   import com.sulake.habbo.communication.messages.incoming.room.permissions.YouAreControllerMessageEvent;
+   import package_192.WiredGetRoomLogsComposer;
+   import com.sulake.habbo.communication.messages.incoming.preferences.AccountPreferencesEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredPermissionsEvent;
    
    public class WiredMenuController extends class_17 implements ILinkEventTracker, class_1761, class_13
    {
@@ -91,9 +91,9 @@ package com.sulake.habbo.roomevents.wired_menu
          super(param2,param3,param4);
          _roomEvents = param1;
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_2350(onWiredPermissions));
-         _messageEvents.push(new class_1809(onAccountPreferences));
-         _messageEvents.push(new class_3249(onControllerMessageEvent));
+         _messageEvents.push(new WiredPermissionsEvent(onWiredPermissions));
+         _messageEvents.push(new AccountPreferencesEvent(onAccountPreferences));
+         _messageEvents.push(new YouAreControllerMessageEvent(onControllerMessageEvent));
          for each(var _loc5_ in _messageEvents)
          {
             addMessageEvent(_loc5_);
@@ -179,7 +179,7 @@ package com.sulake.habbo.roomevents.wired_menu
             }
             if(var_967.view == null || !var_967.view.isShowing())
             {
-               var_967.send(new class_3529(1,WiredRoomLogsConfig.PAGE_SIZE,-1,-1,""));
+               var_967.send(new WiredGetRoomLogsComposer(1,WiredRoomLogsConfig.PAGE_SIZE,-1,-1,""));
             }
             else
             {
@@ -342,9 +342,9 @@ package com.sulake.habbo.roomevents.wired_menu
          }
       }
       
-      private function onWiredPermissions(param1:class_2350) : void
+      private function onWiredPermissions(param1:WiredPermissionsEvent) : void
       {
-         var _loc2_:class_3518 = param1.getParser();
+         var _loc2_:WiredPermissionsEventParser = param1.getParser();
          var_2782 = _loc2_.canModify;
          var_3124 = _loc2_.canRead;
          if(var_18 != null && !var_18.disposed)
@@ -361,7 +361,7 @@ package com.sulake.habbo.roomevents.wired_menu
          }
       }
       
-      private function onAccountPreferences(param1:class_1809) : void
+      private function onAccountPreferences(param1:AccountPreferencesEvent) : void
       {
          var_2772 = param1.getParser().wiredMenuButton;
          var_2975 = param1.getParser().wiredInspectButton;
@@ -489,7 +489,7 @@ package com.sulake.habbo.roomevents.wired_menu
       
       public function sendPreferences() : void
       {
-         send(new class_3094(wiredMenuButton,wiredInspectButton,playTestMode,wiredWhisperDisabled,showAllNotifications));
+         send(new WiredSetPreferencesMessageComposer(wiredMenuButton,wiredInspectButton,playTestMode,wiredWhisperDisabled,showAllNotifications));
       }
       
       override public function dispose() : void

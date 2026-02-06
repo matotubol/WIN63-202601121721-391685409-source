@@ -6,7 +6,7 @@ package com.sulake.habbo.campaign.calendar
    import com.sulake.core.window.components.class_2251;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_80.class_2349;
+   import com.sulake.habbo.communication.messages.parser.campaign.class_2349;
    
    public class CalendarItem
    {

@@ -1,6 +1,6 @@
 package com.sulake.habbo.quest
 {
-   import package_163.class_3303;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.class_3303;
    
    public class AchievementCategory
    {

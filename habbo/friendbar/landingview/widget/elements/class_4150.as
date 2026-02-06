@@ -3,9 +3,9 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
    import com.sulake.core.window.class_1741;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.widget.GenericWidget;
-   import package_140.class_3041;
-   import package_81.class_2300;
-   import package_81.class_2780;
+   import com.sulake.habbo.communication.messages.incoming.competition.IsUserPartOfCompetitionMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.competition.ForwardToASubmittableRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.competition.GetIsUserPartOfCompetitionMessageComposer;
    
    public class class_4150 extends class_4135
    {
@@ -28,13 +28,13 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          super.initialize(param1,param2,param3,param4);
          _submittedKey = param3[2];
          var_897 = param3[3];
-         param1.communicationManager.addHabboConnectionMessageEvent(new class_3041(onInfo));
+         param1.communicationManager.addHabboConnectionMessageEvent(new IsUserPartOfCompetitionMessageEvent(onInfo));
       }
       
       override public function refresh() : void
       {
          super.refresh();
-         landingView.send(new class_2780(var_897));
+         landingView.send(new GetIsUserPartOfCompetitionMessageComposer(var_897));
       }
       
       override protected function onClick() : void
@@ -47,12 +47,12 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          }
          else
          {
-            landingView.send(new class_2300());
+            landingView.send(new ForwardToASubmittableRoomMessageComposer());
             landingView.tracking.trackGoogle("landingView","click_startsubmit");
          }
       }
       
-      private function onInfo(param1:class_3041) : void
+      private function onInfo(param1:IsUserPartOfCompetitionMessageEvent) : void
       {
          var_3594 = param1.getParser().isPartOf;
          var_4433 = param1.getParser().targetId;

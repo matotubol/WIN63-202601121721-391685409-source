@@ -2,10 +2,10 @@ package com.sulake.habbo.help.cfh.registry.instantmessage
 {
    import com.sulake.core.runtime.class_13;
    import com.sulake.habbo.help.HabboHelp;
-   import package_11.class_1825;
-   import package_11.class_2137;
-   import package_14.class_1792;
-   import package_14.class_2028;
+   import com.sulake.habbo.communication.messages.parser.friendlist.RoomInviteEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.NewConsoleMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.RoomInviteEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.NewConsoleMessageEvent;
    
    public class InstantMessageEventHandler implements class_13
    {
@@ -16,13 +16,13 @@ package com.sulake.habbo.help.cfh.registry.instantmessage
       {
          super();
          var_59 = param1;
-         var_59.addMessageEvent(new class_2028(onInstantMessage));
-         var_59.addMessageEvent(new class_1792(onRoomInvite));
+         var_59.addMessageEvent(new NewConsoleMessageEvent(onInstantMessage));
+         var_59.addMessageEvent(new RoomInviteEvent(onRoomInvite));
       }
       
-      public function onInstantMessage(param1:class_2028) : void
+      public function onInstantMessage(param1:NewConsoleMessageEvent) : void
       {
-         var _loc2_:class_2137 = param1.getParser();
+         var _loc2_:NewConsoleMessageEventParser = param1.getParser();
          if(_loc2_.chatId < 0)
          {
             var_59.instantMessageRegistry.addItem(_loc2_.chatId,_loc2_.senderName,_loc2_.messageText);
@@ -33,9 +33,9 @@ package com.sulake.habbo.help.cfh.registry.instantmessage
          }
       }
       
-      public function onRoomInvite(param1:class_1792) : void
+      public function onRoomInvite(param1:RoomInviteEvent) : void
       {
-         var _loc2_:class_1825 = param1.getParser();
+         var _loc2_:RoomInviteEventParser = param1.getParser();
          var_59.instantMessageRegistry.addItem(_loc2_.senderId,"",_loc2_.messageText);
       }
       

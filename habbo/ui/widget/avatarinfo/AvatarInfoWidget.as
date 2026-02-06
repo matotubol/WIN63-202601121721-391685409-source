@@ -54,9 +54,9 @@ package com.sulake.habbo.ui.widget.avatarinfo
    import flash.events.TimerEvent;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_161.class_2759;
-   import package_161.class_3483;
-   import package_66.class_3119;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.pets.ConfirmPetBreedingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.pets.CancelPetBreedingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.BreedPetsMessageComposer;
    
    public class AvatarInfoWidget extends RoomWidgetBase implements class_31, class_1853
    {
@@ -1730,7 +1730,7 @@ package com.sulake.habbo.ui.widget.avatarinfo
          var _loc4_:class_2146 = handler.container.roomSession.userDataManager.getUserDataByIndex(param2);
          if(_loc3_ && _loc4_)
          {
-            handler.container.connection.send(new class_3119(1,_loc3_.webID,_loc4_.webID));
+            handler.container.connection.send(new BreedPetsMessageComposer(1,_loc3_.webID,_loc4_.webID));
          }
       }
       
@@ -1740,7 +1740,7 @@ package com.sulake.habbo.ui.widget.avatarinfo
          var _loc4_:class_2146 = handler.container.roomSession.userDataManager.getUserDataByIndex(param2);
          if(_loc3_ && _loc4_)
          {
-            handler.container.connection.send(new class_3119(2,_loc3_.webID,_loc4_.webID));
+            handler.container.connection.send(new BreedPetsMessageComposer(2,_loc3_.webID,_loc4_.webID));
          }
       }
       
@@ -1750,7 +1750,7 @@ package com.sulake.habbo.ui.widget.avatarinfo
          var _loc4_:class_2146 = handler.container.roomSession.userDataManager.getUserDataByIndex(param2);
          if(_loc3_ && _loc4_)
          {
-            handler.container.connection.send(new class_3119(0,_loc3_.webID,_loc4_.webID));
+            handler.container.connection.send(new BreedPetsMessageComposer(0,_loc3_.webID,_loc4_.webID));
          }
       }
       
@@ -1776,12 +1776,12 @@ package com.sulake.habbo.ui.widget.avatarinfo
       
       public function cancelPetBreeding(param1:int) : void
       {
-         handler.container.connection.send(new class_3483(param1));
+         handler.container.connection.send(new CancelPetBreedingComposer(param1));
       }
       
       public function confirmPetBreeding(param1:int, param2:String, param3:int, param4:int) : void
       {
-         handler.container.connection.send(new class_2759(param1,param2,param3,param4));
+         handler.container.connection.send(new ConfirmPetBreedingComposer(param1,param2,param3,param4));
       }
       
       public function showNestBreedingSuccess(param1:int, param2:int) : void

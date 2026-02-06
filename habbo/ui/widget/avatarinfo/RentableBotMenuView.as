@@ -9,9 +9,9 @@ package com.sulake.habbo.ui.widget.avatarinfo
    import com.sulake.habbo.ui.widget.messages.RoomWidgetUserActionMessage;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_160.class_3372;
-   import package_184.class_3969;
-   import package_55.class_2536;
+   import com.sulake.habbo.communication.messages.outgoing.room.bots.CommandBotComposer;
+   import com.sulake.habbo.communication.messages.parser.room.bots.class_3969;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.RemoveBotFromFlatMessageComposer;
    
    public class RentableBotMenuView extends AvatarContextInfoButtonView
    {
@@ -201,7 +201,7 @@ package com.sulake.habbo.ui.widget.avatarinfo
                {
                   case "pick":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_2536(var_24.id));
+                     widget.handler.container.connection.send(new RemoveBotFromFlatMessageComposer(var_24.id));
                      break;
                   case "setup_chat":
                      _loc3_ = true;
@@ -212,28 +212,28 @@ package com.sulake.habbo.ui.widget.avatarinfo
                      break;
                   case "random_walk":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_3372(var_24.id,3,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,3,""));
                      break;
                   case "dress_up":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_3372(var_24.id,1,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,1,""));
                      break;
                   case "dance":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_3372(var_24.id,4,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,4,""));
                      break;
                   case "donate_to_all":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_3372(var_24.id,25,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,25,""));
                      break;
                   case "donate_to_user":
                      _loc3_ = true;
-                     widget.handler.container.connection.send(new class_3372(var_24.id,24,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,24,""));
                      break;
                   case "nux_take_tour":
                      _loc3_ = true;
                      widget.component.context.createLinkEvent("help/tour");
-                     widget.handler.container.connection.send(new class_3372(var_24.id,10,""));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,10,""));
                      break;
                   case "wired_inspect":
                      _loc3_ = true;
@@ -258,7 +258,7 @@ package com.sulake.habbo.ui.widget.avatarinfo
                   if(param2.parent.name.indexOf("nux_proceed_") != -1)
                   {
                      _loc7_ = param2.parent.name.substr(12,param2.parent.name.length - 12);
-                     widget.handler.container.connection.send(new class_3372(var_24.id,8,_loc7_));
+                     widget.handler.container.connection.send(new CommandBotComposer(var_24.id,8,_loc7_));
                      _loc3_ = true;
                   }
                }

@@ -7,7 +7,7 @@ package com.sulake.habbo.ui.widget.camera
    import com.sulake.core.utils.ErrorReportStorage;
    import com.sulake.core.window.class_1741;
    import com.sulake.habbo.catalog.IHabboCatalog;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2076;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomMessageComposer;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.quest.class_498;
    import com.sulake.habbo.room.IRoomEngine;
@@ -24,8 +24,8 @@ package com.sulake.habbo.ui.widget.camera
    import flash.display.BitmapData;
    import flash.geom.Matrix;
    import flash.geom.Rectangle;
-   import package_147.class_2801;
-   import package_147.class_2876;
+   import com.sulake.habbo.communication.messages.incoming.camera.CameraPublishStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.CompetitionStatusMessageEvent;
    
    public class CameraWidget extends RoomWidgetBase
    {
@@ -218,7 +218,7 @@ package com.sulake.habbo.ui.widget.camera
          }
       }
       
-      public function publishingStatus(param1:class_2801) : void
+      public function publishingStatus(param1:CameraPublishStatusMessageEvent) : void
       {
          if(var_161)
          {
@@ -226,7 +226,7 @@ package com.sulake.habbo.ui.widget.camera
          }
       }
       
-      public function competitionStatus(param1:class_2876) : void
+      public function competitionStatus(param1:CompetitionStatusMessageEvent) : void
       {
          if(var_161)
          {
@@ -236,7 +236,7 @@ package com.sulake.habbo.ui.widget.camera
       
       public function sendPhotoData() : Boolean
       {
-         var _loc1_:class_2076 = var_825.getRenderRoomMessage();
+         var _loc1_:RenderRoomMessageComposer = var_825.getRenderRoomMessage();
          if(var_161)
          {
             _loc1_.addEffectData(var_161.getEffectDataJson());

@@ -3,7 +3,7 @@ package com.sulake.habbo.window.utils.floorplaneditor
    import com.sulake.core.window.class_1741;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_170.class_3410;
+   import com.sulake.habbo.communication.messages.outgoing.room.layout.UpdateFloorPropertiesMessageComposer;
    
    public class ImportExportDialog
    {
@@ -71,7 +71,7 @@ package com.sulake.habbo.window.utils.floorplaneditor
                   _window.findChildByName("data").caption = _bcFloorPlanEditor.lastReceivedFloorPlan;
                   break;
                case "save":
-                  _bcFloorPlanEditor.windowManager.communication.connection.send(new class_3410(_window.findChildByName("data").caption,_bcFloorPlanEditor.floorPlanCache.entryPoint.x,_bcFloorPlanEditor.floorPlanCache.entryPoint.y,_bcFloorPlanEditor.floorPlanCache.entryPointDir,BCFloorPlanEditor.getThicknessSettingBySelectionIndex(_bcFloorPlanEditor.wallThickness),BCFloorPlanEditor.getThicknessSettingBySelectionIndex(_bcFloorPlanEditor.floorThickness)));
+                  _bcFloorPlanEditor.windowManager.communication.connection.send(new UpdateFloorPropertiesMessageComposer(_window.findChildByName("data").caption,_bcFloorPlanEditor.floorPlanCache.entryPoint.x,_bcFloorPlanEditor.floorPlanCache.entryPoint.y,_bcFloorPlanEditor.floorPlanCache.entryPointDir,BCFloorPlanEditor.getThicknessSettingBySelectionIndex(_bcFloorPlanEditor.wallThickness),BCFloorPlanEditor.getThicknessSettingBySelectionIndex(_bcFloorPlanEditor.floorThickness)));
             }
          }
       }

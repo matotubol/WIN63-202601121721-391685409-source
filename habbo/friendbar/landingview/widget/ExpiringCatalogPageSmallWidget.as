@@ -12,9 +12,9 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.habbo.friendbar.landingview.layout.CommonWidgetSettings;
    import com.sulake.habbo.friendbar.landingview.layout.WidgetContainerLayout;
    import com.sulake.habbo.window.widgets.class_2728;
-   import package_10.class_3124;
-   import package_13.class_2380;
-   import package_6.class_4064;
+   import com.sulake.habbo.communication.messages.incoming.catalog.CatalogPageWithEarliestExpiryMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetCatalogPageWithEarliestExpiryComposer;
+   import com.sulake.habbo.communication.messages.parser.catalog.CatalogPageWithEarliestExpiryMessageEventParser;
    
    public class ExpiringCatalogPageSmallWidget implements ILandingViewWidget, ISettingsAwareWidget
    {
@@ -53,14 +53,14 @@ package com.sulake.habbo.friendbar.landingview.widget
          _container = class_1812(_landingView.getXmlWindow("expiring_catalog_page_small"));
          _container.findChildByName("open_catalog_button").procedure = onOpenCatalogButton;
          _container.visible = false;
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_3124(onCatalogPage));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new CatalogPageWithEarliestExpiryMessageEvent(onCatalogPage));
       }
       
       public function refresh() : void
       {
          if(_lastRequestTime == null || _lastRequestTime.time + 30000 < new Date().time)
          {
-            _landingView.send(new class_2380());
+            _landingView.send(new GetCatalogPageWithEarliestExpiryComposer());
             _lastRequestTime = new Date();
          }
       }
@@ -108,7 +108,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       
       private function onCatalogPage(param1:IMessageEvent) : void
       {
-         var _loc2_:class_4064 = class_4064(param1.parser);
+         var _loc2_:CatalogPageWithEarliestExpiryMessageEventParser = CatalogPageWithEarliestExpiryMessageEventParser(param1.parser);
          _pageName = _loc2_.pageName;
          var_4702 = _loc2_.secondsToExpiry;
          refreshContent();

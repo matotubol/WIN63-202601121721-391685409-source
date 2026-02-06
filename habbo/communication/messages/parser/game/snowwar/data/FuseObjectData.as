@@ -2,7 +2,7 @@ package com.sulake.habbo.communication.messages.parser.game.snowwar.data
 {
    import com.sulake.core.communication.messages.IMessageDataWrapper;
    import com.sulake.habbo.room.IStuffData;
-   import package_50.class_3692;
+   import com.sulake.habbo.communication.messages.parser.room.engine.class_3692;
    
    public class FuseObjectData
    {

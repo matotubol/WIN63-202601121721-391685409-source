@@ -15,10 +15,10 @@ package com.sulake.habbo.friendbar.groupforums
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_155.class_2670;
-   import package_155.class_3434;
-   import package_155.class_3590;
-   import package_155.class_3591;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_2670;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3434;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3590;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3591;
    
    public class GroupForumView
    {

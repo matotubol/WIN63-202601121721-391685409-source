@@ -1,6 +1,6 @@
 package com.sulake.habbo.session
 {
-   import package_32.class_3348;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_3348;
    
    public interface IRoomSession
    {

@@ -11,10 +11,10 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import com.sulake.habbo.ui.widget.roomtools.RoomToolsWidget;
    import flash.events.Event;
-   import package_1.class_2313;
-   import package_17.class_1781;
-   import package_42.class_1945;
-   import package_42.class_2168;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.RateFlatMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.navigator.GetGuestRoomResultEventParser;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.GetGuestRoomResultEvent;
    
    public class RoomToolsWidgetHandler implements IRoomWidgetHandler
    {
@@ -44,7 +44,7 @@ package com.sulake.habbo.ui.handler
       private function onRoomInfo(param1:IMessageEvent) : void
       {
          var _loc3_:String = null;
-         var _loc2_:class_1781 = class_2168(param1).getParser();
+         var _loc2_:GetGuestRoomResultEventParser = GetGuestRoomResultEvent(param1).getParser();
          var _loc4_:class_1945 = _loc2_.data;
          if(_loc4_)
          {
@@ -166,12 +166,12 @@ package com.sulake.habbo.ui.handler
       public function set communicationManager(param1:class_57) : void
       {
          _communicationManager = param1;
-         _communicationManagerMessageEvents.push(_communicationManager.addHabboConnectionMessageEvent(new class_2168(onRoomInfo)));
+         _communicationManagerMessageEvents.push(_communicationManager.addHabboConnectionMessageEvent(new GetGuestRoomResultEvent(onRoomInfo)));
       }
       
       public function rateRoom() : void
       {
-         _container.connection.send(new class_2313(1));
+         _container.connection.send(new RateFlatMessageComposer(1));
       }
       
       public function get canRate() : Boolean

@@ -5,8 +5,8 @@ package com.sulake.habbo.navigator
    import com.sulake.core.window.components.class_2010;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_42.class_1945;
-   import package_9.class_1796;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
    
    public class GuildInfoCtrl implements class_13
    {
@@ -59,7 +59,7 @@ package com.sulake.habbo.navigator
       
       private function onGuildInfo(param1:class_1758) : void
       {
-         _navigator.send(new class_1796(_groupId,true));
+         _navigator.send(new GetHabboGroupDetailsMessageComposer(_groupId,true));
       }
    }
 }

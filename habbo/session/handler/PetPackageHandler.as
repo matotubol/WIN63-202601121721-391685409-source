@@ -5,10 +5,10 @@ package com.sulake.habbo.session.handler
    import com.sulake.habbo.session.IRoomHandlerListener;
    import com.sulake.habbo.session.IRoomSession;
    import com.sulake.habbo.session.events.RoomSessionPetPackageEvent;
-   import package_100.class_3138;
-   import package_100.class_3266;
-   import package_91.class_2428;
-   import package_91.class_3621;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.OpenPetPackageRequestedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.OpenPetPackageResultMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.OpenPetPackageResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.OpenPetPackageRequestedMessageEventParser;
    
    public class PetPackageHandler extends BaseHandler
    {
@@ -20,13 +20,13 @@ package com.sulake.habbo.session.handler
          {
             return;
          }
-         param1.addMessageEvent(new class_3138(onOpenPetPackageRequested));
-         param1.addMessageEvent(new class_3266(onOpenPetPackageResult));
+         param1.addMessageEvent(new OpenPetPackageRequestedMessageEvent(onOpenPetPackageRequested));
+         param1.addMessageEvent(new OpenPetPackageResultMessageEvent(onOpenPetPackageResult));
       }
       
       private function onOpenPetPackageRequested(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3621 = (param1 as class_3138).getParser();
+         var _loc2_:OpenPetPackageRequestedMessageEventParser = (param1 as OpenPetPackageRequestedMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -44,7 +44,7 @@ package com.sulake.habbo.session.handler
       
       private function onOpenPetPackageResult(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2428 = (param1 as class_3266).getParser();
+         var _loc2_:OpenPetPackageResultMessageEventParser = (param1 as OpenPetPackageResultMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;

@@ -14,10 +14,10 @@ package com.sulake.habbo.friendbar.onBoardingHcSteps
    import onBoardingHcUi.Button;
    import onBoardingHcUi.ColouredButton;
    import onBoardingHcUi.LoaderUI;
-   import package_1.class_3485;
-   import package_112.class_3330;
-   import package_141.class_3072;
-   import package_142.class_3941;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.UpdateHomeRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nux.SelectInitialRoomComposer;
+   import com.sulake.habbo.communication.messages.incoming.nux.SelectInitialRoomEvent;
+   import com.sulake.habbo.communication.messages.parser.nux.SelectInitialRoomEventParser;
    
    public class RoomPicker implements class_13
    {
@@ -61,7 +61,7 @@ package com.sulake.habbo.friendbar.onBoardingHcSteps
          super();
          _newUserFlow = param1;
          _container = param2;
-         var_5162 = param1.communicationManager.addHabboConnectionMessageEvent(new class_3072(onSelectInitialRoomResponse));
+         var_5162 = param1.communicationManager.addHabboConnectionMessageEvent(new SelectInitialRoomEvent(onSelectInitialRoomResponse));
       }
       
       private static function get galleryUrl() : String
@@ -69,20 +69,20 @@ package com.sulake.habbo.friendbar.onBoardingHcSteps
          return "https://images.habbo.com/c_images/nux/";
       }
       
-      private function onSelectInitialRoomResponse(param1:class_3072) : void
+      private function onSelectInitialRoomResponse(param1:SelectInitialRoomEvent) : void
       {
          if(param1 == null)
          {
             return;
          }
-         var _loc2_:class_3941 = param1.getParser();
+         var _loc2_:SelectInitialRoomEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
          }
          if(_loc2_.roomId > 0)
          {
-            _newUserFlow.communicationManager.connection.send(new class_3485(_loc2_.roomId));
+            _newUserFlow.communicationManager.connection.send(new UpdateHomeRoomMessageComposer(_loc2_.roomId));
          }
          _newUserFlow.roomPickingCompleted();
       }
@@ -189,7 +189,7 @@ package com.sulake.habbo.friendbar.onBoardingHcSteps
       private function onButtonSelect(param1:DisplayObject) : void
       {
          var _loc2_:String = var_1902[var_2163 - 1];
-         _newUserFlow.communicationManager.connection.send(new class_3330(_loc2_));
+         _newUserFlow.communicationManager.connection.send(new SelectInitialRoomComposer(_loc2_));
       }
       
       private function onRoomClick(param1:Event) : void

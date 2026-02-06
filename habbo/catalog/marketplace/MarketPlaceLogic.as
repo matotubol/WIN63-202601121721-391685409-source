@@ -9,16 +9,16 @@ package com.sulake.habbo.catalog.marketplace
    import com.sulake.habbo.room.IRoomEngine;
    import com.sulake.habbo.session.furniture.class_1800;
    import com.sulake.habbo.window.class_38;
-   import package_29.class_2000;
-   import package_29.class_2037;
-   import package_29.class_2183;
-   import package_29.class_2249;
-   import package_29.class_3020;
-   import package_5.class_2811;
-   import package_5.class_2909;
-   import package_5.class_3288;
-   import package_5.class_3378;
-   import package_7.class_2462;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketPlaceOwnOffersEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketPlaceOffersEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceCancelOfferResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceBuyOfferResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.class_3020;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketPlaceOwnOffersEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketPlaceOffersEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceBuyOfferResultEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceCancelOfferResultEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.GetMarketplaceConfigurationMessageComposer;
    
    public class MarketPlaceLogic implements IMarketPlace
    {
@@ -127,7 +127,7 @@ package com.sulake.habbo.catalog.marketplace
          {
             return;
          }
-         _catalog.connection.send(new class_2462());
+         _catalog.connection.send(new GetMarketplaceConfigurationMessageComposer());
       }
       
       private function showConfirmation(param1:int, param2:MarketPlaceOfferData) : void
@@ -234,12 +234,12 @@ package com.sulake.habbo.catalog.marketplace
       
       public function onOffers(param1:IMessageEvent) : void
       {
-         var _loc4_:class_2037 = param1 as class_2037;
+         var _loc4_:MarketPlaceOffersEvent = param1 as MarketPlaceOffersEvent;
          if(_loc4_ == null)
          {
             return;
          }
-         var _loc2_:class_2909 = _loc4_.getParser() as class_2909;
+         var _loc2_:MarketPlaceOffersEventParser = _loc4_.getParser() as MarketPlaceOffersEventParser;
          if(_loc2_ == null)
          {
             return;
@@ -261,12 +261,12 @@ package com.sulake.habbo.catalog.marketplace
       
       public function onOwnOffers(param1:IMessageEvent) : void
       {
-         var _loc4_:class_2000 = param1 as class_2000;
+         var _loc4_:MarketPlaceOwnOffersEvent = param1 as MarketPlaceOwnOffersEvent;
          if(_loc4_ == null)
          {
             return;
          }
-         var _loc2_:class_2811 = _loc4_.getParser() as class_2811;
+         var _loc2_:MarketPlaceOwnOffersEventParser = _loc4_.getParser() as MarketPlaceOwnOffersEventParser;
          if(_loc2_ == null)
          {
             return;
@@ -288,16 +288,16 @@ package com.sulake.habbo.catalog.marketplace
       
       public function onBuyResult(param1:IMessageEvent) : void
       {
-         var parser:class_3288;
+         var parser:MarketplaceBuyOfferResultEventParser;
          var item:MarketPlaceOfferData;
          var updateItem:MarketPlaceOfferData;
          var event:IMessageEvent = param1;
-         var buyEvent:class_2249 = event as class_2249;
+         var buyEvent:MarketplaceBuyOfferResultEvent = event as MarketplaceBuyOfferResultEvent;
          if(event == null)
          {
             return;
          }
-         parser = buyEvent.getParser() as class_3288;
+         parser = buyEvent.getParser() as MarketplaceBuyOfferResultEventParser;
          if(parser == null)
          {
             return;
@@ -356,15 +356,15 @@ package com.sulake.habbo.catalog.marketplace
       
       public function onCancelResult(param1:IMessageEvent) : void
       {
-         var parser:class_3378;
+         var parser:MarketplaceCancelOfferResultEventParser;
          var item:MarketPlaceOfferData;
          var event:IMessageEvent = param1;
-         var cancelEvent:class_2183 = event as class_2183;
+         var cancelEvent:MarketplaceCancelOfferResultEvent = event as MarketplaceCancelOfferResultEvent;
          if(event == null)
          {
             return;
          }
-         parser = cancelEvent.getParser() as class_3378;
+         parser = cancelEvent.getParser() as MarketplaceCancelOfferResultEventParser;
          if(parser == null)
          {
             return;

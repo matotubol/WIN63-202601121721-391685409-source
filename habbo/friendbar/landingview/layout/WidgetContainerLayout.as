@@ -10,8 +10,8 @@ package com.sulake.habbo.friendbar.landingview.layout
    import com.sulake.habbo.friendbar.landingview.interfaces.ILandingViewWidget;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_140.class_2933;
-   import package_81.class_3513;
+   import com.sulake.habbo.communication.messages.incoming.competition.CurrentTimingCodeMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.competition.GetCurrentTimingCodeMessageComposer;
    
    public class WidgetContainerLayout implements class_31
    {
@@ -171,7 +171,7 @@ package com.sulake.habbo.friendbar.landingview.layout
          {
             createWindow();
             registerDynamicWidgets();
-            _landingView.communicationManager.addHabboConnectionMessageEvent(new class_2933(onTimingCode));
+            _landingView.communicationManager.addHabboConnectionMessageEvent(new CurrentTimingCodeMessageEvent(onTimingCode));
             var_3488 = _landingView.getProperty("landing.view.bgtiming");
          }
          for each(var _loc1_ in var_35)
@@ -185,7 +185,7 @@ package com.sulake.habbo.friendbar.landingview.layout
          {
             _landingView.navigator.openNavigator(navigatorPosition);
          }
-         _landingView.send(new class_3513(var_3488));
+         _landingView.send(new GetCurrentTimingCodeMessageComposer(var_3488));
          _window.visible = true;
       }
       
@@ -403,7 +403,7 @@ package com.sulake.habbo.friendbar.landingview.layout
          return _landingView;
       }
       
-      private function onTimingCode(param1:class_2933) : void
+      private function onTimingCode(param1:CurrentTimingCodeMessageEvent) : void
       {
          if(param1.getParser().schedulingStr == var_3488 && _landingView)
          {

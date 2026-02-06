@@ -21,7 +21,7 @@ package com.sulake.habbo.catalog.club
    import flash.geom.Point;
    import flash.net.URLRequest;
    import flash.utils.Timer;
-   import package_10.class_2375;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2375;
    
    public class ClubExtendConfirmationDialog
    {

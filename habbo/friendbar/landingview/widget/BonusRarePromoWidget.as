@@ -14,8 +14,8 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.habbo.session.product.class_1949;
    import com.sulake.habbo.session.product.class_59;
    import flash.display.BitmapData;
-   import package_10.class_3622;
-   import package_13.class_3063;
+   import com.sulake.habbo.communication.messages.incoming.catalog.BonusRareInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetBonusRareInfoMessageComposer;
    
    public class BonusRarePromoWidget implements ILandingViewWidget, class_59, ISettingsAwareWidget, class_1829
    {
@@ -43,7 +43,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          if(!disposed)
          {
             _landingView.roomEngine.events.removeEventListener("REE_ENGINE_INITIALIZED",onRoomEngineInitialized);
-            _landingView.communicationManager.removeHabboConnectionMessageEvent(new class_3622(onBonusRareInfoMessage));
+            _landingView.communicationManager.removeHabboConnectionMessageEvent(new BonusRareInfoMessageEvent(onBonusRareInfoMessage));
             _landingView = null;
             _container = null;
          }
@@ -59,14 +59,14 @@ package com.sulake.habbo.friendbar.landingview.widget
          _container = class_1812(_landingView.getXmlWindow("bonus_rare_promo"));
          _container.findChildByName("buy_button").procedure = onOpenCreditsPageButton;
          _container.visible = false;
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_3622(onBonusRareInfoMessage));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new BonusRareInfoMessageEvent(onBonusRareInfoMessage));
          _landingView.roomEngine.events.addEventListener("REE_ENGINE_INITIALIZED",onRoomEngineInitialized);
          requestBonusRareInfo();
       }
       
       private function requestBonusRareInfo() : void
       {
-         _landingView.communicationManager.connection.send(new class_3063());
+         _landingView.communicationManager.connection.send(new GetBonusRareInfoMessageComposer());
       }
       
       public function refresh() : void
@@ -115,7 +115,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          }
       }
       
-      private function onBonusRareInfoMessage(param1:class_3622) : void
+      private function onBonusRareInfoMessage(param1:BonusRareInfoMessageEvent) : void
       {
          var_576 = param1.getParser().productType;
          var_3320 = param1.getParser().productClassId;

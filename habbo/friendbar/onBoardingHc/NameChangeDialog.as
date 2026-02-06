@@ -18,12 +18,12 @@ package com.sulake.habbo.friendbar.onBoardingHc
    import onBoardingHcUi.LoaderUI;
    import onBoardingHcUi.NineSplitSprite;
    import onBoardingHcUi.WaitIndicator;
-   import package_128.class_2461;
-   import package_128.class_2679;
-   import package_22.class_1789;
-   import package_22.class_2414;
-   import package_24.class_1886;
-   import package_24.class_3130;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.CheckUserNameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.ChangeUserNameMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.avatar.ChangeUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.avatar.CheckUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.avatar.ChangeUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.CheckUserNameResultMessageEvent;
    
    public class NameChangeDialog implements class_13
    {
@@ -85,19 +85,19 @@ package com.sulake.habbo.friendbar.onBoardingHc
          _container = param2;
          _dialogWidth = param3;
          init();
-         var_4097 = param1.communicationManager.addHabboConnectionMessageEvent(new class_1886(onChangeUserNameResult));
-         var_4364 = param1.communicationManager.addHabboConnectionMessageEvent(new class_3130(onCheckUserNameResult));
+         var_4097 = param1.communicationManager.addHabboConnectionMessageEvent(new ChangeUserNameResultMessageEvent(onChangeUserNameResult));
+         var_4364 = param1.communicationManager.addHabboConnectionMessageEvent(new CheckUserNameResultMessageEvent(onCheckUserNameResult));
          var_804 = new Timer(500,1);
          var_804.addEventListener("timer",onIdleTimer);
       }
       
-      private function onChangeUserNameResult(param1:class_1886) : void
+      private function onChangeUserNameResult(param1:ChangeUserNameResultMessageEvent) : void
       {
          if(param1 == null)
          {
             return;
          }
-         var _loc2_:class_1789 = param1.getParser();
+         var _loc2_:ChangeUserNameResultMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -105,13 +105,13 @@ package com.sulake.habbo.friendbar.onBoardingHc
          claimNameResponse(_loc2_.resultCode,_loc2_.name,_loc2_.nameSuggestions);
       }
       
-      private function onCheckUserNameResult(param1:class_3130) : void
+      private function onCheckUserNameResult(param1:CheckUserNameResultMessageEvent) : void
       {
          if(param1 == null)
          {
             return;
          }
-         var _loc2_:class_2414 = param1.getParser();
+         var _loc2_:CheckUserNameResultMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -267,22 +267,22 @@ package com.sulake.habbo.friendbar.onBoardingHc
          nameIsCorrect = false;
          switch(param1)
          {
-            case class_1886.var_1851:
+            case ChangeUserNameResultMessageEvent.var_1851:
                nameIsCorrect = true;
                _context.nameChangeCompleted();
                _context.editorFinished();
                break;
-            case class_1886.var_2917:
+            case ChangeUserNameResultMessageEvent.var_2917:
                showErrorMessage(_context.getLocalization("rename.error.too_long","OOPS! YOUR NAME\'S TOO LONG TO REMEMBER"));
                break;
-            case class_1886.var_2697:
+            case ChangeUserNameResultMessageEvent.var_2697:
                showErrorMessage(_context.getLocalization("rename.error.too_short","OOPS! YOUR NAME\'S TOO SHORT TO PRONOUNCE."));
                break;
-            case class_1886.var_3157:
+            case ChangeUserNameResultMessageEvent.var_3157:
                showErrorMessage(_context.getLocalization("rename.error.words","OOPS! THINK HARDER - THAT\'S NOT A VERY NICE NAME."));
                break;
-            case class_1886.var_3330:
-            case class_1886.var_2518:
+            case ChangeUserNameResultMessageEvent.var_3330:
+            case ChangeUserNameResultMessageEvent.var_2518:
                showErrorMessage(_context.getLocalization("rename.error.taken","OOPS! SOMEONE\'S ALREADY USING THAT NAME."));
          }
       }
@@ -297,7 +297,7 @@ package com.sulake.habbo.friendbar.onBoardingHc
          {
             _context.nameChangeCompleted();
          }
-         _context.communicationManager.connection.send(new class_2679(param1));
+         _context.communicationManager.connection.send(new ChangeUserNameMessageComposer(param1));
          _context.nameChangeCompleted();
       }
       
@@ -314,20 +314,20 @@ package com.sulake.habbo.friendbar.onBoardingHc
          nameIsCorrect = false;
          switch(param1)
          {
-            case class_1886.var_1851:
+            case ChangeUserNameResultMessageEvent.var_1851:
                nameIsCorrect = true;
                break;
-            case class_1886.var_2917:
+            case ChangeUserNameResultMessageEvent.var_2917:
                showErrorMessage(_context.getLocalization("rename.error.too_long","OOPS! YOUR NAME\'S TOO LONG TO REMEMBER"));
                break;
-            case class_1886.var_2697:
+            case ChangeUserNameResultMessageEvent.var_2697:
                showErrorMessage(_context.getLocalization("rename.error.too_short","OOPS! YOUR NAME\'S TOO SHORT TO PRONOUNCE."));
                break;
-            case class_1886.var_3157:
+            case ChangeUserNameResultMessageEvent.var_3157:
                showErrorMessage(_context.getLocalization("rename.error.words","OOPS! THINK HARDER - THAT\'S NOT A VERY NICE NAME."));
                break;
-            case class_1886.var_3330:
-            case class_1886.var_2518:
+            case ChangeUserNameResultMessageEvent.var_3330:
+            case ChangeUserNameResultMessageEvent.var_2518:
                showErrorMessage(_context.getLocalization("rename.error.taken","OOPS! SOMEONE\'S ALREADY USING THAT NAME."));
          }
          if(var_279 != null)
@@ -347,7 +347,7 @@ package com.sulake.habbo.friendbar.onBoardingHc
          {
             return;
          }
-         _context.communicationManager.connection.send(new class_2461(param1));
+         _context.communicationManager.connection.send(new CheckUserNameMessageComposer(param1));
          if(var_259 != null)
          {
             var_259.visible = true;

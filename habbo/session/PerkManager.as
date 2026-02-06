@@ -4,8 +4,8 @@ package com.sulake.habbo.session
    import com.sulake.core.runtime.class_13;
    import com.sulake.habbo.session.events.PerksUpdatedEvent;
    import flash.utils.Dictionary;
-   import package_173.class_2995;
-   import package_64.class_2121;
+   import com.sulake.habbo.communication.messages.parser.perk.class_2995;
+   import com.sulake.habbo.communication.messages.incoming.perk.PerkAllowancesMessageEvent;
    
    public class PerkManager implements class_13
    {
@@ -24,7 +24,7 @@ package com.sulake.habbo.session
          _sessionDataManager = param1;
          if(_sessionDataManager.communication)
          {
-            _perkAllowancesMessageEvent = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_2121(onPerkAllowances));
+            _perkAllowancesMessageEvent = _sessionDataManager.communication.addHabboConnectionMessageEvent(new PerkAllowancesMessageEvent(onPerkAllowances));
          }
       }
       
@@ -71,7 +71,7 @@ package com.sulake.habbo.session
          return _loc2_ != null ? _loc2_.errorMessage : "";
       }
       
-      private function onPerkAllowances(param1:class_2121) : void
+      private function onPerkAllowances(param1:PerkAllowancesMessageEvent) : void
       {
          for each(var _loc2_ in param1.getParser().getPerks())
          {

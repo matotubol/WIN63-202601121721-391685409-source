@@ -8,9 +8,9 @@ package com.sulake.habbo.friendlist
    import com.sulake.core.window.events.*;
    import com.sulake.habbo.friendlist.domain.AvatarSearchResults;
    import com.sulake.habbo.utils.class_2323;
-   import package_14.class_3180;
-   import package_28.class_3293;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_3180;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.HabboSearchMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class SearchView implements ITabView, ISearchView
    {
@@ -218,7 +218,7 @@ package com.sulake.habbo.friendlist
          else if(param1.type == "WME_CLICK")
          {
             _friendList.trackGoogle("extendedProfile","friendList_friendsSearch");
-            _friendList.send(new class_1879(param2.id));
+            _friendList.send(new GetExtendedProfileMessageComposer(param2.id));
          }
       }
       
@@ -326,7 +326,7 @@ package com.sulake.habbo.friendlist
             class_21.log("No text...");
             return;
          }
-         _friendList.send(new class_3293(_loc1_));
+         _friendList.send(new HabboSearchMessageComposer(_loc1_));
       }
    }
 }

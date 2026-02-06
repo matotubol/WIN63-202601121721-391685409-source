@@ -7,20 +7,20 @@ package com.sulake.habbo.session.handler
    import com.sulake.habbo.session.IRoomSession;
    import com.sulake.habbo.session.events.RoomSessionDoorbellEvent;
    import com.sulake.habbo.session.events.RoomSessionQueueEvent;
-   import package_17.class_3447;
-   import package_35.class_1854;
-   import package_35.class_2305;
-   import package_35.class_2386;
-   import package_35.class_3242;
-   import package_35.class_3365;
-   import package_35.class_3632;
-   import package_42.class_3544;
-   import package_54.class_2039;
-   import package_54.class_2169;
-   import package_54.class_2634;
-   import package_54.class_2917;
-   import package_54.class_3428;
-   import package_54.class_3653;
+   import com.sulake.habbo.communication.messages.parser.navigator.FlatAccessDeniedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.session.RoomReadyMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.session.class_2305;
+   import com.sulake.habbo.communication.messages.parser.room.session.OpenConnectionMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.session.YouAreSpectatorMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.session.FlatAccessibleMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.session.RoomQueueStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.navigator.FlatAccessDeniedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.CloseConnectionMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.RoomReadyMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.FlatAccessibleMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.YouAreSpectatorMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.RoomQueueStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.OpenConnectionMessageEvent;
    
    public class RoomSessionHandler extends BaseHandler
    {
@@ -38,18 +38,18 @@ package com.sulake.habbo.session.handler
          {
             return;
          }
-         param1.addMessageEvent(new class_3653(onRoomConnected));
-         param1.addMessageEvent(new class_2634(onFlatAccessible));
-         param1.addMessageEvent(new class_2169(onRoomReady));
-         param1.addMessageEvent(new class_2039(onRoomDisconnected));
-         param1.addMessageEvent(new class_3544(onFlatAccessDenied));
-         param1.addMessageEvent(new class_3428(onRoomQueueStatus));
-         param1.addMessageEvent(new class_2917(onYouAreSpectator));
+         param1.addMessageEvent(new OpenConnectionMessageEvent(onRoomConnected));
+         param1.addMessageEvent(new FlatAccessibleMessageEvent(onFlatAccessible));
+         param1.addMessageEvent(new RoomReadyMessageEvent(onRoomReady));
+         param1.addMessageEvent(new CloseConnectionMessageEvent(onRoomDisconnected));
+         param1.addMessageEvent(new FlatAccessDeniedMessageEvent(onFlatAccessDenied));
+         param1.addMessageEvent(new RoomQueueStatusMessageEvent(onRoomQueueStatus));
+         param1.addMessageEvent(new YouAreSpectatorMessageEvent(onYouAreSpectator));
       }
       
-      private function onRoomConnected(param1:class_3653) : void
+      private function onRoomConnected(param1:OpenConnectionMessageEvent) : void
       {
-         var _loc2_:class_2386 = param1.getParser();
+         var _loc2_:OpenConnectionMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -60,10 +60,10 @@ package com.sulake.habbo.session.handler
          }
       }
       
-      private function onFlatAccessible(param1:class_2634) : void
+      private function onFlatAccessible(param1:FlatAccessibleMessageEvent) : void
       {
          var _loc3_:IRoomSession = null;
-         var _loc2_:class_3365 = param1.getParser();
+         var _loc2_:FlatAccessibleMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -82,9 +82,9 @@ package com.sulake.habbo.session.handler
          }
       }
       
-      private function onRoomReady(param1:class_2169) : void
+      private function onRoomReady(param1:RoomReadyMessageEvent) : void
       {
-         var _loc2_:class_1854 = param1.getParser();
+         var _loc2_:RoomReadyMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -98,10 +98,10 @@ package com.sulake.habbo.session.handler
          }
       }
       
-      private function onFlatAccessDenied(param1:class_3544) : void
+      private function onFlatAccessDenied(param1:FlatAccessDeniedMessageEvent) : void
       {
          var _loc3_:IRoomSession = null;
-         var _loc2_:class_3447 = param1.getParser();
+         var _loc2_:FlatAccessDeniedMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
@@ -134,7 +134,7 @@ package com.sulake.habbo.session.handler
          }
       }
       
-      private function onRoomQueueStatus(param1:class_3428) : void
+      private function onRoomQueueStatus(param1:RoomQueueStatusMessageEvent) : void
       {
          var _loc5_:class_2305 = null;
          var _loc6_:RoomSessionQueueEvent = null;
@@ -143,7 +143,7 @@ package com.sulake.habbo.session.handler
          {
             return;
          }
-         var _loc3_:class_3632 = param1.getParser();
+         var _loc3_:RoomQueueStatusMessageEventParser = param1.getParser();
          if(_loc3_ == null)
          {
             return;
@@ -168,13 +168,13 @@ package com.sulake.habbo.session.handler
          }
       }
       
-      private function onYouAreSpectator(param1:class_2917) : void
+      private function onYouAreSpectator(param1:YouAreSpectatorMessageEvent) : void
       {
          if(listener == null)
          {
             return;
          }
-         var _loc2_:class_3242 = param1.getParser();
+         var _loc2_:YouAreSpectatorMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;

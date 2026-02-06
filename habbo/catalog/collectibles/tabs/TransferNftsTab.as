@@ -12,13 +12,13 @@ package com.sulake.habbo.catalog.collectibles.tabs
    import com.sulake.core.window.utils.class_2001;
    import com.sulake.habbo.catalog.collectibles.CollectiblesController;
    import com.sulake.habbo.catalog.collectibles.CollectiblesView;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3745;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3816;
+   import com.sulake.habbo.communication.messages.parser.collectibles.NftTransferFeeMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.collectibles.NftTransferAssetsResultMessageEventParser;
    import com.sulake.habbo.localization.class_27;
-   import package_36.class_2661;
-   import package_36.class_3343;
-   import package_70.class_2425;
-   import package_70.class_2926;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftTransferFeeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftTransferAssetsResultMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetNftTransferFeeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.NftTransferAssetsMessageComposer;
    
    public class TransferNftsTab implements class_31
    {
@@ -82,18 +82,18 @@ package com.sulake.habbo.catalog.collectibles.tabs
             return;
          }
          _messageEvents = new Vector.<IMessageEvent>(0);
-         _messageEvents.push(new class_2661(onNftTransferFeeMessage));
-         _messageEvents.push(new class_3343(onNftTransferResultMessage));
+         _messageEvents.push(new NftTransferFeeMessageEvent(onNftTransferFeeMessage));
+         _messageEvents.push(new NftTransferAssetsResultMessageEvent(onNftTransferResultMessage));
          for each(var _loc1_ in _messageEvents)
          {
             var_196.addMessageEvent(_loc1_);
          }
       }
       
-      private function onNftTransferFeeMessage(param1:class_2661) : void
+      private function onNftTransferFeeMessage(param1:NftTransferFeeMessageEvent) : void
       {
          var_3156 = false;
-         var _loc2_:class_3745 = param1.getParser();
+         var _loc2_:NftTransferFeeMessageEventParser = param1.getParser();
          var_2211 = _loc2_.transferFee;
          silverFeeText.text = String(var_2211);
          silverFeeText.visible = var_2211 > 0;
@@ -142,14 +142,14 @@ package com.sulake.habbo.catalog.collectibles.tabs
          if(param2.type == "WE_OK")
          {
             _isTransferring = true;
-            var_196.send(new class_2926(selectedWallet));
+            var_196.send(new NftTransferAssetsMessageComposer(selectedWallet));
          }
          updateTransferButtonState();
       }
       
-      private function onNftTransferResultMessage(param1:class_3343) : void
+      private function onNftTransferResultMessage(param1:NftTransferAssetsResultMessageEvent) : void
       {
-         var _loc2_:class_3816 = param1.getParser();
+         var _loc2_:NftTransferAssetsResultMessageEventParser = param1.getParser();
          var_196.notifications.addItem(_loc2_.success ? localization.getLocalization("collectibles.transfer.success") : localization.getLocalizationWithParams("collectibles.transfer.error","","id",_loc2_.resultCode),"info","icon_curator_stamp_large_png");
          _isTransferring = false;
          updateTransferButtonState();
@@ -197,7 +197,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
       private function initializeData() : void
       {
          var_3156 = true;
-         var_196.send(new class_2425());
+         var_196.send(new GetNftTransferFeeMessageComposer());
          var _loc1_:Array = var_965.walletAddresses;
          if(_loc1_)
          {

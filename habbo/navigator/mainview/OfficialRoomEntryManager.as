@@ -10,7 +10,7 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.habbo.navigator.Util;
    import com.sulake.habbo.navigator.class_42;
    import flash.display.BitmapData;
-   import package_42.class_2460;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_2460;
    
    public class OfficialRoomEntryManager implements class_13
    {

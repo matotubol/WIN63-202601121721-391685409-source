@@ -3,19 +3,19 @@ package com.sulake.habbo.avatar
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.habbo.avatar.view.AvatarEditorNameChangeView;
    import com.sulake.habbo.communication.class_57;
-   import package_124.class_2452;
-   import package_124.class_2467;
-   import package_124.class_2592;
-   import package_124.class_3660;
-   import package_128.class_2461;
-   import package_128.class_2873;
-   import package_128.class_3233;
-   import package_22.class_2414;
-   import package_24.class_1886;
-   import package_24.class_2598;
-   import package_24.class_3130;
-   import package_4.class_1757;
-   import package_85.class_3391;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectSelectedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectAddedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectExpiredMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectActivatedMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.CheckUserNameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.SaveWardrobeOutfitMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.GetWardrobeMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.avatar.CheckUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.avatar.ChangeUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.WardrobeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.CheckUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.action.AvatarEffectMessageEvent;
    
    public class AvatarEditorMessageHandler
    {
@@ -29,14 +29,14 @@ package com.sulake.habbo.avatar
          super();
          var_55 = param1;
          _communication = param2;
-         _communication.addHabboConnectionMessageEvent(new class_3660(onAvatarEffectActivated));
-         _communication.addHabboConnectionMessageEvent(new class_2452(onAvatarEffectSelected));
-         _communication.addHabboConnectionMessageEvent(new class_2598(onWardrobe));
-         _communication.addHabboConnectionMessageEvent(new class_2467(onAvatarEffectAdded));
-         _communication.addHabboConnectionMessageEvent(new class_3391(onRoomAvatarEffects));
-         _communication.addHabboConnectionMessageEvent(new class_1757(onUserRights));
-         _communication.addHabboConnectionMessageEvent(new class_2592(onAvatarEffectExpired));
-         _communication.addHabboConnectionMessageEvent(new class_3130(onCheckUserNameResult));
+         _communication.addHabboConnectionMessageEvent(new AvatarEffectActivatedMessageEvent(onAvatarEffectActivated));
+         _communication.addHabboConnectionMessageEvent(new AvatarEffectSelectedMessageEvent(onAvatarEffectSelected));
+         _communication.addHabboConnectionMessageEvent(new WardrobeMessageEvent(onWardrobe));
+         _communication.addHabboConnectionMessageEvent(new AvatarEffectAddedMessageEvent(onAvatarEffectAdded));
+         _communication.addHabboConnectionMessageEvent(new AvatarEffectMessageEvent(onRoomAvatarEffects));
+         _communication.addHabboConnectionMessageEvent(new UserRightsMessageEvent(onUserRights));
+         _communication.addHabboConnectionMessageEvent(new AvatarEffectExpiredMessageEvent(onAvatarEffectExpired));
+         _communication.addHabboConnectionMessageEvent(new CheckUserNameResultMessageEvent(onCheckUserNameResult));
       }
       
       public function dispose() : void
@@ -51,7 +51,7 @@ package com.sulake.habbo.avatar
          {
             return;
          }
-         var _loc3_:class_2873 = new class_2873(param1,param2.figure,param2.gender);
+         var _loc3_:SaveWardrobeOutfitMessageComposer = new SaveWardrobeOutfitMessageComposer(param1,param2.figure,param2.gender);
          _communication.connection.send(_loc3_);
          _loc3_.dispose();
          _loc3_ = null;
@@ -63,10 +63,10 @@ package com.sulake.habbo.avatar
          {
             return;
          }
-         _communication.connection.send(new class_2461(param1));
+         _communication.connection.send(new CheckUserNameMessageComposer(param1));
       }
       
-      private function onCheckUserNameResult(param1:class_3130) : void
+      private function onCheckUserNameResult(param1:CheckUserNameResultMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {
@@ -82,8 +82,8 @@ package com.sulake.habbo.avatar
          {
             return;
          }
-         var _loc4_:class_2414 = param1.getParser();
-         if(_loc4_.resultCode == class_1886.var_1851)
+         var _loc4_:CheckUserNameResultMessageEventParser = param1.getParser();
+         if(_loc4_.resultCode == ChangeUserNameResultMessageEvent.var_1851)
          {
             _loc2_.checkedName = _loc4_.name;
          }
@@ -99,13 +99,13 @@ package com.sulake.habbo.avatar
          {
             return;
          }
-         var _loc1_:class_3233 = new class_3233();
+         var _loc1_:GetWardrobeMessageComposer = new GetWardrobeMessageComposer();
          _communication.connection.send(_loc1_);
          _loc1_.dispose();
          _loc1_ = null;
       }
       
-      private function onWardrobe(param1:class_2598) : void
+      private function onWardrobe(param1:WardrobeMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {
@@ -118,7 +118,7 @@ package com.sulake.habbo.avatar
          }
       }
       
-      private function onUserRights(param1:class_1757) : void
+      private function onUserRights(param1:UserRightsMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {
@@ -145,7 +145,7 @@ package com.sulake.habbo.avatar
          }
       }
       
-      private function onAvatarEffectActivated(param1:class_3660) : void
+      private function onAvatarEffectActivated(param1:AvatarEffectActivatedMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {
@@ -160,7 +160,7 @@ package com.sulake.habbo.avatar
          }
       }
       
-      private function onAvatarEffectExpired(param1:class_2592) : void
+      private function onAvatarEffectExpired(param1:AvatarEffectExpiredMessageEvent) : void
       {
          var _loc3_:int = 0;
          if(param1 == null || !var_55)
@@ -180,7 +180,7 @@ package com.sulake.habbo.avatar
          }
       }
       
-      private function onRoomAvatarEffects(param1:class_3391) : void
+      private function onRoomAvatarEffects(param1:AvatarEffectMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {
@@ -194,7 +194,7 @@ package com.sulake.habbo.avatar
          }
       }
       
-      private function onAvatarEffectSelected(param1:class_2592) : void
+      private function onAvatarEffectSelected(param1:AvatarEffectExpiredMessageEvent) : void
       {
          if(param1 == null || !var_55)
          {

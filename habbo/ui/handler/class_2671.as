@@ -9,15 +9,15 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import com.sulake.room.object.IRoomObject;
    import flash.events.Event;
-   import package_100.class_2779;
-   import package_100.class_3392;
-   import package_100.class_3629;
-   import package_91.class_3808;
-   import package_91.class_3868;
-   import package_91.class_4045;
-   import package_94.class_2344;
-   import package_94.class_2756;
-   import package_94.class_2957;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.YoutubeDisplayVideoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.YoutubeDisplayPlaylistsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.YoutubeControlVideoMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.YoutubeDisplayVideoMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.YoutubeDisplayPlaylistsMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.YoutubeControlVideoMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetYoutubeDisplayPlaylistMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.ControlYoutubeDisplayPlaybackMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.GetYoutubeDisplayStatusMessageComposer;
    
    public class class_2671 implements IRoomWidgetHandler
    {
@@ -49,9 +49,9 @@ package com.sulake.habbo.ui.handler
       public function set container(param1:IRoomWidgetHandlerContainer) : void
       {
          _container = param1;
-         addMessageEvent(new class_2779(onVideo));
-         addMessageEvent(new class_3392(onPlaylists));
-         addMessageEvent(new class_3629(onControlVideo));
+         addMessageEvent(new YoutubeDisplayVideoMessageEvent(onVideo));
+         addMessageEvent(new YoutubeDisplayPlaylistsMessageEvent(onPlaylists));
+         addMessageEvent(new YoutubeControlVideoMessageEvent(onControlVideo));
       }
       
       private function addMessageEvent(param1:IMessageEvent) : void
@@ -73,21 +73,21 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onVideo(param1:class_2779) : void
+      private function onVideo(param1:YoutubeDisplayVideoMessageEvent) : void
       {
-         var _loc2_:class_3808 = param1.getParser();
+         var _loc2_:YoutubeDisplayVideoMessageEventParser = param1.getParser();
          var_16.showVideo(_loc2_.furniId,_loc2_.videoId,_loc2_.startAtSeconds,_loc2_.endAtSeconds,_loc2_.state);
       }
       
-      private function onControlVideo(param1:class_3629) : void
+      private function onControlVideo(param1:YoutubeControlVideoMessageEvent) : void
       {
-         var _loc2_:class_4045 = param1.getParser();
+         var _loc2_:YoutubeControlVideoMessageEventParser = param1.getParser();
          var_16.controlVideo(_loc2_.furniId,_loc2_.commandId);
       }
       
-      private function onPlaylists(param1:class_3392) : void
+      private function onPlaylists(param1:YoutubeDisplayPlaylistsMessageEvent) : void
       {
-         var _loc2_:class_3868 = param1.getParser();
+         var _loc2_:YoutubeDisplayPlaylistsMessageEventParser = param1.getParser();
          var_16.populatePlaylists(_loc2_.furniId,_loc2_.playlists,_loc2_.selectedPlaylistId);
       }
       
@@ -130,7 +130,7 @@ package com.sulake.habbo.ui.handler
                {
                   var _loc3_:Boolean = _container.isOwnerOfFurniture(_loc2_) || _container.sessionDataManager.hasSecurity(4);
                   var_16.show(_loc2_,false);
-                  _container.connection.send(new class_2957(_loc2_.getId()));
+                  _container.connection.send(new GetYoutubeDisplayStatusMessageComposer(_loc2_.getId()));
                }
                break;
             case "RETWE_CLOSE_WIDGET":
@@ -159,27 +159,27 @@ package com.sulake.habbo.ui.handler
       
       public function selectPlaylist(param1:int, param2:String) : void
       {
-         _container.connection.send(new class_2344(param1,param2));
+         _container.connection.send(new SetYoutubeDisplayPlaylistMessageComposer(param1,param2));
       }
       
       public function switchToPreviousVideo(param1:int) : void
       {
-         _container.connection.send(new class_2756(param1,0));
+         _container.connection.send(new ControlYoutubeDisplayPlaybackMessageComposer(param1,0));
       }
       
       public function switchToNextVideo(param1:int) : void
       {
-         _container.connection.send(new class_2756(param1,1));
+         _container.connection.send(new ControlYoutubeDisplayPlaybackMessageComposer(param1,1));
       }
       
       public function pauseVideo(param1:int) : void
       {
-         _container.connection.send(new class_2756(param1,2));
+         _container.connection.send(new ControlYoutubeDisplayPlaybackMessageComposer(param1,2));
       }
       
       public function continueVideo(param1:int) : void
       {
-         _container.connection.send(new class_2756(param1,3));
+         _container.connection.send(new ControlYoutubeDisplayPlaybackMessageComposer(param1,3));
       }
    }
 }

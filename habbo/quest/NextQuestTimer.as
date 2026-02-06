@@ -5,7 +5,7 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.utils.FriendlyTime;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class NextQuestTimer implements class_13
    {

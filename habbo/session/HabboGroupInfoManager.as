@@ -3,9 +3,9 @@ package com.sulake.habbo.session
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.core.runtime.class_13;
    import com.sulake.core.utils.class_55;
-   import package_3.class_2981;
-   import package_54.class_2169;
-   import package_9.class_2925;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboGroupBadgesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.RoomReadyMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupBadgesMessageComposer;
    
    public class HabboGroupInfoManager implements class_13
    {
@@ -25,8 +25,8 @@ package com.sulake.habbo.session
          var_179 = new class_55();
          if(_sessionDataManager.communication)
          {
-            var_4410 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_2169(onRoomReady));
-            var_1600 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_2981(onHabboGroupBadges));
+            var_4410 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new RoomReadyMessageEvent(onRoomReady));
+            var_1600 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new HabboGroupBadgesMessageEvent(onHabboGroupBadges));
          }
       }
       
@@ -52,10 +52,10 @@ package com.sulake.habbo.session
       
       private function onRoomReady(param1:IMessageEvent) : void
       {
-         _sessionDataManager.send(new class_2925());
+         _sessionDataManager.send(new GetHabboGroupBadgesMessageComposer());
       }
       
-      private function onHabboGroupBadges(param1:class_2981) : void
+      private function onHabboGroupBadges(param1:HabboGroupBadgesMessageEvent) : void
       {
          var _loc3_:int = 0;
          var _loc4_:int = 0;

@@ -18,21 +18,21 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.habbo.window.widgets.class_2478;
    import com.sulake.habbo.window.widgets.class_3087;
    import flash.geom.Point;
-   import package_153.class_2911;
-   import package_187.class_3355;
-   import package_187.class_3732;
-   import package_187.class_3765;
-   import package_187.class_3878;
-   import package_187.class_3929;
-   import package_187.class_4056;
-   import package_3.class_1846;
-   import package_3.class_1999;
-   import package_3.class_2123;
-   import package_3.class_3082;
-   import package_53.class_2038;
-   import package_53.class_3520;
-   import package_9.class_2976;
-   import package_9.class_3563;
+   import com.sulake.habbo.communication.messages.incoming.talent.TalentTrackMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3355;
+   import com.sulake.habbo.communication.messages.parser.talent.TalentTrackMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3765;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3878;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3929;
+   import com.sulake.habbo.communication.messages.parser.talent.class_4056;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
+   import com.sulake.habbo.communication.messages.incoming.users.EmailStatusResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboGroupDetailsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.ChangeEmailResultEvent;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GuideAdvertisementReadMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.ChangeEmailComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetEmailStatusComposer;
    
    public class TalentTrackController implements class_13
    {
@@ -128,13 +128,13 @@ package com.sulake.habbo.friendbar.talent
       
       public function initialize() : void
       {
-         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new class_2911(onTalentTrack));
-         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new class_3082(onChangeEmailResult));
-         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new class_2123(onGroupDetails));
-         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new class_1999(onEmailStatus));
+         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new TalentTrackMessageEvent(onTalentTrack));
+         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new ChangeEmailResultEvent(onChangeEmailResult));
+         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new HabboGroupDetailsMessageEvent(onGroupDetails));
+         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new EmailStatusResultEvent(onEmailStatus));
       }
       
-      private function onEmailStatus(param1:class_1999) : void
+      private function onEmailStatus(param1:EmailStatusResultEvent) : void
       {
          var _loc2_:class_1812 = getEmailContainer();
          if(_loc2_ != null)
@@ -145,19 +145,19 @@ package com.sulake.habbo.friendbar.talent
          }
       }
       
-      private function onChangeEmailResult(param1:class_3082) : void
+      private function onChangeEmailResult(param1:ChangeEmailResultEvent) : void
       {
          setEmailErrorStatus(true,param1.getParser().result);
       }
       
-      private function onTalentTrack(param1:class_2911) : void
+      private function onTalentTrack(param1:TalentTrackMessageEvent) : void
       {
-         var _loc2_:class_3732 = param1.getParser();
+         var _loc2_:TalentTrackMessageEventParser = param1.getParser();
          _talentTrack = _loc2_.getTalentTrack();
          createWindow();
       }
       
-      private function onGroupDetails(param1:class_2123) : void
+      private function onGroupDetails(param1:HabboGroupDetailsMessageEvent) : void
       {
          var _loc2_:class_1846 = param1.data;
          if(_loc2_.groupId == var_2970)
@@ -606,7 +606,7 @@ package com.sulake.habbo.friendbar.talent
                break;
             case "citizenship_button":
                _habboTalent.tracking.trackTalentTrackOpen("citizenship","talentrack");
-               _habboTalent.send(new class_3520("citizenship"));
+               _habboTalent.send(new GetTalentTrackMessageComposer("citizenship"));
                break;
             case "ACH_SafetyQuizGraduate1":
                closeAndLog(param2.name);
@@ -684,7 +684,7 @@ package com.sulake.habbo.friendbar.talent
                getEmailContainer().visible = true;
                getEmailContainer().findChildByName("change_email_region").procedure = onChangeEmail;
                getEmailText().procedure = onEmailTxt;
-               _habboTalent.send(new class_3563());
+               _habboTalent.send(new GetEmailStatusComposer());
                setEmailErrorStatus(false);
             }
          }
@@ -807,7 +807,7 @@ package com.sulake.habbo.friendbar.talent
          {
             destroyWindow();
             destroyTaskProgressDialog();
-            _habboTalent.send(new class_2038());
+            _habboTalent.send(new GuideAdvertisementReadMessageComposer());
             _habboTalent.habboHelp.requestGuide();
             _habboTalent.tracking.trackEventLog("Help","","tour.new_user.accept");
             _habboTalent.tracking.trackGoogle("newbieTourWindow","click_acceptTour");
@@ -828,7 +828,7 @@ package com.sulake.habbo.friendbar.talent
          {
             destroyWindow();
             destroyTaskProgressDialog();
-            _habboTalent.send(new class_2038());
+            _habboTalent.send(new GuideAdvertisementReadMessageComposer());
             _habboTalent.tracking.trackEventLog("Help","","tour.new_user.cancel");
             _habboTalent.tracking.trackGoogle("newbieTourWindow","click_refuseTour");
          }
@@ -840,7 +840,7 @@ package com.sulake.habbo.friendbar.talent
          if(param1.type == "WME_CLICK")
          {
             _loc3_ = getEmailText().text;
-            _habboTalent.send(new class_2976(_loc3_));
+            _habboTalent.send(new ChangeEmailComposer(_loc3_));
          }
       }
       

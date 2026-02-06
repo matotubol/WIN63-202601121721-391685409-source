@@ -8,8 +8,8 @@ package com.sulake.habbo.toolbar.extensions
    import com.sulake.habbo.toolbar.IExtensionView;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_13.class_3407;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetHabboClubExtendOfferMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class CitizenshipVipDiscountPromoExtension
    {
@@ -73,8 +73,8 @@ package com.sulake.habbo.toolbar.extensions
       {
          if(_toolbar.inventory.clubLevel == 2)
          {
-            _toolbar.connection.send(new class_2196("DiscountPromo","citizenshipdiscount","client.club.extend.discount.clicked"));
-            _toolbar.connection.send(new class_3407());
+            _toolbar.connection.send(new EventLogMessageComposer("DiscountPromo","citizenshipdiscount","client.club.extend.discount.clicked"));
+            _toolbar.connection.send(new GetHabboClubExtendOfferMessageComposer());
          }
       }
       

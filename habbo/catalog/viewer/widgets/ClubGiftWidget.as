@@ -23,9 +23,9 @@ package com.sulake.habbo.catalog.viewer.widgets
    import flash.display.BitmapData;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_10.class_2104;
-   import package_10.class_2138;
-   import package_10.class_2368;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2104;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2138;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2368;
    
    public class ClubGiftWidget extends CatalogWidget implements class_2612
    {

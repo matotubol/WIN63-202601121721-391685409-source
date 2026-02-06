@@ -35,7 +35,7 @@ package com.sulake.habbo.inventory.trading
    import flash.events.TimerEvent;
    import flash.geom.Rectangle;
    import flash.utils.Timer;
-   import package_88.class_3098;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeOpenFailedEvent;
    
    public class TradingView implements IInventoryView, class_1829
    {
@@ -551,7 +551,7 @@ package com.sulake.habbo.inventory.trading
          }
       }
       
-      public function alertTradeOpenFailed(param1:class_3098) : void
+      public function alertTradeOpenFailed(param1:TradeOpenFailedEvent) : void
       {
          var _loc2_:String = "inventory.trading.openfail." + param1.getParser().reason;
          _windowManager.registerLocalizationParameter(_loc2_,"otherusername",param1.getParser().otherUserName);

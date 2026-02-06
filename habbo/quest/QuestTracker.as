@@ -6,14 +6,14 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.components.class_2052;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2778;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3170;
+   import com.sulake.habbo.communication.messages.outgoing.quest.OpenQuestTrackerMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.StartCampaignMessageComposer;
    import flash.events.TimerEvent;
    import flash.geom.Point;
    import flash.utils.Timer;
    import flash.utils.clearTimeout;
    import flash.utils.setTimeout;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class QuestTracker implements class_13
    {
@@ -414,7 +414,7 @@ package com.sulake.habbo.quest
                   if(var_4580 && !var_1427)
                   {
                      var_2460 = setTimeout(onNewQuestNotReceived,600);
-                     _questEngine.send(new class_2778());
+                     _questEngine.send(new OpenQuestTrackerMessageComposer());
                      break;
                   }
                   setWindowVisible(false);
@@ -471,7 +471,7 @@ package com.sulake.habbo.quest
          else
          {
             _questEngine.questController.questDetails.openForNextQuest = _questEngine.getBoolean("questing.showDetailsForNextQuest");
-            _questEngine.send(new class_3170(_questEngine.questController.getDefaultCampaign()));
+            _questEngine.send(new StartCampaignMessageComposer(_questEngine.questController.getDefaultCampaign()));
          }
       }
       

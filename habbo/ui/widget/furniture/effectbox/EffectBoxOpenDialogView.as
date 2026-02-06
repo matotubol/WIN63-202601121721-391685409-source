@@ -7,7 +7,7 @@ package com.sulake.habbo.ui.widget.furniture.effectbox
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.habbo.ui.widget.furniture.contextmenu.FurnitureContextMenuWidget;
    import com.sulake.habbo.window.class_38;
-   import package_55.class_2945;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
    
    public class EffectBoxOpenDialogView implements class_13
    {
@@ -100,7 +100,7 @@ package com.sulake.habbo.ui.widget.furniture.effectbox
                close();
                break;
             case "ok":
-               connection.send(new class_2945(var_2338));
+               connection.send(new UseFurnitureMessageComposer(var_2338));
                close();
          }
       }

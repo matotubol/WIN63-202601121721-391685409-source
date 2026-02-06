@@ -19,8 +19,8 @@ package com.sulake.habbo.game.snowwar.ui
    import com.sulake.habbo.game.snowwar.utils.WindowUtils;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_1.class_2003;
-   import package_115.Game2ExitGameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.GetGuestRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.arena.Game2ExitGameMessageComposer;
    
    public class GameLoadingViewController implements class_13, class_259
    {
@@ -115,7 +115,7 @@ package com.sulake.habbo.game.snowwar.ui
             var_49.send(new Game2ExitGameMessageComposer());
             if(var_49.roomBeforeGame > -1)
             {
-               var_49.send(new class_2003(var_49.roomBeforeGame,false,true));
+               var_49.send(new GetGuestRoomMessageComposer(var_49.roomBeforeGame,false,true));
             }
             var_49.disposeLoadingView();
          }

@@ -5,8 +5,8 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.components.ILabelWindow;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_122.class_3143;
-   import package_50.class_1996;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetRoomChatlogMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.room.engine.RoomEntryInfoMessageEventParser;
    
    public class StartPanelCtrl implements class_13
    {
@@ -59,7 +59,7 @@ package com.sulake.habbo.moderation
          class_1812(_frame.findChildByName("userinfo_but")).findChildByName("offence_name").caption = "User info: " + param2;
       }
       
-      public function guestRoomEntered(param1:class_1996) : void
+      public function guestRoomEntered(param1:RoomEntryInfoMessageEventParser) : void
       {
          if(_frame == null || param1 == null)
          {
@@ -139,7 +139,7 @@ package com.sulake.habbo.moderation
       
       private function onChatlogButton(param1:class_1758) : void
       {
-         _main.windowTracker.show(new ChatlogCtrl(new class_3143(_isGuestRoom ? 0 : 1,var_1951),_main,4,var_1951),_frame,false,false,true);
+         _main.windowTracker.show(new ChatlogCtrl(new GetRoomChatlogMessageComposer(_isGuestRoom ? 0 : 1,var_1951),_main,4,var_1951),_frame,false,false,true);
       }
       
       private function onUserinfoButton(param1:class_1758) : void

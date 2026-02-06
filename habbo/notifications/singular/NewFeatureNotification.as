@@ -17,8 +17,8 @@ package com.sulake.habbo.notifications.singular
    import com.sulake.habbo.toolbar.IHabboToolbar;
    import com.sulake.habbo.window.class_38;
    import com.sulake.room.utils.ColorConverter;
-   import package_140.class_2880;
-   import package_81.class_2385;
+   import com.sulake.habbo.communication.messages.incoming.competition.SecondsUntilMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.competition.GetSecondsUntilMessageComposer;
    
    public class NewFeatureNotification implements class_13
    {
@@ -49,7 +49,7 @@ package com.sulake.habbo.notifications.singular
       
       private var var_704:Boolean;
       
-      private var var_948:class_2880;
+      private var var_948:SecondsUntilMessageEvent;
       
       private var _notifications:HabboNotifications;
       
@@ -74,9 +74,9 @@ package com.sulake.habbo.notifications.singular
          var _loc7_:String = getString("notifications.new_feature.expiry." + _key);
          if(_loc7_ != null && _loc7_.length > 0)
          {
-            var_948 = new class_2880(onTime);
+            var_948 = new SecondsUntilMessageEvent(onTime);
             param5.communication.addHabboConnectionMessageEvent(var_948);
-            param5.communication.connection.send(new class_2385(_loc7_));
+            param5.communication.connection.send(new GetSecondsUntilMessageComposer(_loc7_));
          }
          else
          {
@@ -85,7 +85,7 @@ package com.sulake.habbo.notifications.singular
          }
       }
       
-      private function onTime(param1:class_2880) : void
+      private function onTime(param1:SecondsUntilMessageEvent) : void
       {
          if(_disposed || var_704)
          {

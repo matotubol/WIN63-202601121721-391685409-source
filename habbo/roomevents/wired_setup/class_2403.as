@@ -6,7 +6,7 @@ package com.sulake.habbo.roomevents.wired_setup
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.PresetManager;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.WiredUIBuilder;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.styles.WiredStyle;
-   import package_3.class_2022;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipsMessageEvent;
    
    public interface class_2403
    {
@@ -73,7 +73,7 @@ package com.sulake.habbo.roomevents.wired_setup
       
       function get usingCustomAdvancedSettings() : Boolean;
       
-      function onGuildMemberships(param1:class_2022) : void;
+      function onGuildMemberships(param1:GuildMembershipsMessageEvent) : void;
       
       function get requireConfirmation() : Object;
       

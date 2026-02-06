@@ -7,7 +7,7 @@ package com.sulake.habbo.ui.widget.avatarinfo.botskills
    import com.sulake.habbo.ui.widget.avatarinfo.AvatarInfoWidget;
    import com.sulake.habbo.utils.HabboWebTools;
    import flash.geom.Point;
-   import package_160.class_3372;
+   import com.sulake.habbo.communication.messages.outgoing.room.bots.CommandBotComposer;
    
    public class BotChatterMarkovConfiguration extends BotSkillConfigurationViewBase
    {
@@ -140,7 +140,7 @@ package com.sulake.habbo.ui.widget.avatarinfo.botskills
             switch(param2.name)
             {
                case "save_button":
-                  var_16.handler.container.connection.send(new class_3372(var_1504,2,botCommandString));
+                  var_16.handler.container.connection.send(new CommandBotComposer(var_1504,2,botCommandString));
                   close();
                   break;
                case "cancel_button":

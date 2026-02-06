@@ -12,9 +12,9 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
    import com.sulake.core.window.components.class_2872;
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2823;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3188;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.class_3781;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetVariablesForObjectMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredSetObjectVariableValueMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.WiredMenuErrorEventParser;
    import com.sulake.habbo.roomevents.HabboUserDefinedRoomEvents;
    import com.sulake.habbo.roomevents.Util;
    import com.sulake.habbo.roomevents.wired_menu.WiredMenuController;
@@ -32,9 +32,9 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
    import flash.utils.getTimer;
    import package_188.VariableList;
    import package_189.WiredVariable;
-   import package_97.WiredObjectInspectionData;
-   import package_97.class_2755;
-   import package_97.class_3336;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredObjectInspectionData;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredVariablesForObjectEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredMenuErrorEvent;
    
    public class WiredMenuInspectionTab extends WiredMenuDefaultTab implements class_31
    {
@@ -90,8 +90,8 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
          createCreateVariableBubble();
          updateTableUI();
          updatePreviewUI();
-         addMessageEvent(new class_2755(onWiredVariablesForObject));
-         addMessageEvent(new class_3336(onWiredMenuError));
+         addMessageEvent(new WiredVariablesForObjectEvent(onWiredVariablesForObject));
+         addMessageEvent(new WiredMenuErrorEvent(onWiredMenuError));
          highlightWiredButton.addEventListener("WME_CLICK",onHighlightWiredsClicked);
          deleteVariableButton.addEventListener("WME_CLICK",onDeleteVariableClicked);
          addVariableButton.addEventListener("WME_CLICK",onAddVariableClicked);
@@ -190,7 +190,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
          var _loc6_:int = Util.getIntFromString(param3,-2147483648,true);
          if(_loc6_ != -2147483648)
          {
-            controller.send(new class_3188(_loc4_.variableTarget,getObjectIdForType(),_loc4_.variableId,_loc6_,0));
+            controller.send(new WiredSetObjectVariableValueMessageComposer(_loc4_.variableTarget,getObjectIdForType(),_loc4_.variableId,_loc6_,0));
          }
       }
       
@@ -246,7 +246,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
             return;
          }
          var_2492 = var_468.getIndexOfObject(_loc3_);
-         controller.send(new class_3188(_loc2_.variableTarget,getObjectIdForType(),_loc2_.variableId,0,2));
+         controller.send(new WiredSetObjectVariableValueMessageComposer(_loc2_.variableTarget,getObjectIdForType(),_loc2_.variableId,0,2));
       }
       
       private function onCreateVariableClicked(param1:WindowMouseEvent) : void
@@ -262,12 +262,12 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
          {
             _loc3_ = int(valueInput.text);
          }
-         controller.send(new class_3188(_loc2_.variableTarget,getObjectIdForType(),_loc2_.variableId,_loc3_,1));
+         controller.send(new WiredSetObjectVariableValueMessageComposer(_loc2_.variableTarget,getObjectIdForType(),_loc2_.variableId,_loc3_,1));
          createVariableBubble.visible = false;
          valueInput.text = "0";
       }
       
-      private function onWiredVariablesForObject(param1:class_2755) : void
+      private function onWiredVariablesForObject(param1:WiredVariablesForObjectEvent) : void
       {
          if(var_61 != STATE_FETCHING_HOLDING_VARIABLES && var_61 != STATE_DISPLAYING)
          {
@@ -288,10 +288,10 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
          }
       }
       
-      private function onWiredMenuError(param1:class_3336) : void
+      private function onWiredMenuError(param1:WiredMenuErrorEvent) : void
       {
-         var _loc2_:class_3781 = param1.getParser();
-         if(_loc2_.errorCode == class_3781.var_5342)
+         var _loc2_:WiredMenuErrorEventParser = param1.getParser();
+         if(_loc2_.errorCode == WiredMenuErrorEventParser.var_5342)
          {
             if(var_61 != STATE_DISPLAYING)
             {
@@ -514,7 +514,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_inspection
       private function requestVariablesForObject(param1:int, param2:int) : void
       {
          var_4210 = getTimer();
-         controller.send(new class_2823(param1,param2));
+         controller.send(new WiredGetVariablesForObjectMessageComposer(param1,param2));
       }
       
       public function inspectFurni(param1:int, param2:Boolean = false) : void

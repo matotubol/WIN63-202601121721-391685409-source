@@ -15,17 +15,17 @@ package com.sulake.habbo.groups
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.window.widgets.class_2478;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_3.class_1846;
-   import package_3.class_2228;
-   import package_3.class_3489;
-   import package_3.class_3604;
-   import package_71.class_2196;
-   import package_9.class_1796;
-   import package_9.class_1879;
-   import package_9.class_2406;
-   import package_9.class_3140;
-   import package_9.class_3246;
-   import package_9.class_3368;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2228;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3489;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3604;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.SelectFavouriteHabboGroupMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetRelationshipStatusInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.DeselectFavouriteHabboGroupMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetSelectedBadgesMessageComposer;
    
    public class ExtendedProfileWindowCtrl implements class_13, ILinkEventTracker
    {
@@ -123,7 +123,7 @@ package com.sulake.habbo.groups
       {
          if(var_24 != null && var_24.userId == param1 && _window != null && Boolean(_window.visible))
          {
-            var_52.send(new class_1879(param1));
+            var_52.send(new GetExtendedProfileMessageComposer(param1));
             var_2797 = true;
          }
       }
@@ -146,7 +146,7 @@ package com.sulake.habbo.groups
          }
          if(var_372 > 0)
          {
-            var_52.send(new class_1796(var_372,false));
+            var_52.send(new GetHabboGroupDetailsMessageComposer(var_372,false));
          }
          refresh();
          _window.visible = true;
@@ -171,8 +171,8 @@ package com.sulake.habbo.groups
       
       private function refresh() : void
       {
-         var_52.send(new class_3140(var_24.userId));
-         var_52.send(new class_3368(var_24.userId));
+         var_52.send(new GetRelationshipStatusInfoMessageComposer(var_24.userId));
+         var_52.send(new GetSelectedBadgesMessageComposer(var_24.userId));
          prepareWindow();
          refreshHeader();
          refreshGroupList();
@@ -473,8 +473,8 @@ package com.sulake.habbo.groups
             return;
          }
          var_372 = param2.id;
-         var_52.send(new class_1796(var_372,false));
-         var_52.send(new class_2196("HabboGroups","" + param2.id,"select"));
+         var_52.send(new GetHabboGroupDetailsMessageComposer(var_372,false));
+         var_52.send(new EventLogMessageComposer("HabboGroups","" + param2.id,"select"));
          this.refreshGroupListSelection();
       }
       
@@ -484,8 +484,8 @@ package com.sulake.habbo.groups
          {
             return;
          }
-         var_52.send(new class_2406(param2.id));
-         var_52.send(new class_2196("HabboGroups","" + param2.parent.id,"make favourite"));
+         var_52.send(new SelectFavouriteHabboGroupMessageComposer(param2.id));
+         var_52.send(new EventLogMessageComposer("HabboGroups","" + param2.parent.id,"make favourite"));
          var_372 = param2.id;
       }
       
@@ -495,8 +495,8 @@ package com.sulake.habbo.groups
          {
             return;
          }
-         var_52.send(new class_3246(param2.id));
-         var_52.send(new class_2196("HabboGroups","" + param2.parent.id,"clear favourite"));
+         var_52.send(new DeselectFavouriteHabboGroupMessageComposer(param2.id));
+         var_52.send(new EventLogMessageComposer("HabboGroups","" + param2.parent.id,"clear favourite"));
          var_372 = param2.id;
       }
       
@@ -546,7 +546,7 @@ package com.sulake.habbo.groups
       {
          if(_window != null && Boolean(_window.visible) && var_24 != null && var_24.userId != param1)
          {
-            var_52.send(new class_1879(param1));
+            var_52.send(new GetExtendedProfileMessageComposer(param1));
          }
       }
       

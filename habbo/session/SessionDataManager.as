@@ -32,44 +32,44 @@ package com.sulake.habbo.session
    import flash.display.BitmapData;
    import flash.events.Event;
    import flash.utils.Dictionary;
-   import package_12.class_1944;
-   import package_21.class_1787;
-   import package_21.class_2089;
-   import package_21.class_2094;
-   import package_21.class_2206;
-   import package_22.class_1789;
-   import package_23.class_1790;
-   import package_24.class_1795;
-   import package_24.class_1886;
-   import package_27.class_1809;
-   import package_3.class_1804;
-   import package_3.class_1808;
-   import package_3.class_1999;
-   import package_3.class_2193;
-   import package_33.class_1849;
-   import package_33.class_1874;
-   import package_33.class_1973;
-   import package_35.class_1854;
-   import package_37.class_1865;
-   import package_39.class_1884;
-   import package_4.class_1743;
-   import package_4.class_1757;
-   import package_4.class_2005;
-   import package_44.class_1913;
-   import package_52.class_2031;
-   import package_54.class_2169;
-   import package_58.class_2063;
-   import package_59.class_2064;
-   import package_63.class_2114;
-   import package_66.class_2126;
-   import package_75.class_2227;
-   import package_78.class_2237;
-   import package_8.class_1755;
-   import package_8.class_1953;
-   import package_8.class_2234;
-   import package_9.class_2026;
-   import package_9.class_2224;
-   import package_9.class_2239;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetUIFlagsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.vault.CreditVaultStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.vault.WithdrawCreditVaultMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.vault.IncomeRewardStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.vault.IncomeRewardClaimMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.avatar.ChangeUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.availability.AvailabilityStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.FigureUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.ChangeUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.preferences.AccountPreferencesEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.UserNameChangedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.AccountSafetyLockStatusChangeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.EmailStatusResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.InClientLinkMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.nft.UserNftChatStylesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.nft.UserPurchasableChatStylesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.nft.UserPurchasableChatStyleChangedMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.session.RoomReadyMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.room.pets.PetRespectFailedEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.UserChangeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.NoobnessLevelMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.UserObjectEventParser;
+   import com.sulake.habbo.communication.messages.incoming.mysterybox.MysteryBoxKeysMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.RoomReadyMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.preferences.AccountPreferencesEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.chat.ChatMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.mysterybox.MysteryBoxKeysMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.RespectPetMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.availability.AvailabilityStatusMessageEventParser;
+   import package_78.GetDailyTasksComposer;
+   import com.sulake.habbo.communication.messages.parser.users.EmailStatusResultEventParser;
+   import com.sulake.habbo.communication.messages.parser.users.UserNameChangedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.users.AccountSafetyLockStatusChangeMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.users.RespectUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetUserNftChatStylesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.ReplenishRespectMessageComposer;
    
    public class SessionDataManager extends class_17 implements ISessionDataManager
    {
@@ -220,24 +220,24 @@ package com.sulake.habbo.session
       {
          if(_communication)
          {
-            _communication.addHabboConnectionMessageEvent(new class_1743(onNoobnessLevelEvent));
-            _communication.addHabboConnectionMessageEvent(new class_1999(onEmailStatus));
-            _communication.addHabboConnectionMessageEvent(new class_2169(onRoomReady) as IMessageEvent);
-            _communication.addHabboConnectionMessageEvent(new class_1795(onFigureUpdate));
-            _communication.addHabboConnectionMessageEvent(new class_1849(onNftChatStyles));
-            _communication.addHabboConnectionMessageEvent(new class_1973(onPurchasableChatStyleChanged));
-            _communication.addHabboConnectionMessageEvent(new class_1884(onUserChange));
-            _communication.addHabboConnectionMessageEvent(new class_2005(onUserObject));
-            _communication.addHabboConnectionMessageEvent(new class_1874(onPurchasableChatStyles));
-            _communication.addHabboConnectionMessageEvent(new class_1886(onChangeUserNameResult));
-            _communication.addHabboConnectionMessageEvent(new class_1757(onUserRights));
-            _communication.addHabboConnectionMessageEvent(new class_1809(onAccountPreferences));
-            _communication.addHabboConnectionMessageEvent(new class_1804(onUserNameChange));
-            _communication.addHabboConnectionMessageEvent(new class_2193(onInClientLink));
-            _communication.addHabboConnectionMessageEvent(new class_2031(onMysteryBoxKeys));
-            _communication.addHabboConnectionMessageEvent(new class_1790(onAvailabilityStatus));
-            _communication.addHabboConnectionMessageEvent(new class_1808(onAccountSafetyLockStatusChanged));
-            _communication.addHabboConnectionMessageEvent(new class_1865(onPetRespectFailed));
+            _communication.addHabboConnectionMessageEvent(new NoobnessLevelMessageEvent(onNoobnessLevelEvent));
+            _communication.addHabboConnectionMessageEvent(new EmailStatusResultEvent(onEmailStatus));
+            _communication.addHabboConnectionMessageEvent(new RoomReadyMessageEvent(onRoomReady) as IMessageEvent);
+            _communication.addHabboConnectionMessageEvent(new FigureUpdateEvent(onFigureUpdate));
+            _communication.addHabboConnectionMessageEvent(new UserNftChatStylesMessageEvent(onNftChatStyles));
+            _communication.addHabboConnectionMessageEvent(new UserPurchasableChatStyleChangedMessageEvent(onPurchasableChatStyleChanged));
+            _communication.addHabboConnectionMessageEvent(new UserChangeMessageEvent(onUserChange));
+            _communication.addHabboConnectionMessageEvent(new UserObjectEvent(onUserObject));
+            _communication.addHabboConnectionMessageEvent(new UserPurchasableChatStylesMessageEvent(onPurchasableChatStyles));
+            _communication.addHabboConnectionMessageEvent(new ChangeUserNameResultMessageEvent(onChangeUserNameResult));
+            _communication.addHabboConnectionMessageEvent(new UserRightsMessageEvent(onUserRights));
+            _communication.addHabboConnectionMessageEvent(new AccountPreferencesEvent(onAccountPreferences));
+            _communication.addHabboConnectionMessageEvent(new UserNameChangedMessageEvent(onUserNameChange));
+            _communication.addHabboConnectionMessageEvent(new InClientLinkMessageEvent(onInClientLink));
+            _communication.addHabboConnectionMessageEvent(new MysteryBoxKeysMessageEvent(onMysteryBoxKeys));
+            _communication.addHabboConnectionMessageEvent(new AvailabilityStatusMessageEvent(onAvailabilityStatus));
+            _communication.addHabboConnectionMessageEvent(new AccountSafetyLockStatusChangeMessageEvent(onAccountSafetyLockStatusChanged));
+            _communication.addHabboConnectionMessageEvent(new PetRespectFailedEvent(onPetRespectFailed));
          }
          var_4403 = new HabboGroupInfoManager(this);
          var_2485 = new IgnoredUsersManager(this);
@@ -307,8 +307,8 @@ package com.sulake.habbo.session
       {
          var_2485.initIgnoreList();
          var_1076.initBlockList();
-         send(new class_2224());
-         send(new class_2237());
+         send(new GetUserNftChatStylesMessageComposer());
+         send(new GetDailyTasksComposer());
          getIncomeRewardStatus();
       }
       
@@ -381,14 +381,14 @@ package com.sulake.habbo.session
       
       private function onUserRights(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1757 = class_1757(param1);
+         var _loc2_:UserRightsMessageEvent = UserRightsMessageEvent(param1);
          var_2971 = _loc2_.clubLevel != 0 ? 2 : 0;
          var_3788 = _loc2_.securityLevel;
          var_3734 = Math.max(var_3734,_loc2_.securityLevel);
          _isAmbassador = _loc2_.isAmbassador;
       }
       
-      private function onNoobnessLevelEvent(param1:class_1743) : void
+      private function onNoobnessLevelEvent(param1:NoobnessLevelMessageEvent) : void
       {
          var_3371 = param1.noobnessLevel;
          if(var_3371 != 0)
@@ -399,8 +399,8 @@ package com.sulake.habbo.session
       
       private function onUserObject(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2005 = param1 as class_2005;
-         var _loc3_:class_1913 = _loc2_.getParser();
+         var _loc2_:UserObjectEvent = param1 as UserObjectEvent;
+         var _loc3_:UserObjectEventParser = _loc2_.getParser();
          var_197 = _loc3_.id;
          _name = _loc3_.name;
          var_4065 = _loc3_.respectTotal;
@@ -430,7 +430,7 @@ package com.sulake.habbo.session
       
       private function onUserChange(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1884 = param1 as class_1884;
+         var _loc2_:UserChangeMessageEvent = param1 as UserChangeMessageEvent;
          if(_loc2_ == null)
          {
             return;
@@ -444,7 +444,7 @@ package com.sulake.habbo.session
       
       private function onFigureUpdate(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1795 = param1 as class_1795;
+         var _loc2_:FigureUpdateEvent = param1 as FigureUpdateEvent;
          if(_loc2_ == null)
          {
             return;
@@ -456,7 +456,7 @@ package com.sulake.habbo.session
       
       private function onNftChatStyles(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1849 = param1 as class_1849;
+         var _loc2_:UserNftChatStylesMessageEvent = param1 as UserNftChatStylesMessageEvent;
          if(_loc2_ == null)
          {
             return;
@@ -466,7 +466,7 @@ package com.sulake.habbo.session
       
       private function onPurchasableChatStyles(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1874 = param1 as class_1874;
+         var _loc2_:UserPurchasableChatStylesMessageEvent = param1 as UserPurchasableChatStylesMessageEvent;
          if(_loc2_ == null)
          {
             return;
@@ -477,7 +477,7 @@ package com.sulake.habbo.session
       private function onPurchasableChatStyleChanged(param1:IMessageEvent) : void
       {
          var _loc4_:int = 0;
-         var _loc2_:class_1973 = param1 as class_1973;
+         var _loc2_:UserPurchasableChatStyleChangedMessageEvent = param1 as UserPurchasableChatStyleChangedMessageEvent;
          if(_loc2_ == null)
          {
             return;
@@ -504,12 +504,12 @@ package com.sulake.habbo.session
       
       private function onUserNameChange(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1804 = param1 as class_1804;
+         var _loc2_:UserNameChangedMessageEvent = param1 as UserNameChangedMessageEvent;
          if(_loc2_ == null || _loc2_.getParser() == null)
          {
             return;
          }
-         var _loc3_:class_1953 = _loc2_.getParser();
+         var _loc3_:UserNameChangedMessageEventParser = _loc2_.getParser();
          if(_loc3_.webId == var_197)
          {
             _name = _loc3_.newName;
@@ -518,11 +518,11 @@ package com.sulake.habbo.session
          }
       }
       
-      private function onChangeUserNameResult(param1:class_1886) : void
+      private function onChangeUserNameResult(param1:ChangeUserNameResultMessageEvent) : void
       {
          var _loc3_:String = null;
-         var _loc2_:class_1789 = param1.getParser();
-         if(_loc2_.resultCode == class_1886.var_1851)
+         var _loc2_:ChangeUserNameResultMessageEventParser = param1.getParser();
+         if(_loc2_.resultCode == ChangeUserNameResultMessageEvent.var_1851)
          {
             try
             {
@@ -542,36 +542,36 @@ package com.sulake.habbo.session
          }
       }
       
-      private function onMysteryBoxKeys(param1:class_2031) : void
+      private function onMysteryBoxKeys(param1:MysteryBoxKeysMessageEvent) : void
       {
-         var _loc2_:class_2114 = param1.getParser();
+         var _loc2_:MysteryBoxKeysMessageEventParser = param1.getParser();
          _mysteryBoxColor = _loc2_.boxColor;
          _mysteryKeyColor = _loc2_.keyColor;
          events.dispatchEvent(new MysteryBoxKeysUpdateEvent(_mysteryBoxColor,_mysteryKeyColor));
       }
       
-      private function onInClientLink(param1:class_2193) : void
+      private function onInClientLink(param1:InClientLinkMessageEvent) : void
       {
          context.createLinkEvent(param1.link);
       }
       
-      private function onAccountPreferences(param1:class_1809) : void
+      private function onAccountPreferences(param1:AccountPreferencesEvent) : void
       {
-         var _loc2_:class_2063 = param1.getParser() as class_2063;
+         var _loc2_:AccountPreferencesEventParser = param1.getParser() as AccountPreferencesEventParser;
          var_3233 = _loc2_.roomCameraFollowDisabled;
          var_685 = _loc2_.uiFlags;
          events.dispatchEvent(new SessionDataPreferencesEvent(var_685));
       }
       
-      private function onEmailStatus(param1:class_1999) : void
+      private function onEmailStatus(param1:EmailStatusResultEvent) : void
       {
-         var _loc2_:class_1755 = param1.getParser() as class_1755;
+         var _loc2_:EmailStatusResultEventParser = param1.getParser() as EmailStatusResultEventParser;
          var_4995 = _loc2_.isVerified;
       }
       
       private function onAvailabilityStatus(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2227 = (param1 as class_1790).getParser();
+         var _loc2_:AvailabilityStatusMessageEventParser = (param1 as AvailabilityStatusMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -588,7 +588,7 @@ package com.sulake.habbo.session
          }
       }
       
-      private function onPetRespectFailed(param1:class_1865) : void
+      private function onPetRespectFailed(param1:PetRespectFailedEvent) : void
       {
          if(param1 == null)
          {
@@ -597,9 +597,9 @@ package com.sulake.habbo.session
          var_1113 = var_1113 + 1;
       }
       
-      private function onAccountSafetyLockStatusChanged(param1:class_1808) : void
+      private function onAccountSafetyLockStatusChanged(param1:AccountSafetyLockStatusChangeMessageEvent) : void
       {
-         var _loc2_:class_2234 = param1.getParser();
+         var _loc2_:AccountSafetyLockStatusChangeMessageEventParser = param1.getParser();
          var_2835 = _loc2_.status == 0;
       }
       
@@ -726,7 +726,7 @@ package com.sulake.habbo.session
             }
             var_685 &= ~param1;
          }
-         _communication.connection.send(new class_1944(var_685));
+         _communication.connection.send(new SetUIFlagsMessageComposer(var_685));
       }
       
       public function getBadgeImage(param1:String) : BitmapData
@@ -853,14 +853,14 @@ package com.sulake.habbo.session
       {
          if(param1 >= 0 && var_868 > 0)
          {
-            send(new class_2026(param1));
+            send(new RespectUserMessageComposer(param1));
             var_868 -= 1;
          }
       }
       
       public function replenishRespect() : void
       {
-         send(new class_2239());
+         send(new ReplenishRespectMessageComposer());
          var_2340 -= 1;
          var_868 = var_4717;
       }
@@ -872,29 +872,29 @@ package com.sulake.habbo.session
       
       public function getCreditVaultStatus() : void
       {
-         send(new class_1787());
+         send(new CreditVaultStatusMessageComposer());
       }
       
       public function getIncomeRewardStatus() : void
       {
-         send(new class_2094());
+         send(new IncomeRewardStatusMessageComposer());
       }
       
       public function withdrawCreditVault() : void
       {
-         send(new class_2089());
+         send(new WithdrawCreditVaultMessageComposer());
       }
       
       public function claimReward(param1:int) : void
       {
-         send(new class_2206(param1));
+         send(new IncomeRewardClaimMessageComposer(param1));
       }
       
       public function givePetRespect(param1:int) : void
       {
          if(param1 >= 0 && var_1113 > 0)
          {
-            send(new class_2126(param1));
+            send(new RespectPetMessageComposer(param1));
             var_1113 -= 1;
          }
       }
@@ -1157,18 +1157,18 @@ package com.sulake.habbo.session
       
       private function onRoomReady(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2169 = param1 as class_2169;
+         var _loc3_:RoomReadyMessageEvent = param1 as RoomReadyMessageEvent;
          if(_loc3_ == null || _loc3_.getParser() == null || param1.connection == null)
          {
             return;
          }
-         var _loc2_:class_1854 = _loc3_.getParser();
+         var _loc2_:RoomReadyMessageEventParser = _loc3_.getParser();
          HabboWebTools.roomVisited(_loc2_.roomId);
       }
       
       public function sendSpecialCommandMessage(param1:String) : void
       {
-         send(new class_2064(param1));
+         send(new ChatMessageComposer(param1));
       }
       
       public function get roomSessionManager() : IRoomSessionManager

@@ -12,8 +12,8 @@ package com.sulake.habbo.help
    import com.sulake.core.utils.ErrorReportStorage;
    import com.sulake.core.window.class_1741;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.parser.help.class_1878;
-   import com.sulake.habbo.communication.messages.parser.help.class_1963;
+   import com.sulake.habbo.communication.messages.parser.help.CallForHelpPendingCallsMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.help.GuideReportingStatusMessageEventParser;
    import com.sulake.habbo.freeflowchat.class_51;
    import com.sulake.habbo.friendlist.class_258;
    import com.sulake.habbo.help.cfh.registry.chat.ChatEventHandler;
@@ -46,34 +46,34 @@ package com.sulake.habbo.help
    import com.sulake.iid.IIDSessionDataManager;
    import flash.net.URLRequest;
    import flash.net.navigateToURL;
-   import package_17.class_1781;
-   import package_18.class_1782;
-   import package_18.class_2041;
-   import package_18.class_2165;
-   import package_18.class_2218;
-   import package_2.class_1736;
-   import package_2.class_1786;
-   import package_2.class_1979;
-   import package_2.class_2195;
-   import package_28.class_1824;
-   import package_34.class_1850;
-   import package_34.class_1991;
-   import package_34.class_2008;
-   import package_34.class_2181;
-   import package_35.class_1854;
+   import com.sulake.habbo.communication.messages.parser.navigator.GetGuestRoomResultEventParser;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.CfhTopicsInitMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.SanctionStatusEvent;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.MyCfhReportStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_2218;
+   import com.sulake.habbo.communication.messages.incoming.help.CallForHelpPendingCallsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.help.CallForHelpDisabledNotifyMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.help.GuideReportingStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.help.CallForHelpPendingCallsDeletedMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.RemoveFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.help.GetCfhStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.help.GetPendingCallsForHelpMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.help.GetGuideReportingStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.help.GetCfhMyReportStatus;
+   import com.sulake.habbo.communication.messages.parser.room.session.RoomReadyMessageEventParser;
    import package_38.HumanGameObjectData;
-   import package_39.class_1916;
-   import package_39.class_1980;
-   import package_39.class_2007;
-   import package_40.class_1888;
-   import package_42.class_2168;
-   import package_50.class_1988;
-   import package_50.class_1996;
-   import package_53.class_2038;
-   import package_54.class_2169;
-   import package_56.class_2054;
-   import package_57.class_2055;
-   import package_9.class_1891;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.class_1916;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.UsersMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.callforhelp.CfhTopicsInitMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.navigator.GetGuestRoomResultEvent;
+   import com.sulake.habbo.communication.messages.parser.room.engine.UsersMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.engine.RoomEntryInfoMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GuideAdvertisementReadMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.room.session.RoomReadyMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.snowwar.arena.Game2StageStartingMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.game.snowwar.arena.Game2StageStartingMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.users.IgnoreUserMessageComposer;
    
    public class HabboHelp extends class_17 implements IHabboHelp, ILinkEventTracker
    {
@@ -482,18 +482,18 @@ package com.sulake.habbo.help
       override protected function initComponent() : void
       {
          _messageEvents = new Vector.<IMessageEvent>(0);
-         addMessageEvent(new class_2054(onGameStageStarting));
-         addMessageEvent(new class_2169(onRoomReady));
-         addMessageEvent(new class_2195(onPendingCallsForHelpDeleted));
-         addMessageEvent(new class_1786(onCallForHelpDisabledNotify));
-         addMessageEvent(new class_2007(onUsers));
-         addMessageEvent(new class_2168(onGuestRoomResult));
-         addMessageEvent(new class_1736(onPendingCallsForHelp));
-         addMessageEvent(new class_2165(onMyCfhReportStatusMessageEvent));
-         addMessageEvent(new class_1979(onGuideReportingStatus));
-         addMessageEvent(new class_2041(onSanctionStatusEvent));
-         addMessageEvent(new class_1980(onRoomEnter));
-         addMessageEvent(new class_1782(onCfhTopics));
+         addMessageEvent(new Game2StageStartingMessageEvent(onGameStageStarting));
+         addMessageEvent(new RoomReadyMessageEvent(onRoomReady));
+         addMessageEvent(new CallForHelpPendingCallsDeletedMessageEvent(onPendingCallsForHelpDeleted));
+         addMessageEvent(new CallForHelpDisabledNotifyMessageEvent(onCallForHelpDisabledNotify));
+         addMessageEvent(new UsersMessageEvent(onUsers));
+         addMessageEvent(new GetGuestRoomResultEvent(onGuestRoomResult));
+         addMessageEvent(new CallForHelpPendingCallsMessageEvent(onPendingCallsForHelp));
+         addMessageEvent(new MyCfhReportStatusMessageEvent(onMyCfhReportStatusMessageEvent));
+         addMessageEvent(new GuideReportingStatusMessageEvent(onGuideReportingStatus));
+         addMessageEvent(new SanctionStatusEvent(onSanctionStatusEvent));
+         addMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
+         addMessageEvent(new CfhTopicsInitMessageEvent(onCfhTopics));
          var_1973 = new ChatEventHandler(this);
          var_619 = new GuideHelpManager(this);
          var_42 = new CallForHelpManager(this);
@@ -657,21 +657,21 @@ package com.sulake.habbo.help
       public function queryForPendingCallsForHelp(param1:int) : void
       {
          var_363 = param1;
-         sendMessage(new class_1991());
+         sendMessage(new GetPendingCallsForHelpMessageComposer());
       }
       
       public function queryForGuideReportingStatus(param1:int) : void
       {
          var_1282 = param1;
-         sendMessage(new class_2038());
-         sendMessage(new class_2008());
+         sendMessage(new GuideAdvertisementReadMessageComposer());
+         sendMessage(new GetGuideReportingStatusMessageComposer());
       }
       
       private function onPendingCallsForHelp(param1:IMessageEvent) : void
       {
          var _loc4_:String = null;
          var _loc3_:int = 0;
-         var _loc2_:class_1878 = class_1736(param1).getParser();
+         var _loc2_:CallForHelpPendingCallsMessageEventParser = CallForHelpPendingCallsMessageEvent(param1).getParser();
          if(_loc2_.callCount == 0 || var_363 == 9 && _loc2_.callCount < 3)
          {
             proceedWithReporting();
@@ -698,9 +698,9 @@ package com.sulake.habbo.help
          var_522.submitCallForHelp(false);
       }
       
-      private function onGuideReportingStatus(param1:class_1979) : void
+      private function onGuideReportingStatus(param1:GuideReportingStatusMessageEvent) : void
       {
-         var _loc2_:class_1963 = param1.getParser();
+         var _loc2_:GuideReportingStatusMessageEventParser = param1.getParser();
          switch(_loc2_.statusCode)
          {
             case 0:
@@ -738,7 +738,7 @@ package com.sulake.habbo.help
          var_363 = 0;
       }
       
-      private function onCallForHelpDisabledNotify(param1:class_1786) : void
+      private function onCallForHelpDisabledNotify(param1:CallForHelpDisabledNotifyMessageEvent) : void
       {
          _windowManager.simpleAlert("${help.emergency.global_mute.caption}","${help.emergency.global_mute.subtitle}","${help.emergency.global_mute.message}","${help.emergency.global_mute.link}",param1.getParser().infoUrl);
       }
@@ -750,13 +750,13 @@ package com.sulake.habbo.help
       
       public function ignoreAndUnfriendReportedUser() : void
       {
-         var _loc1_:class_1824 = null;
+         var _loc1_:RemoveFriendMessageComposer = null;
          if(var_42.reportedUserId > 0)
          {
-            sendMessage(new class_1891(var_42.reportedUserId));
+            sendMessage(new IgnoreUserMessageComposer(var_42.reportedUserId));
             if(_friendList.getFriend(var_42.reportedUserId) != null)
             {
-               _loc1_ = new class_1824();
+               _loc1_ = new RemoveFriendMessageComposer();
                _loc1_.addRemovedFriend(var_42.reportedUserId);
                sendMessage(_loc1_);
             }
@@ -767,7 +767,7 @@ package com.sulake.habbo.help
       {
          var _loc3_:int = 0;
          var _loc4_:class_1916 = null;
-         var _loc2_:class_1988 = class_2007(param1).getParser();
+         var _loc2_:UsersMessageEventParser = UsersMessageEvent(param1).getParser();
          _loc3_ = 0;
          while(_loc3_ < _loc2_.getUserCount())
          {
@@ -780,10 +780,10 @@ package com.sulake.habbo.help
          }
       }
       
-      private function onGameStageStarting(param1:class_2054) : void
+      private function onGameStageStarting(param1:Game2StageStartingMessageEvent) : void
       {
          var _loc6_:HumanGameObjectData = null;
-         var _loc2_:class_2055 = param1.getParser();
+         var _loc2_:Game2StageStartingMessageEventParser = param1.getParser();
          var _loc5_:Array = _loc2_.gameObjects.gameObjects;
          var _loc4_:int = _userRegistry.roomId;
          var _loc3_:String = _userRegistry.roomName;
@@ -801,13 +801,13 @@ package com.sulake.habbo.help
       
       private function onRoomReady(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1854 = class_2169(param1).getParser();
+         var _loc2_:RoomReadyMessageEventParser = RoomReadyMessageEvent(param1).getParser();
          _userRegistry.registerRoom(_loc2_.roomId,"");
       }
       
       private function onGuestRoomResult(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1781 = class_2168(param1).getParser();
+         var _loc2_:GetGuestRoomResultEventParser = GetGuestRoomResultEvent(param1).getParser();
          _userRegistry.registerRoom(_loc2_.data.flatId,_loc2_.data.roomName);
       }
       
@@ -826,15 +826,15 @@ package com.sulake.habbo.help
          return _instantMessageRegistry;
       }
       
-      private function onRoomEnter(param1:class_1980) : void
+      private function onRoomEnter(param1:RoomEntryInfoMessageEvent) : void
       {
-         var _loc2_:class_1996 = class_1980(param1).getParser();
+         var _loc2_:RoomEntryInfoMessageEventParser = RoomEntryInfoMessageEvent(param1).getParser();
          var_19 = _loc2_.guestRoomId;
       }
       
-      private function onCfhTopics(param1:class_1782) : void
+      private function onCfhTopics(param1:CfhTopicsInitMessageEvent) : void
       {
-         var _loc2_:class_1888 = param1.getParser();
+         var _loc2_:CfhTopicsInitMessageEventParser = param1.getParser();
          var_1950 = _loc2_.callForHelpCategories;
       }
       
@@ -933,20 +933,20 @@ package com.sulake.habbo.help
       
       public function requestSanctionInfo(param1:Boolean) : void
       {
-         sendMessage(new class_1850(param1));
+         sendMessage(new GetCfhStatusMessageComposer(param1));
       }
       
       public function requestReportsStatus() : void
       {
-         sendMessage(new class_2181());
+         sendMessage(new GetCfhMyReportStatus());
       }
       
-      private function onSanctionStatusEvent(param1:class_2041) : void
+      private function onSanctionStatusEvent(param1:SanctionStatusEvent) : void
       {
          _sanctionInfo.openWindow(param1);
       }
       
-      private function onMyCfhReportStatusMessageEvent(param1:class_2165) : void
+      private function onMyCfhReportStatusMessageEvent(param1:MyCfhReportStatusMessageEvent) : void
       {
          _reportStatus.openWindow(param1);
       }

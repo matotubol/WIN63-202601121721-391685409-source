@@ -14,13 +14,13 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2798;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3469;
+   import com.sulake.habbo.communication.messages.outgoing.quest.AcceptQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.RejectQuestMessageComposer;
    import com.sulake.habbo.quest.events.QuestsListEvent;
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.utils.WindowToggle;
    import flash.display.BitmapData;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class QuestsList implements class_13
    {
@@ -252,7 +252,7 @@ package com.sulake.habbo.quest
                var _loc5_:Boolean = refreshTimeLeft(_loc6_,param3);
                if(!_loc5_ && param3.accepted)
                {
-                  _questEngine.send(new class_3469(param3.id));
+                  _questEngine.send(new RejectQuestMessageComposer(param3.id));
                }
                _loc6_.visible = false;
             }
@@ -430,7 +430,7 @@ package com.sulake.habbo.quest
          }
          var _loc3_:int = param2.id;
          class_21.log("Accept quest: " + _loc3_);
-         _questEngine.send(new class_2798(_loc3_));
+         _questEngine.send(new AcceptQuestMessageComposer(_loc3_));
       }
       
       private function onCancelQuest(param1:class_1758, param2:class_1741) : void
@@ -441,7 +441,7 @@ package com.sulake.habbo.quest
          }
          var _loc3_:int = param2.id;
          class_21.log("Reject quest: " + _loc3_);
-         _questEngine.send(new class_3469(_loc3_));
+         _questEngine.send(new RejectQuestMessageComposer(_loc3_));
       }
       
       private function onClickGetHc(param1:WindowMouseEvent) : void

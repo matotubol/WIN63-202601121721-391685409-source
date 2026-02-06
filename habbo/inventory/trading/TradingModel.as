@@ -5,16 +5,16 @@ package com.sulake.habbo.inventory.trading
    import com.sulake.core.utils.class_55;
    import com.sulake.core.window.class_1812;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_2298;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_2659;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_2708;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_2852;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_2859;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_3052;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_3122;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_3223;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_3272;
-   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.class_3300;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.SilverFeeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.AddItemsToTradeComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.OpenTradingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.ConfirmAcceptTradingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.CloseTradingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.RemoveItemFromTradeComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.ConfirmDeclineTradingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.UnacceptTradingComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.AddItemToTradeComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.trading.AcceptTradingComposer;
    import com.sulake.habbo.inventory.HabboInventory;
    import com.sulake.habbo.inventory.IInventoryModel;
    import com.sulake.habbo.inventory.collectibles.CollectibleGroupedItem;
@@ -35,20 +35,20 @@ package com.sulake.habbo.inventory.trading
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
    import flash.events.Event;
-   import package_156.class_2676;
-   import package_156.class_3269;
-   import package_82.class_3592;
-   import package_88.class_2393;
-   import package_88.class_2491;
-   import package_88.class_2568;
-   import package_88.class_2622;
-   import package_88.class_2668;
-   import package_88.class_2706;
-   import package_88.class_2871;
-   import package_88.class_2882;
-   import package_88.class_2941;
-   import package_88.class_3098;
-   import package_88.class_3329;
+   import package_156.RemoveNftFromTradeComposer;
+   import package_156.AddNftToTradeComposer;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradeSilverSetMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingConfirmationEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingOtherNotAllowedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingAcceptEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingYouAreNotAllowedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeSilverFeeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingNotOpenEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingCloseEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingCompletedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeSilverSetMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeOpenFailedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingItemListEvent;
    
    public class TradingModel implements IInventoryModel, class_1829
    {
@@ -463,7 +463,7 @@ package com.sulake.habbo.inventory.trading
          return _inventory;
       }
       
-      public function updateItemGroupMaps(param1:class_3329, param2:class_55, param3:class_55) : void
+      public function updateItemGroupMaps(param1:TradingItemListEvent, param2:class_55, param3:class_55) : void
       {
          if(_inventory == null)
          {
@@ -688,41 +688,41 @@ package com.sulake.habbo.inventory.trading
       
       public function handleMessageEvent(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2871 = null;
-         var _loc4_:class_2941 = null;
-         var _loc3_:class_3592 = null;
-         var _loc5_:class_2668 = null;
-         if(param1 is class_3098)
+         var _loc2_:TradingCloseEvent = null;
+         var _loc4_:TradeSilverSetMessageEvent = null;
+         var _loc3_:TradeSilverSetMessageEventParser = null;
+         var _loc5_:TradeSilverFeeMessageEvent = null;
+         if(param1 is TradeOpenFailedEvent)
          {
             class_21.log("TRADING::TradingOpenFailedEvent");
-            if(class_3098(param1).getParser().reason == 7 || class_3098(param1).getParser().reason == 8)
+            if(TradeOpenFailedEvent(param1).getParser().reason == 7 || TradeOpenFailedEvent(param1).getParser().reason == 8)
             {
                var_73.alertPopup(2);
             }
             else
             {
-               var_73.alertTradeOpenFailed(class_3098(param1));
+               var_73.alertTradeOpenFailed(TradeOpenFailedEvent(param1));
             }
          }
-         else if(param1 is class_2568)
+         else if(param1 is TradingAcceptEvent)
          {
             class_21.log("TRADING::TradingAcceptEvent");
-            if(class_2568(param1).userID == var_1406)
+            if(TradingAcceptEvent(param1).userID == var_1406)
             {
-               var_863 = class_2568(param1).userAccepts != 0;
+               var_863 = TradingAcceptEvent(param1).userAccepts != 0;
             }
             else
             {
-               var_1088 = class_2568(param1).userAccepts != 0;
+               var_1088 = TradingAcceptEvent(param1).userAccepts != 0;
             }
             var_73.updateUserInterface();
          }
-         else if(param1 is class_2393)
+         else if(param1 is TradingConfirmationEvent)
          {
             class_21.log("TRADING::TradingConfirmationEvent");
             state = 2;
          }
-         else if(param1 is class_2882)
+         else if(param1 is TradingCompletedEvent)
          {
             class_21.log("TRADING::TradingCompletedEvent");
             if(isConfirmingWeb3Trade())
@@ -731,7 +731,7 @@ package com.sulake.habbo.inventory.trading
             }
             state = 5;
          }
-         else if(param1 is class_2871)
+         else if(param1 is TradingCloseEvent)
          {
             class_21.log("TRADING::TradingCloseEvent");
             if(!var_983)
@@ -739,7 +739,7 @@ package com.sulake.habbo.inventory.trading
                class_21.log("Received TradingCloseEvent, but trading already stopped!!!");
                return;
             }
-            _loc2_ = param1 as class_2871;
+            _loc2_ = param1 as TradingCloseEvent;
             if(_loc2_.getParser().reason == 1)
             {
                if(_inventory.getBoolean("trading.commiterror.enabled"))
@@ -753,29 +753,29 @@ package com.sulake.habbo.inventory.trading
             }
             close();
          }
-         else if(param1 is class_2706)
+         else if(param1 is TradingNotOpenEvent)
          {
             class_21.log("TRADING::TradingNotOpenEvent");
          }
-         else if(param1 is class_2491)
+         else if(param1 is TradingOtherNotAllowedEvent)
          {
             var_73.showOtherUserNotification("${inventory.trading.warning.others_account_disabled}");
          }
-         else if(param1 is class_2622)
+         else if(param1 is TradingYouAreNotAllowedEvent)
          {
             var_73.showOwnUserNotification("${inventory.trading.warning.own_account_disabled}");
          }
-         else if(param1 is class_2941)
+         else if(param1 is TradeSilverSetMessageEvent)
          {
-            _loc4_ = param1 as class_2941;
+            _loc4_ = param1 as TradeSilverSetMessageEvent;
             _loc3_ = _loc4_.getParser();
             var_2660 = _loc3_.playerSilver;
             var_2337 = _loc3_.otherPlayerSilver;
             var_73.updateUserInterface();
          }
-         else if(param1 is class_2668)
+         else if(param1 is TradeSilverFeeMessageEvent)
          {
-            _loc5_ = param1 as class_2668;
+            _loc5_ = param1 as TradeSilverFeeMessageEvent;
             var_2262 = _loc5_.getParser().silverFee;
             var_73.updateUserInterface();
          }
@@ -797,7 +797,7 @@ package com.sulake.habbo.inventory.trading
       
       public function requestOpenTrading(param1:int) : void
       {
-         _communication.connection.send(new class_2708(param1));
+         _communication.connection.send(new OpenTradingComposer(param1));
       }
       
       public function requestAddItemsToTrading(param1:Vector.<int>, param2:Boolean, param3:int, param4:int, param5:Boolean, param6:IStuffData) : void
@@ -805,7 +805,7 @@ package com.sulake.habbo.inventory.trading
          var _loc8_:* = undefined;
          if(!param5 && param1.length > 0)
          {
-            _communication.connection.send(new class_3272(param1.pop()));
+            _communication.connection.send(new AddItemToTradeComposer(param1.pop()));
          }
          else
          {
@@ -821,11 +821,11 @@ package com.sulake.habbo.inventory.trading
             {
                if(_loc8_.length == 1)
                {
-                  _communication.connection.send(new class_3272(_loc8_.pop()));
+                  _communication.connection.send(new AddItemToTradeComposer(_loc8_.pop()));
                }
                else
                {
-                  _communication.connection.send(new class_2659(_loc8_));
+                  _communication.connection.send(new AddItemsToTradeComposer(_loc8_));
                }
             }
          }
@@ -838,7 +838,7 @@ package com.sulake.habbo.inventory.trading
          {
             _loc3_.push(int(_loc2_));
          }
-         _communication.connection.send(new class_3269(_loc3_));
+         _communication.connection.send(new AddNftToTradeComposer(_loc3_));
       }
       
       public function canAddItemToTrade(param1:Boolean, param2:int, param3:int, param4:Boolean, param5:IStuffData) : Boolean
@@ -892,7 +892,7 @@ package com.sulake.habbo.inventory.trading
                var _loc4_:Vector.<Number> = null.pop(1);
                if(_loc4_ != null && undefined.length == 1)
                {
-                  _communication.connection.send(new class_2676(undefined[0]));
+                  _communication.connection.send(new RemoveNftFromTradeComposer(undefined[0]));
                }
             }
             return;
@@ -903,43 +903,43 @@ package com.sulake.habbo.inventory.trading
             _loc3_ = _loc6_.peek();
             if(_loc3_)
             {
-               _communication.connection.send(new class_3052(_loc3_.id));
+               _communication.connection.send(new RemoveItemFromTradeComposer(_loc3_.id));
             }
          }
       }
       
       public function requestAcceptTrading() : void
       {
-         _communication.connection.send(new class_3300());
+         _communication.connection.send(new AcceptTradingComposer());
       }
       
       public function requestUnacceptTrading() : void
       {
-         _communication.connection.send(new class_3223());
+         _communication.connection.send(new UnacceptTradingComposer());
       }
       
       public function requestConfirmAcceptTrading() : void
       {
          state = 4;
-         _communication.connection.send(new class_2852());
+         _communication.connection.send(new ConfirmAcceptTradingComposer());
       }
       
       public function requestConfirmDeclineTrading() : void
       {
-         _communication.connection.send(new class_3122());
+         _communication.connection.send(new ConfirmDeclineTradingComposer());
       }
       
       public function requestCancelTrading() : void
       {
          if(!isConfirmingWeb3Trade())
          {
-            _communication.connection.send(new class_2859());
+            _communication.connection.send(new CloseTradingComposer());
          }
       }
       
       public function addSilverFee(param1:Boolean) : void
       {
-         _communication.connection.send(new class_2298(param1));
+         _communication.connection.send(new SilverFeeMessageComposer(param1));
       }
       
       public function isCreditFurniPresent() : Boolean

@@ -13,7 +13,7 @@ package com.sulake.habbo.roomevents.wired_menu.roomlogs
    import flash.events.TimerEvent;
    import flash.utils.Timer;
    import flash.utils.setTimeout;
-   import package_192.class_3529;
+   import package_192.WiredGetRoomLogsComposer;
    import package_203.WiredLogEntry;
    import package_203.WiredLogPage;
    
@@ -181,7 +181,7 @@ package com.sulake.habbo.roomevents.wired_menu.roomlogs
          {
             param4 = "";
          }
-         var_55.send(new class_3529(param1,WiredRoomLogsConfig.PAGE_SIZE,param3,param2,param4),param5);
+         var_55.send(new WiredGetRoomLogsComposer(param1,WiredRoomLogsConfig.PAGE_SIZE,param3,param2,param4),param5);
          onPageLoaded();
          return true;
       }

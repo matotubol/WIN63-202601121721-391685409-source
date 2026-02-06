@@ -10,8 +10,8 @@ package com.sulake.habbo.inventory.badges
    import com.sulake.habbo.inventory.IInventoryModel;
    import com.sulake.habbo.window.class_38;
    import flash.events.Event;
-   import package_43.class_3013;
-   import package_43.class_3630;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.GetBadgesComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.SetActivatedBadgesComposer;
    
    public class BadgesModel implements IInventoryModel
    {
@@ -103,7 +103,7 @@ package com.sulake.habbo.inventory.badges
       
       public function requestInitialization() : void
       {
-         _communication.connection.send(new class_3013());
+         _communication.connection.send(new GetBadgesComposer());
       }
       
       public function getMaxActiveCount() : int
@@ -287,7 +287,7 @@ package com.sulake.habbo.inventory.badges
       {
          var _loc4_:int = 0;
          var _loc2_:Badge = null;
-         var _loc1_:class_3630 = new class_3630();
+         var _loc1_:SetActivatedBadgesComposer = new SetActivatedBadgesComposer();
          var _loc3_:Vector.<Badge> = getBadges(1);
          _loc4_ = 0;
          while(_loc4_ < _loc3_.length)

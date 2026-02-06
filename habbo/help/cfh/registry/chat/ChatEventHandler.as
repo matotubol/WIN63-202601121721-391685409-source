@@ -5,7 +5,7 @@ package com.sulake.habbo.help.cfh.registry.chat
    import com.sulake.habbo.help.HabboHelp;
    import com.sulake.habbo.session.class_2146;
    import com.sulake.habbo.session.events.RoomSessionChatEvent;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class ChatEventHandler implements class_13
    {

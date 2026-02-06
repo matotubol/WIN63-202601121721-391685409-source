@@ -15,7 +15,7 @@ package com.sulake.habbo.window.widgets
    import flash.events.Event;
    import flash.filters.ColorMatrixFilter;
    import flash.geom.Point;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class AvatarImageWidget implements class_2478, class_259
    {
@@ -338,7 +338,7 @@ package com.sulake.habbo.window.widgets
       {
          if(var_1270 > 0)
          {
-            _windowManager.communication.connection.send(new class_1879(var_1270));
+            _windowManager.communication.connection.send(new GetExtendedProfileMessageComposer(var_1270));
          }
       }
    }

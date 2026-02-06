@@ -85,10 +85,10 @@ package com.sulake.habbo.ui
    import flash.geom.Rectangle;
    import flash.utils.Timer;
    import flash.utils.getTimer;
-   import package_110.class_2388;
-   import package_110.class_2982;
-   import package_184.class_3191;
-   import package_184.class_3314;
+   import com.sulake.habbo.communication.messages.incoming.room.bots.BotForceOpenContextMenuEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.bots.BotSkillListUpdateEvent;
+   import com.sulake.habbo.communication.messages.parser.room.bots.BotSkillListUpdateEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.bots.BotForceOpenContextMenuEventParser;
    
    public class RoomDesktop implements IRoomDesktop, IRoomWidgetMessageListener, IRoomWidgetHandlerContainer
    {
@@ -214,9 +214,9 @@ package com.sulake.habbo.ui
          var_70 = param1;
          _assets = param2;
          var_37 = param3;
-         var_1632 = new class_2982(onBotSkillListUpdateEvent);
+         var_1632 = new BotSkillListUpdateEvent(onBotSkillListUpdateEvent);
          var_37.addMessageEvent(var_1632);
-         var_1608 = new class_2388(onBotForceOpenContextMenuEvent);
+         var_1608 = new BotForceOpenContextMenuEvent(onBotForceOpenContextMenuEvent);
          var_37.addMessageEvent(var_1608);
          var_35 = new class_55();
          var_1411 = new class_55();
@@ -650,9 +650,9 @@ package com.sulake.habbo.ui
          var_1465 = null;
       }
       
-      private function onBotSkillListUpdateEvent(param1:class_2982) : void
+      private function onBotSkillListUpdateEvent(param1:BotSkillListUpdateEvent) : void
       {
-         var _loc3_:class_3191 = param1.getParser();
+         var _loc3_:BotSkillListUpdateEventParser = param1.getParser();
          if(var_70 != null)
          {
             var _loc2_:class_2146 = var_70.userDataManager.getRentableBotUserData(_loc3_.botId);
@@ -661,9 +661,9 @@ package com.sulake.habbo.ui
          events.dispatchEvent(new RoomWidgetRentableBotSkillListUpdateEvent(_loc3_.botId,_loc3_.skillList));
       }
       
-      private function onBotForceOpenContextMenuEvent(param1:class_2388) : void
+      private function onBotForceOpenContextMenuEvent(param1:BotForceOpenContextMenuEvent) : void
       {
-         var _loc2_:class_3314 = param1.getParser();
+         var _loc2_:BotForceOpenContextMenuEventParser = param1.getParser();
          events.dispatchEvent(new RoomWidgetRentableBotForceOpenContextMenuEvent(_loc2_.botId));
       }
       

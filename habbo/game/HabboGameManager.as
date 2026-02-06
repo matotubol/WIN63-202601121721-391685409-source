@@ -37,10 +37,10 @@ package com.sulake.habbo.game
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_13.GetSnowWarGameTokensOfferComposer;
-   import package_41.Game2CheckGameDirectoryStatusMessageComposer;
-   import package_41.class_1903;
-   import package_41.class_1964;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetSnowWarGameTokensOfferComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2CheckGameDirectoryStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2StartSnowWarMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2QuickJoinGameMessageComposer;
    
    public class HabboGameManager extends class_17 implements class_45
    {
@@ -332,12 +332,12 @@ package com.sulake.habbo.game
       public function startSnowWarGame(param1:String) : void
       {
          initGameDirectoryConnection();
-         send(new class_1903(param1));
+         send(new Game2StartSnowWarMessageComposer(param1));
       }
       
       public function startQuickSnowWarGame() : void
       {
-         send(new class_1964());
+         send(new Game2QuickJoinGameMessageComposer());
       }
       
       public function onSnowWarArenaSessionEnded() : void

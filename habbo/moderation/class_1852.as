@@ -41,12 +41,12 @@ package com.sulake.habbo.moderation
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDSessionDataManager;
    import flash.utils.ByteArray;
-   import package_143.class_2894;
-   import package_168.class_3071;
-   import package_26.class_2494;
-   import package_42.class_1945;
-   import package_43.class_3575;
-   import package_61.class_2655;
+   import com.sulake.habbo.communication.messages.parser.room.chat.ChatMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.IsBadgeRequestFulfilledEvent;
+   import com.sulake.habbo.communication.messages.incoming.notifications.HabboBroadcastMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.RequestABadgeComposer;
+   import com.sulake.habbo.communication.messages.incoming.room.chat.WhisperMessageEvent;
    
    [SecureSWF(rename="true")]
    public class class_1852 extends class_17
@@ -90,9 +90,9 @@ package com.sulake.habbo.moderation
       {
          super(param1,param2,param3);
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_2494(onBroadcastMessageEvent));
-         _messageEvents.push(new class_3071(onBadgeRequestFulfilledEvent));
-         _messageEvents.push(new class_2655(onWhisperMessageEvent));
+         _messageEvents.push(new HabboBroadcastMessageEvent(onBroadcastMessageEvent));
+         _messageEvents.push(new IsBadgeRequestFulfilledEvent(onBadgeRequestFulfilledEvent));
+         _messageEvents.push(new WhisperMessageEvent(onWhisperMessageEvent));
          for each(var _loc4_ in _messageEvents)
          {
             addMessageEvent(_loc4_);
@@ -112,13 +112,13 @@ package com.sulake.habbo.moderation
          return "";
       }
       
-      private function onBroadcastMessageEvent(param1:class_2494) : void
+      private function onBroadcastMessageEvent(param1:HabboBroadcastMessageEvent) : void
       {
          var _loc2_:String = param1.getParser().messageText;
          onMaybeOpenModTools(_loc2_);
       }
       
-      private function onWhisperMessageEvent(param1:class_2655) : void
+      private function onWhisperMessageEvent(param1:WhisperMessageEvent) : void
       {
          var _loc7_:String = null;
          var _loc4_:MD5 = null;
@@ -126,7 +126,7 @@ package com.sulake.habbo.moderation
          var _loc8_:ByteArray = null;
          var _loc3_:String = null;
          var _loc6_:class_1945 = _navigator.enteredGuestRoomData;
-         var _loc2_:class_2894 = param1.getParser();
+         var _loc2_:ChatMessageEventParser = param1.getParser();
          if(_loc6_ != null && _loc2_.styleId == 34)
          {
             _loc7_ = _loc6_.ownerName + "-" + _loc6_.roomName;
@@ -182,7 +182,7 @@ package com.sulake.habbo.moderation
          var_3367 |= 1 << param1;
          if(_secretCode1 != "" && (var_3367 & 0x1F) == 31)
          {
-            send(new class_3575(_secretCode1));
+            send(new RequestABadgeComposer(_secretCode1));
             _secretCode1 = "";
          }
       }
@@ -199,7 +199,7 @@ package com.sulake.habbo.moderation
          _notifications.addItem("${badge_desc_ADM}","info","moderation_badge_png");
       }
       
-      private function onBadgeRequestFulfilledEvent(param1:class_3071) : void
+      private function onBadgeRequestFulfilledEvent(param1:IsBadgeRequestFulfilledEvent) : void
       {
       }
       
@@ -305,7 +305,7 @@ package com.sulake.habbo.moderation
          }
          if(_secretCode2 != "" && var_3367 == 0)
          {
-            send(new class_3575(_secretCode2));
+            send(new RequestABadgeComposer(_secretCode2));
             _secretCode2 = "";
          }
          hide();

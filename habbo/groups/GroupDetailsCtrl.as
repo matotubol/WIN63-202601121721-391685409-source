@@ -10,11 +10,11 @@ package com.sulake.habbo.groups
    import com.sulake.core.window.utils.class_2001;
    import com.sulake.habbo.utils.HabboWebTools;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_3.class_1846;
-   import package_71.class_2196;
-   import package_9.class_2315;
-   import package_9.class_2585;
-   import package_9.class_3543;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetGuildEditInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.JoinHabboGroupMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.DeactivateGuildMessageComposer;
    
    public class GroupDetailsCtrl implements class_13
    {
@@ -173,8 +173,8 @@ package com.sulake.habbo.groups
          }
          var_52.trackGoogle("groupDetails","joinGroup");
          _window.findChildByName("join_button").disable();
-         var_52.send(new class_2585(_selectedGroup.groupId));
-         var_52.send(new class_2196("HabboGroups","" + _selectedGroup.groupId,"join"));
+         var_52.send(new JoinHabboGroupMessageComposer(_selectedGroup.groupId));
+         var_52.send(new EventLogMessageComposer("HabboGroups","" + _selectedGroup.groupId,"join"));
       }
       
       private function onRoomLink(param1:class_1758, param2:class_1741) : void
@@ -185,7 +185,7 @@ package com.sulake.habbo.groups
          }
          var_52.trackGoogle("groupDetails","groupBaseRoom");
          var_52.navigator.goToPrivateRoom(_selectedGroup.roomId);
-         var_52.send(new class_2196("HabboGroups","" + _selectedGroup.groupId,"base"));
+         var_52.send(new EventLogMessageComposer("HabboGroups","" + _selectedGroup.groupId,"base"));
       }
       
       private function onForumLink(param1:class_1758, param2:class_1741) : void
@@ -218,7 +218,7 @@ package com.sulake.habbo.groups
             return;
          }
          var_52.trackGoogle("groupDetails","groupManage");
-         var_52.send(new class_2315(_selectedGroup.groupId));
+         var_52.send(new GetGuildEditInfoMessageComposer(_selectedGroup.groupId));
       }
       
       private function onDeleteGuild(param1:class_1758, param2:class_1741) : void
@@ -236,7 +236,7 @@ package com.sulake.habbo.groups
          if(param2.type == "WE_OK")
          {
             var_52.trackGoogle("groupDetails","groupDelete");
-            var_52.send(new class_3543(_selectedGroup.groupId));
+            var_52.send(new DeactivateGuildMessageComposer(_selectedGroup.groupId));
          }
       }
       

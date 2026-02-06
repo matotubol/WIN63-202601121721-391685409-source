@@ -4,7 +4,7 @@ package com.sulake.habbo.groups
    import com.sulake.core.window.class_1741;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_9.class_1796;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
    
    public class GroupCreatedWindowCtrl implements class_13
    {
@@ -61,7 +61,7 @@ package com.sulake.habbo.groups
          if(param1.type == "WME_CLICK")
          {
             close();
-            var_52.send(new class_1796(_groupId,false));
+            var_52.send(new GetHabboGroupDetailsMessageComposer(_groupId,false));
          }
       }
       

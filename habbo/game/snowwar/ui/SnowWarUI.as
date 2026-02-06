@@ -15,7 +15,7 @@ package com.sulake.habbo.game.snowwar.ui
    import flash.events.TimerEvent;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_115.Game2ExitGameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.arena.Game2ExitGameMessageComposer;
    
    public class SnowWarUI implements class_13, class_259
    {

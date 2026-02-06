@@ -1,6 +1,6 @@
 package com.sulake.habbo.tracking
 {
-   import package_71.class_2474;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.LagWarningReportMessageComposer;
    
    public class LagWarningLogger
    {
@@ -34,14 +34,14 @@ package com.sulake.habbo.tracking
       
       private function reportWarningsAsNeeded(param1:int) : void
       {
-         var _loc2_:class_2474 = null;
+         var _loc2_:LagWarningReportMessageComposer = null;
          if(var_1971 == 0)
          {
             return;
          }
          if(var_3444 == 0 || param1 - var_3444 > warningInterval)
          {
-            _loc2_ = new class_2474(var_1971);
+            _loc2_ = new LagWarningReportMessageComposer(var_1971);
             _habboTracking.send(_loc2_);
             var_3444 = param1;
             var_1971 = 0;

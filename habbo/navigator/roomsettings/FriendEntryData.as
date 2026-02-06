@@ -1,6 +1,6 @@
 package com.sulake.habbo.navigator.roomsettings
 {
-   import package_32.class_2565;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_2565;
    
    public class FriendEntryData implements class_2565
    {

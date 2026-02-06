@@ -8,13 +8,13 @@ package com.sulake.habbo.help
    import com.sulake.core.window.components.ISelectorListWindow;
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.parser.help.class_2617;
-   import com.sulake.habbo.communication.messages.parser.help.class_2624;
+   import com.sulake.habbo.communication.messages.parser.help.QuizDataMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.help.QuizResultsMessageEventParser;
    import com.sulake.habbo.window.utils.IModalDialog;
-   import package_2.class_3251;
-   import package_2.class_3458;
-   import package_34.class_2524;
-   import package_34.class_3552;
+   import com.sulake.habbo.communication.messages.incoming.help.QuizDataMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.help.QuizResultsMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.help.PostQuizAnswersComposer;
+   import com.sulake.habbo.communication.messages.outgoing.help.GetQuizQuestionsComposer;
    
    public class HabboWayQuizController implements class_13
    {
@@ -65,8 +65,8 @@ package com.sulake.habbo.help
       {
          super();
          _habboHelp = param1;
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_3251(onQuizData));
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_3458(onQuizResults));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new QuizDataMessageEvent(onQuizData));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new QuizResultsMessageEvent(onQuizResults));
       }
       
       public function dispose() : void
@@ -98,25 +98,25 @@ package com.sulake.habbo.help
       
       public function showHabboWayQuiz() : void
       {
-         _habboHelp.sendMessage(new class_3552("HabboWay1"));
+         _habboHelp.sendMessage(new GetQuizQuestionsComposer("HabboWay1"));
       }
       
       public function showSafetyQuiz() : void
       {
-         _habboHelp.sendMessage(new class_3552("SafetyQuiz1"));
+         _habboHelp.sendMessage(new GetQuizQuestionsComposer("SafetyQuiz1"));
       }
       
-      private function onQuizData(param1:class_3251) : void
+      private function onQuizData(param1:QuizDataMessageEvent) : void
       {
-         var _loc2_:class_2617 = param1.getParser();
+         var _loc2_:QuizDataMessageEventParser = param1.getParser();
          _habboHelp.closeHabboWay();
          _habboHelp.closeSafetyBooklet();
          showWindow(_loc2_.quizCode,_loc2_.questionIds);
       }
       
-      private function onQuizResults(param1:class_3458) : void
+      private function onQuizResults(param1:QuizResultsMessageEvent) : void
       {
-         var _loc2_:class_2624 = param1.getParser();
+         var _loc2_:QuizResultsMessageEventParser = param1.getParser();
          _questionIdsForWrongAnswers = _loc2_.questionIdsForWrongAnswers;
          if(_questionIdsForWrongAnswers.length == 0)
          {
@@ -273,7 +273,7 @@ package com.sulake.habbo.help
       {
          if(param1 >= questionCount)
          {
-            _habboHelp.sendMessage(new class_2524(var_1366,var_1790));
+            _habboHelp.sendMessage(new PostQuizAnswersComposer(var_1366,var_1790));
          }
          else if(param1 >= 0)
          {

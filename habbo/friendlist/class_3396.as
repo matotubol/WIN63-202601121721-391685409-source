@@ -8,9 +8,9 @@ package com.sulake.habbo.friendlist
    import com.sulake.habbo.friendlist.domain.FriendRequest;
    import com.sulake.habbo.friendlist.events.FriendRequestEvent;
    import com.sulake.habbo.utils.class_2323;
-   import package_28.class_2365;
-   import package_28.class_3432;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.DeclineFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.AcceptFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class class_3396 implements ITabView, class_1747
    {
@@ -178,7 +178,7 @@ package com.sulake.habbo.friendlist
             _friendList.showLimitReachedAlert();
             return;
          }
-         var _loc2_:class_3432 = new class_3432();
+         var _loc2_:AcceptFriendMessageComposer = new AcceptFriendMessageComposer();
          _loc2_.addAcceptedRequest(_loc3_.requestId);
          _friendList.send(_loc2_);
          refreshRequestEntry(_loc3_);
@@ -196,7 +196,7 @@ package com.sulake.habbo.friendlist
             _friendList.showLimitReachedAlert();
             return;
          }
-         var _loc1_:class_3432 = new class_3432();
+         var _loc1_:AcceptFriendMessageComposer = new AcceptFriendMessageComposer();
          for each(var _loc2_ in _friendList.friendRequests.requests)
          {
             if(_loc2_.state != 2 && _loc2_.state != 3)
@@ -234,7 +234,7 @@ package com.sulake.habbo.friendlist
             return;
          }
          _loc3_.state = 3;
-         var _loc2_:class_2365 = new class_2365();
+         var _loc2_:DeclineFriendMessageComposer = new DeclineFriendMessageComposer();
          _loc2_.addDeclinedRequest(param1);
          _friendList.send(_loc2_);
          refreshRequestEntry(_loc3_);
@@ -247,7 +247,7 @@ package com.sulake.habbo.friendlist
       
       public function declineAllRequests() : void
       {
-         var _loc1_:class_2365 = new class_2365();
+         var _loc1_:DeclineFriendMessageComposer = new DeclineFriendMessageComposer();
          _friendList.send(_loc1_);
          for each(var _loc2_ in _friendList.friendRequests.requests)
          {
@@ -271,7 +271,7 @@ package com.sulake.habbo.friendlist
          if(param1.type == "WME_CLICK")
          {
             _friendList.trackGoogle("extendedProfile","friendList_friendRequests");
-            _friendList.send(new class_1879(param2.id));
+            _friendList.send(new GetExtendedProfileMessageComposer(param2.id));
          }
       }
       

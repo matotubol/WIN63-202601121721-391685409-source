@@ -5,7 +5,7 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.core.window.enum.*;
    import com.sulake.core.window.events.*;
    import com.sulake.habbo.navigator.*;
-   import package_42.class_3737;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3737;
    
    public class PopularTagsListCtrl implements IViewCtrl
    {

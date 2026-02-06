@@ -3,7 +3,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.core.window.class_1812;
    import com.sulake.habbo.catalog.guilds.GuildMembershipsController;
    import com.sulake.habbo.catalog.viewer.widgets.events.CatalogWidgetShowWarningTextEvent;
-   import package_3.class_3489;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3489;
    
    public class GuildForumSelectorCatalogWidget extends GuildSelectorCatalogWidget
    {

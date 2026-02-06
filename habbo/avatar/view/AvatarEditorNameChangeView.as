@@ -10,7 +10,7 @@ package com.sulake.habbo.avatar.view
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.avatar.AvatarEditorView;
    import com.sulake.habbo.avatar.HabboAvatarEditorManager;
-   import package_24.class_1886;
+   import com.sulake.habbo.communication.messages.incoming.avatar.ChangeUserNameResultMessageEvent;
    
    public class AvatarEditorNameChangeView
    {
@@ -199,34 +199,34 @@ package com.sulake.habbo.avatar.view
          }
          switch(param1)
          {
-            case class_1886.var_3330:
+            case ChangeUserNameResultMessageEvent.var_3330:
                var_52.localization.registerParameter("help.tutorial.name.taken","name",param2);
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.taken");
                break;
-            case class_1886.var_3157:
+            case ChangeUserNameResultMessageEvent.var_3157:
                var_52.localization.registerParameter("help.tutorial.name.invalid","name",param2);
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.invalid");
                break;
-            case class_1886.var_2917:
+            case ChangeUserNameResultMessageEvent.var_2917:
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.long");
                break;
-            case class_1886.var_2697:
+            case ChangeUserNameResultMessageEvent.var_2697:
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.short");
                break;
-            case class_1886.var_2518:
+            case ChangeUserNameResultMessageEvent.var_2518:
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.change_not_allowed");
                break;
-            case class_1886.var_3721:
+            case ChangeUserNameResultMessageEvent.var_3721:
                _loc5_.text = var_52.localization.getLocalization("help.tutorial.name.merge_hotel_down");
                break;
-            case class_1886.var_4470:
+            case ChangeUserNameResultMessageEvent.var_4470:
          }
          var _loc4_:class_1812 = _window.findChildByName("suggestions") as class_1812;
          if(_loc4_ == null)
          {
             return;
          }
-         if(param1 == class_1886.var_3721 || param1 == class_1886.var_2518)
+         if(param1 == ChangeUserNameResultMessageEvent.var_3721 || param1 == ChangeUserNameResultMessageEvent.var_2518)
          {
             _loc4_.visible = false;
             return;

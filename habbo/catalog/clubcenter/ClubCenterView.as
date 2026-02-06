@@ -14,7 +14,7 @@ package com.sulake.habbo.catalog.clubcenter
    import com.sulake.habbo.window.class_38;
    import com.sulake.habbo.window.widgets.IRoomPreviewerWidget;
    import flash.display.BitmapData;
-   import package_3.class_3429;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3429;
    
    public class ClubCenterView implements class_259
    {

@@ -23,9 +23,9 @@ package com.sulake.habbo.advertisement
    import flash.external.ExternalInterface;
    import flash.net.URLRequest;
    import flash.system.Security;
-   import package_16.class_2067;
-   import package_65.class_2124;
-   import package_76.class_2231;
+   import com.sulake.habbo.communication.messages.outgoing.advertisement.GetInterstitialMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.advertisement.InterstitialMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.advertisement.InterstitialMessageEvent;
    
    public class AdManager extends class_17 implements class_56
    {
@@ -68,7 +68,7 @@ package com.sulake.habbo.advertisement
       override protected function initComponent() : void
       {
          _billboardImageLoaders = new class_55();
-         var_2722 = _communicationManager.addHabboConnectionMessageEvent(new class_2231(onInterstitial));
+         var_2722 = _communicationManager.addHabboConnectionMessageEvent(new InterstitialMessageEvent(onInterstitial));
          var _loc6_:String = getProperty("ads.domain");
          if(_loc6_ != "")
          {
@@ -130,12 +130,12 @@ package com.sulake.habbo.advertisement
             noInterstitialAvailable();
             return;
          }
-         _communicationManager.connection.send(new class_2067());
+         _communicationManager.connection.send(new GetInterstitialMessageComposer());
       }
       
-      private function onInterstitial(param1:class_2231) : void
+      private function onInterstitial(param1:InterstitialMessageEvent) : void
       {
-         var _loc2_:class_2124 = param1.getParser();
+         var _loc2_:InterstitialMessageEventParser = param1.getParser();
          if(_loc2_ && _loc2_.canShowInterstitial)
          {
             if(ExternalInterface.available)

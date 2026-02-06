@@ -8,8 +8,8 @@ package com.sulake.habbo.groups.badge
    import flash.display.BitmapData;
    import flash.geom.ColorTransform;
    import flash.geom.Point;
-   import package_3.class_2862;
-   import package_3.class_2927;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2862;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2927;
    
    public class BadgeEditorPartItem implements class_13, class_3067
    {

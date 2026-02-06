@@ -27,8 +27,8 @@ package com.sulake.habbo.moderation
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDNewModerationTool;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_18.class_2218;
-   import package_79.class_2259;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_2218;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_2259;
    
    public class ModerationManager extends class_17 implements IHabboModeration
    {

@@ -13,9 +13,9 @@ package com.sulake.habbo.window.widgets
    import com.sulake.habbo.window.enum.class_2522;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_3.class_1763;
-   import package_3.class_2981;
-   import package_9.class_1796;
+   import com.sulake.habbo.communication.messages.incoming.users.GroupDetailsChangedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboGroupBadgesMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
    
    public class BadgeImageWidget implements class_3087
    {
@@ -50,9 +50,9 @@ package com.sulake.habbo.window.widgets
       
       private var _groupId:int;
       
-      private var var_2554:class_1763;
+      private var var_2554:GroupDetailsChangedMessageEvent;
       
-      private var var_1600:class_2981;
+      private var var_1600:HabboGroupBadgesMessageEvent;
       
       public function BadgeImageWidget(param1:class_2010, param2:HabboWindowManagerComponent)
       {
@@ -190,8 +190,8 @@ package com.sulake.habbo.window.widgets
             }
             else if(_loc2_ && var_1600 == null)
             {
-               var_2554 = new class_1763(onGroupDetailsChanged);
-               var_1600 = new class_2981(onHabboGroupBadges);
+               var_2554 = new GroupDetailsChangedMessageEvent(onGroupDetailsChanged);
+               var_1600 = new HabboGroupBadgesMessageEvent(onHabboGroupBadges);
                _windowManager.communication.addHabboConnectionMessageEvent(var_2554);
                _windowManager.communication.addHabboConnectionMessageEvent(var_1600);
             }
@@ -295,7 +295,7 @@ package com.sulake.habbo.window.widgets
       {
          if(_groupId > 0)
          {
-            _windowManager.communication.connection.send(new class_1796(_groupId,true));
+            _windowManager.communication.connection.send(new GetHabboGroupDetailsMessageComposer(_groupId,true));
          }
       }
       
@@ -341,12 +341,12 @@ package com.sulake.habbo.window.widgets
          refresh();
       }
       
-      private function onGroupDetailsChanged(param1:class_1763) : void
+      private function onGroupDetailsChanged(param1:GroupDetailsChangedMessageEvent) : void
       {
          forceRefresh(param1.groupId,var_605);
       }
       
-      private function onHabboGroupBadges(param1:class_2981) : void
+      private function onHabboGroupBadges(param1:HabboGroupBadgesMessageEvent) : void
       {
          if(param1.badges.hasKey(_groupId))
          {

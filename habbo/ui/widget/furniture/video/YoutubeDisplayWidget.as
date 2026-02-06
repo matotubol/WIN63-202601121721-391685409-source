@@ -19,7 +19,7 @@ package com.sulake.habbo.ui.widget.furniture.video
    import flash.display.LoaderInfo;
    import flash.events.Event;
    import flash.events.MouseEvent;
-   import package_91.class_3334;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.class_3334;
    
    public class YoutubeDisplayWidget extends RoomWidgetBase
    {

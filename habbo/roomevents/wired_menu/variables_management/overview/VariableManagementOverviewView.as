@@ -8,7 +8,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
    import com.sulake.habbo.window.utils.tableview.ITableObject;
    import com.sulake.habbo.window.utils.tableview.TableColumn;
    import com.sulake.habbo.window.utils.tableview.TableView;
-   import package_117.class_3366;
+   import package_117.WiredGetVariableOwnersPageComposer;
    import package_189.WiredVariable;
    import package_201.WiredUserVariablesElement;
    import package_201.WiredUserVariablesPage;
@@ -134,7 +134,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
          {
             param3 = _loc4_.userTypeFilter;
          }
-         var_55.send(new class_3366(_loc4_.variableId,param1,VariableManagementConfig.PAGE_SIZE,param2,param3));
+         var_55.send(new WiredGetVariableOwnersPageComposer(_loc4_.variableId,param1,VariableManagementConfig.PAGE_SIZE,param2,param3));
          onPageLoaded();
          return true;
       }

@@ -8,14 +8,14 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import com.sulake.room.object.IRoomObject;
    import flash.events.Event;
-   import package_100.class_2955;
-   import package_100.class_2989;
-   import package_100.class_3250;
-   import package_91.class_3881;
-   import package_91.class_3922;
-   import package_94.class_2423;
-   import package_94.class_2506;
-   import package_94.class_3012;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.RentableSpaceRentOkMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.RentableSpaceRentFailedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.RentableSpaceStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.RentableSpaceStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.RentableSpaceRentFailedMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RentableSpaceCancelRentMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RentableSpaceRentMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.RentableSpaceStatusMessageComposer;
    
    public class class_2656 implements IRoomWidgetHandler
    {
@@ -24,11 +24,11 @@ package com.sulake.habbo.ui.handler
       
       private var var_16:RentableSpaceDisplayWidget;
       
-      private var var_1954:class_3250;
+      private var var_1954:RentableSpaceStatusMessageEvent;
       
-      private var var_1999:class_2955;
+      private var var_1999:RentableSpaceRentOkMessageEvent;
       
-      private var var_2087:class_2989;
+      private var var_2087:RentableSpaceRentFailedMessageEvent;
       
       public function class_2656()
       {
@@ -48,11 +48,11 @@ package com.sulake.habbo.ui.handler
       public function set container(param1:IRoomWidgetHandlerContainer) : void
       {
          _container = param1;
-         var_1954 = new class_3250(onRentableSpaceStatusMessage);
+         var_1954 = new RentableSpaceStatusMessageEvent(onRentableSpaceStatusMessage);
          _container.connection.addMessageEvent(var_1954);
-         var_1999 = new class_2955(onRentableSpaceRentOkMessage);
+         var_1999 = new RentableSpaceRentOkMessageEvent(onRentableSpaceRentOkMessage);
          _container.connection.addMessageEvent(var_1999);
-         var_2087 = new class_2989(onRentableSpaceRentFailedMessage);
+         var_2087 = new RentableSpaceRentFailedMessageEvent(onRentableSpaceRentFailedMessage);
          _container.connection.addMessageEvent(var_2087);
       }
       
@@ -129,36 +129,36 @@ package com.sulake.habbo.ui.handler
          return _container == null;
       }
       
-      public function onRentableSpaceRentOkMessage(param1:class_2955) : void
+      public function onRentableSpaceRentOkMessage(param1:RentableSpaceRentOkMessageEvent) : void
       {
          var_16.updateWidgetState();
       }
       
-      public function onRentableSpaceRentFailedMessage(param1:class_2989) : void
+      public function onRentableSpaceRentFailedMessage(param1:RentableSpaceRentFailedMessageEvent) : void
       {
-         var _loc2_:class_3922 = param1.getParser();
+         var _loc2_:RentableSpaceRentFailedMessageEventParser = param1.getParser();
          var_16.showErrorView(_loc2_.reason);
       }
       
-      public function onRentableSpaceStatusMessage(param1:class_3250) : void
+      public function onRentableSpaceStatusMessage(param1:RentableSpaceStatusMessageEvent) : void
       {
-         var _loc2_:class_3881 = param1.getParser();
+         var _loc2_:RentableSpaceStatusMessageEventParser = param1.getParser();
          var_16.populateRentInfo(_loc2_.rented,_loc2_.canRent,_loc2_.canRentErrorCode,_loc2_.renterId,_loc2_.renterName,_loc2_.timeRemaining,_loc2_.price);
       }
       
       public function getRentableSpaceStatus(param1:int) : void
       {
-         _container.connection.send(new class_3012(param1));
+         _container.connection.send(new RentableSpaceStatusMessageComposer(param1));
       }
       
       public function cancelRent(param1:int) : void
       {
-         _container.connection.send(new class_2423(param1));
+         _container.connection.send(new RentableSpaceCancelRentMessageComposer(param1));
       }
       
       public function rentSpace(param1:int) : void
       {
-         _container.connection.send(new class_2506(param1));
+         _container.connection.send(new RentableSpaceRentMessageComposer(param1));
       }
       
       public function getUsersClubLevel() : int

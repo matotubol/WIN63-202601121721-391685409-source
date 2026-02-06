@@ -4,7 +4,7 @@ package com.sulake.habbo.ui.handler
    import com.sulake.core.runtime.class_17;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2739;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredUpdateRoomComposer;
    import com.sulake.habbo.friendbar.events.FriendBarResizeEvent;
    import com.sulake.habbo.room.events.RoomEngineZoomEvent;
    import com.sulake.habbo.session.class_2146;
@@ -32,7 +32,7 @@ package com.sulake.habbo.ui.handler
    import flash.events.Event;
    import flash.filters.ColorMatrixFilter;
    import flash.ui.Mouse;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class ChatInputWidgetHandler implements IRoomWidgetHandler
    {
@@ -547,7 +547,7 @@ package com.sulake.habbo.ui.handler
       {
          if(param2.type == "WE_OK")
          {
-            _container.connection.send(new class_2739(true));
+            _container.connection.send(new WiredUpdateRoomComposer(true));
          }
          param1.dispose();
       }
@@ -556,7 +556,7 @@ package com.sulake.habbo.ui.handler
       {
          if(param2.type == "WE_OK")
          {
-            _container.connection.send(new class_2739(false));
+            _container.connection.send(new WiredUpdateRoomComposer(false));
          }
          param1.dispose();
       }

@@ -16,9 +16,9 @@ package com.sulake.habbo.moderation
    import flash.text.TextFormat;
    import flash.utils.Dictionary;
    import flash.utils.Timer;
-   import package_74.class_3823;
-   import package_74.class_4059;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_3823;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_4059;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class ChatlogCtrl implements class_13, ITrackedWindow, class_2879
    {

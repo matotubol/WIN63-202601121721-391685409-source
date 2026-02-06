@@ -8,7 +8,7 @@ package com.sulake.habbo.friendbar.groupforums
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
-   import package_155.class_3591;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3591;
    
    public class ForumSettingsView
    {

@@ -12,10 +12,10 @@ package com.sulake.habbo.nux
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.session.product.class_1949;
    import com.sulake.habbo.session.product.class_59;
-   import package_112.class_2597;
-   import package_141.class_3217;
-   import package_141.class_3916;
-   import package_141.class_3961;
+   import com.sulake.habbo.communication.messages.outgoing.nux.class_2597;
+   import com.sulake.habbo.communication.messages.incoming.nux.class_3217;
+   import com.sulake.habbo.communication.messages.incoming.nux.class_3916;
+   import com.sulake.habbo.communication.messages.incoming.nux.class_3961;
    
    public class NuxGiftSelectionView implements class_59
    {

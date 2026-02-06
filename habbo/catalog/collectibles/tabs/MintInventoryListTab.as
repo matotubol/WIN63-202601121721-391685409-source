@@ -24,22 +24,22 @@ package com.sulake.habbo.catalog.collectibles.tabs
    import com.sulake.habbo.catalog.collectibles.tabs.subviews.CollectibleProductPreviewer;
    import com.sulake.habbo.catalog.event.CatalogEvent;
    import com.sulake.habbo.communication.messages.parser.collectibles.class_2884;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3720;
+   import com.sulake.habbo.communication.messages.parser.collectibles.CollectibleMintableItemResultMessageEventParser;
    import com.sulake.habbo.communication.messages.parser.collectibles.class_4079;
    import com.sulake.habbo.inventory.class_61;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.utils.HabboWebTools;
-   import package_36.class_2352;
-   import package_36.class_2378;
-   import package_36.class_2586;
-   import package_36.class_2948;
-   import package_36.class_3278;
-   import package_70.class_2733;
-   import package_70.class_2913;
-   import package_70.class_3001;
-   import package_70.class_3135;
-   import package_70.class_3260;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectibleMintTokenOffersMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectibleMintableItemResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectibleMintingEnabledMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectibleMintTokenCountMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectableMintableItemTypesMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetCollectibleMintableItemTypesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetCollectibleMintTokensMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.MintItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetCollectibleMintingEnabledMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetMintTokenOffersMessageComposer;
    
    public class MintInventoryListTab implements class_31
    {
@@ -128,11 +128,11 @@ package com.sulake.habbo.catalog.collectibles.tabs
             return;
          }
          _messageEvents = new Vector.<IMessageEvent>(0);
-         _messageEvents.push(new class_2948(onCollectibleMintTokensMessage));
-         _messageEvents.push(new class_2586(onCollectibleMintingEnabledMessage));
-         _messageEvents.push(new class_3278(onCollectableMintableItemTypesMessage));
-         _messageEvents.push(new class_2352(onMintTokenOffersMessage));
-         _messageEvents.push(new class_2378(onMintItemResult));
+         _messageEvents.push(new CollectibleMintTokenCountMessageEvent(onCollectibleMintTokensMessage));
+         _messageEvents.push(new CollectibleMintingEnabledMessageEvent(onCollectibleMintingEnabledMessage));
+         _messageEvents.push(new CollectableMintableItemTypesMessageEvent(onCollectableMintableItemTypesMessage));
+         _messageEvents.push(new CollectibleMintTokenOffersMessageEvent(onMintTokenOffersMessage));
+         _messageEvents.push(new CollectibleMintableItemResultMessageEvent(onMintItemResult));
          for each(var _loc1_ in _messageEvents)
          {
             var_196.addMessageEvent(_loc1_);
@@ -158,7 +158,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
          loadingContainer.visible = !var_1049;
       }
       
-      private function onCollectibleMintTokensMessage(param1:class_2948) : void
+      private function onCollectibleMintTokensMessage(param1:CollectibleMintTokenCountMessageEvent) : void
       {
          var_3027 = false;
          var_3501 = param1.getParser().totalTokens;
@@ -166,7 +166,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
          updateReadyState(true);
       }
       
-      private function onCollectibleMintingEnabledMessage(param1:class_2586) : void
+      private function onCollectibleMintingEnabledMessage(param1:CollectibleMintingEnabledMessageEvent) : void
       {
          var_3350 = false;
          var_4784 = param1.getParser().enabled;
@@ -179,21 +179,21 @@ package com.sulake.habbo.catalog.collectibles.tabs
          if(param1 != null)
          {
             var_3027 = true;
-            var_196.send(new class_2913(param1));
+            var_196.send(new GetCollectibleMintTokensMessageComposer(param1));
          }
          updateReadyState(true);
          stampPurchasingContainer.visible = param1 != null;
          noWalletContainer.visible = param1 == null;
       }
       
-      private function onCollectableMintableItemTypesMessage(param1:class_3278) : void
+      private function onCollectableMintableItemTypesMessage(param1:CollectableMintableItemTypesMessageEvent) : void
       {
          var_2738 = false;
          _productItems = param1.getParser().collectibleProductItems;
          updateReadyState(true);
       }
       
-      private function onMintTokenOffersMessage(param1:class_2352) : void
+      private function onMintTokenOffersMessage(param1:CollectibleMintTokenOffersMessageEvent) : void
       {
          _tokenOffers = param1.getParser().tokenOffers;
          var _loc3_:Vector.<String> = new Vector.<String>();
@@ -288,9 +288,9 @@ package com.sulake.habbo.catalog.collectibles.tabs
       private function initializeData() : void
       {
          var_2738 = true;
-         var_196.send(new class_2733());
+         var_196.send(new GetCollectibleMintableItemTypesMessageComposer());
          var_3350 = true;
-         var_196.send(new class_3135());
+         var_196.send(new GetCollectibleMintingEnabledMessageComposer());
          if(!var_196.inventory.checkCategoryInitilization("furni"))
          {
             var_3203 = true;
@@ -301,7 +301,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
             activeWallet = var_965.activeWallet;
          }
          stampBuyButton.disable();
-         var_196.send(new class_3260());
+         var_196.send(new GetMintTokenOffersMessageComposer());
       }
       
       public function populateItems(param1:Vector.<class_4079>) : void
@@ -432,14 +432,14 @@ package com.sulake.habbo.catalog.collectibles.tabs
                return;
             }
             var_2982 = true;
-            var_196.send(new class_3001(_loc4_[0],_loc3_));
+            var_196.send(new MintItemMessageComposer(_loc4_[0],_loc3_));
          }
          reloadPreview();
       }
       
-      private function onMintItemResult(param1:class_2378) : void
+      private function onMintItemResult(param1:CollectibleMintableItemResultMessageEvent) : void
       {
-         var _loc2_:* = param1.getParser().mintResult == class_3720.name_6;
+         var _loc2_:* = param1.getParser().mintResult == CollectibleMintableItemResultMessageEventParser.name_6;
          var_196.catalog.events.dispatchEvent(new CatalogEvent(_loc2_ ? "COLLECTIBLES_MINT_SUCCESS" : "COLLECTIBLES_MINT_FAIL"));
          var_2982 = false;
          reloadPreview();

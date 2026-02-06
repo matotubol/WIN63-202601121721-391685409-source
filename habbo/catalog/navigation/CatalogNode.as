@@ -1,6 +1,6 @@
 package com.sulake.habbo.catalog.navigation
 {
-   import package_10.class_2971;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2971;
    
    public class CatalogNode implements class_1917
    {

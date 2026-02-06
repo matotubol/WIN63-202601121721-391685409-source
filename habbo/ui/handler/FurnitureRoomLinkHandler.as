@@ -14,10 +14,10 @@ package com.sulake.habbo.ui.handler
    import com.sulake.room.object.IRoomObject;
    import com.sulake.room.object.IRoomObjectModel;
    import flash.events.Event;
-   import package_1.class_2003;
-   import package_17.class_1781;
-   import package_42.class_1945;
-   import package_42.class_2168;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.GetGuestRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.navigator.GetGuestRoomResultEventParser;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.GetGuestRoomResultEvent;
    
    public class FurnitureRoomLinkHandler implements IRoomWidgetHandler
    {
@@ -54,7 +54,7 @@ package com.sulake.habbo.ui.handler
       public function set communicationManager(param1:class_57) : void
       {
          _communicationManager = param1;
-         _communicationManagerMessageEvents.push(_communicationManager.addHabboConnectionMessageEvent(new class_2168(onRoomInfo)));
+         _communicationManagerMessageEvents.push(_communicationManager.addHabboConnectionMessageEvent(new GetGuestRoomResultEvent(onRoomInfo)));
       }
       
       private function onRoomInfo(param1:IMessageEvent) : void
@@ -63,7 +63,7 @@ package com.sulake.habbo.ui.handler
          var roomName:String;
          var ownerName:String;
          var event:IMessageEvent = param1;
-         var p:class_1781 = class_2168(event).getParser();
+         var p:GetGuestRoomResultEventParser = GetGuestRoomResultEvent(event).getParser();
          var roomData:class_1945 = p.data;
          if(roomData && roomData.flatId == var_2260)
          {
@@ -141,7 +141,7 @@ package com.sulake.habbo.ui.handler
                         }
                         var_777 = _loc3_;
                         var_2260 = parseInt(_loc3_,10);
-                        _communicationManager.connection.send(new class_2003(var_2260,false,false));
+                        _communicationManager.connection.send(new GetGuestRoomMessageComposer(var_2260,false,false));
                      }
                      else
                      {

@@ -8,7 +8,7 @@ package com.sulake.habbo.navigator
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.WindowMouseEvent;
    import flash.geom.Point;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class GuestRoomPasswordInput
    {

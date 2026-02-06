@@ -4,7 +4,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.window.utils.tableview.ITableObject;
    import com.sulake.habbo.window.utils.tableview.TableCell;
-   import package_97.class_4089;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.class_4089;
    
    public class ErrorDataTableObject implements ITableObject
    {

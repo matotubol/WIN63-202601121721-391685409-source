@@ -21,9 +21,9 @@ package com.sulake.habbo.friendlist
    import flash.geom.Point;
    import flash.utils.Dictionary;
    import flash.utils.getTimer;
-   import package_28.class_2765;
-   import package_71.class_2196;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.FollowFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class FriendsView implements ITabView, class_1807
    {
@@ -524,8 +524,8 @@ package com.sulake.habbo.friendlist
          {
             return;
          }
-         _friendList.send(new class_2765(param2.id));
-         _friendList.send(new class_2196("Navigation","Friend List","go.friendlist"));
+         _friendList.send(new FollowFriendMessageComposer(param2.id));
+         _friendList.send(new EventLogMessageComposer("Navigation","Friend List","go.friendlist"));
       }
       
       private function onRelationshipStatusRegion(param1:class_1758, param2:class_1741) : void
@@ -564,7 +564,7 @@ package com.sulake.habbo.friendlist
          else if(param1.type == "WME_CLICK")
          {
             _friendList.trackGoogle("extendedProfile","friendList_friendsView");
-            _friendList.send(new class_1879(param2.parent.id));
+            _friendList.send(new GetExtendedProfileMessageComposer(param2.parent.id));
          }
       }
       

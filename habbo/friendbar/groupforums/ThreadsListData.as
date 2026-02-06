@@ -1,7 +1,7 @@
 package com.sulake.habbo.friendbar.groupforums
 {
    import flash.utils.Dictionary;
-   import package_155.class_3434;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3434;
    
    public class ThreadsListData
    {

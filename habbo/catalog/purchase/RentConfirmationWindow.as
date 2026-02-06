@@ -14,11 +14,11 @@ package com.sulake.habbo.catalog.purchase
    import com.sulake.habbo.session.furniture.class_1800;
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
-   import package_100.class_2743;
-   import package_91.class_2991;
-   import package_94.class_2529;
-   import package_94.class_2937;
-   import package_94.class_3500;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.FurniRentOrBuyoutOfferMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.FurniRentOrBuyoutOfferMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.GetRentOrBuyoutOfferMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.ExtendRentOrBuyoutStripItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.ExtendRentOrBuyoutFurniMessageComposer;
    
    public class RentConfirmationWindow implements class_13, class_1829
    {
@@ -31,7 +31,7 @@ package com.sulake.habbo.catalog.purchase
       
       private var _disposed:Boolean;
       
-      private var _offerMessageEvent:class_2743;
+      private var _offerMessageEvent:FurniRentOrBuyoutOfferMessageEvent;
       
       private var _window:class_1812;
       
@@ -53,17 +53,17 @@ package com.sulake.habbo.catalog.purchase
       {
          super();
          _catalog = param1;
-         _offerMessageEvent = new class_2743(onFurniRentOrBuyoutOffer);
+         _offerMessageEvent = new FurniRentOrBuyoutOfferMessageEvent(onFurniRentOrBuyoutOffer);
          _catalog.connection.addMessageEvent(_offerMessageEvent);
       }
       
-      private function onFurniRentOrBuyoutOffer(param1:class_2743) : void
+      private function onFurniRentOrBuyoutOffer(param1:FurniRentOrBuyoutOfferMessageEvent) : void
       {
          if(var_85 == null)
          {
             return;
          }
-         var _loc2_:class_2991 = param1.getParser();
+         var _loc2_:FurniRentOrBuyoutOfferMessageEventParser = param1.getParser();
          if(var_85.fullName != _loc2_.furniTypeName)
          {
             return;
@@ -150,7 +150,7 @@ package com.sulake.habbo.catalog.purchase
             var_261 = 2;
          }
          var _loc6_:* = param1.type == "i";
-         _catalog.connection.send(new class_2529(_loc6_,param1.fullName,param2));
+         _catalog.connection.send(new GetRentOrBuyoutOfferMessageComposer(_loc6_,param1.fullName,param2));
       }
       
       private function get roomEngine() : IRoomEngine
@@ -174,10 +174,10 @@ package com.sulake.habbo.catalog.purchase
                switch(var_261 - 1)
                {
                   case 0:
-                     _catalog.connection.send(new class_3500(var_85.type == "i",var_3539,_isBuyout));
+                     _catalog.connection.send(new ExtendRentOrBuyoutFurniMessageComposer(var_85.type == "i",var_3539,_isBuyout));
                      break;
                   case 1:
-                     _catalog.connection.send(new class_2937(var_4899,_isBuyout));
+                     _catalog.connection.send(new ExtendRentOrBuyoutStripItemMessageComposer(var_4899,_isBuyout));
                      break;
                   case 2:
                      _catalog.purchaseOffer(var_85.rentOfferId);

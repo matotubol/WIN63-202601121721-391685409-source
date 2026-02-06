@@ -26,8 +26,8 @@ package com.sulake.habbo.communication.demo
    import flash.events.TimerEvent;
    import flash.system.Capabilities;
    import flash.utils.Timer;
-   import package_31.*;
-   import package_4.*;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.*;
+   import com.sulake.habbo.communication.messages.incoming.handshake.*;
    
    [SecureSWF(rename="true")]
    public class class_467 extends class_17
@@ -354,15 +354,15 @@ package com.sulake.habbo.communication.demo
       
       public function sendConnectionParameters(param1:IConnection) : void
       {
-         var _loc2_:class_2188 = null;
-         param1.send(new class_1972(401,var_2877,var_4879));
+         var _loc2_:SSOTicketMessageComposer = null;
+         param1.send(new VersionCheckMessageComposer(401,var_2877,var_4879));
          var _loc3_:String = CommunicationUtils.readSOLString("machineid");
          var _loc4_:String = CommunicationUtils.generateFingerprint();
          var _loc5_:Array = Capabilities.version.split(" ");
-         param1.send(new class_1992(_loc3_,_loc4_,_loc5_.join("/")));
+         param1.send(new UniqueIDMessageComposer(_loc3_,_loc4_,_loc5_.join("/")));
          if(var_538 && var_538.length > 0)
          {
-            _loc2_ = new class_2188(var_538);
+            _loc2_ = new SSOTicketMessageComposer(var_538);
             param1.send(_loc2_);
          }
       }
@@ -452,12 +452,12 @@ package com.sulake.habbo.communication.demo
          {
             if(param2 == null || param2.length < 6)
             {
-               param2 = _localization.getLocalization(class_1856.resolveDisconnectedReasonLocalizationKey(param1));
+               param2 = _localization.getLocalization(DisconnectReasonEvent.resolveDisconnectedReasonLocalizationKey(param1));
             }
             var _loc3_:String = "connection.login.logged_out";
             _localization.registerParameter(null,"reason",param1.toString());
             _localization.registerParameter(null,"reasonName",param2);
-            alert(class_1856.resolveDisconnectedReasonLocalizationKey(param1),"${connection.login.logged_out}");
+            alert(DisconnectReasonEvent.resolveDisconnectedReasonLocalizationKey(param1),"${connection.login.logged_out}");
             return;
          }
          onBufferedDisconnected(param1,param2);
@@ -566,7 +566,7 @@ package com.sulake.habbo.communication.demo
          }
          if(param1.critical && !isExcludeFromCrashing(param1.category) && getBoolean("error_handling.crash_on_critical_error"))
          {
-            disconnected(-1,class_1856.resolveDisconnectedReasonLocalizationKey(-1));
+            disconnected(-1,DisconnectReasonEvent.resolveDisconnectedReasonLocalizationKey(-1));
          }
       }
       

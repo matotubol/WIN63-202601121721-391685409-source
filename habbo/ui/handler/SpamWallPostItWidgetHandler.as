@@ -10,9 +10,9 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import com.sulake.habbo.ui.widget.messages.RoomWidgetSpamWallPostItFinishEditingMessage;
    import flash.events.Event;
-   import package_100.class_3102;
-   import package_91.class_3777;
-   import package_94.class_2874;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.RequestSpamWallPostItMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.RequestSpamWallPostItMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.AddSpamWallPostItMessageComposer;
    
    public class SpamWallPostItWidgetHandler implements IRoomWidgetHandler
    {
@@ -47,7 +47,7 @@ package com.sulake.habbo.ui.handler
       
       public function set connection(param1:IConnection) : void
       {
-         var_3624 = new class_3102(onSpamWallPostItRequest);
+         var_3624 = new RequestSpamWallPostItMessageEvent(onSpamWallPostItRequest);
          var_37 = param1;
          var_37.addMessageEvent(var_3624);
       }
@@ -62,13 +62,13 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onSpamWallPostItRequest(param1:class_3102) : void
+      private function onSpamWallPostItRequest(param1:RequestSpamWallPostItMessageEvent) : void
       {
          if(param1 == null)
          {
             return;
          }
-         var _loc5_:class_3777 = param1.getParser();
+         var _loc5_:RequestSpamWallPostItMessageEventParser = param1.getParser();
          var _loc2_:int = _loc5_.itemId;
          var _loc6_:String = _loc5_.location;
          if(_container.inventory != null)
@@ -100,7 +100,7 @@ package com.sulake.habbo.ui.handler
             {
                if(var_37 != null)
                {
-                  var _loc3_:class_2874 = new class_2874(_loc2_.objectId,_loc2_.location,_loc2_.colorHex,_loc2_.text);
+                  var _loc3_:AddSpamWallPostItMessageComposer = new AddSpamWallPostItMessageComposer(_loc2_.objectId,_loc2_.location,_loc2_.colorHex,_loc2_.text);
                   var_37.send(null);
                }
             }

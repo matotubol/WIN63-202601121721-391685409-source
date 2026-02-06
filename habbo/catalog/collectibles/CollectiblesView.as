@@ -19,14 +19,14 @@ package com.sulake.habbo.catalog.collectibles
    import com.sulake.habbo.catalog.collectibles.tabs.ShopTab;
    import com.sulake.habbo.catalog.collectibles.tabs.TransferNftsTab;
    import com.sulake.habbo.catalog.purse.class_1831;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3774;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3947;
+   import com.sulake.habbo.communication.messages.parser.collectibles.CollectibleWalletAddressesMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.collectibles.NftCollectionsScoreMessageEventParser;
    import com.sulake.habbo.utils.HabboWebTools;
    import com.sulake.habbo.window.class_38;
-   import package_36.class_3475;
-   import package_36.class_3594;
-   import package_70.class_2702;
-   import package_70.class_3022;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.CollectibleWalletAddressesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftCollectionsScoreMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetCollectibleWalletAddressesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetCollectorScoreMessageComposer;
    
    public class CollectiblesView implements class_13
    {
@@ -187,8 +187,8 @@ package com.sulake.habbo.catalog.collectibles
             return;
          }
          _messageEvents = new Vector.<IMessageEvent>(0);
-         _messageEvents.push(new class_3475(onCollectableWalletAddressMessage));
-         _messageEvents.push(new class_3594(onCollectionsScoreMessage));
+         _messageEvents.push(new CollectibleWalletAddressesMessageEvent(onCollectableWalletAddressMessage));
+         _messageEvents.push(new NftCollectionsScoreMessageEvent(onCollectionsScoreMessage));
          for each(var _loc1_ in _messageEvents)
          {
             var_55.addMessageEvent(_loc1_);
@@ -217,10 +217,10 @@ package com.sulake.habbo.catalog.collectibles
          }
       }
       
-      private function onCollectionsScoreMessage(param1:class_3594) : void
+      private function onCollectionsScoreMessage(param1:NftCollectionsScoreMessageEvent) : void
       {
          var _loc3_:* = 0;
-         var _loc2_:class_3947 = param1.getParser();
+         var _loc2_:NftCollectionsScoreMessageEventParser = param1.getParser();
          levelValue.caption = String(_loc2_.level);
          scoreValue.caption = String(_loc2_.score);
          hiscoreValue.caption = String(_loc2_.highestScore);
@@ -246,10 +246,10 @@ package com.sulake.habbo.catalog.collectibles
          collectorLevelBg2.color = _loc3_;
       }
       
-      private function onCollectableWalletAddressMessage(param1:class_3475) : void
+      private function onCollectableWalletAddressMessage(param1:CollectibleWalletAddressesMessageEvent) : void
       {
          var_2843 = false;
-         var _loc2_:class_3774 = param1.getParser();
+         var _loc2_:CollectibleWalletAddressesMessageEventParser = param1.getParser();
          var_667 = _loc2_.walletAddresses;
          var_3546 = _loc2_.stardustWalletAddress;
          if(var_364)
@@ -306,7 +306,7 @@ package com.sulake.habbo.catalog.collectibles
          }
          if(var_1622 != null)
          {
-            var_55.send(new class_3022(var_1622));
+            var_55.send(new GetCollectorScoreMessageComposer(var_1622));
          }
       }
       
@@ -317,7 +317,7 @@ package com.sulake.habbo.catalog.collectibles
             return;
          }
          var_2843 = true;
-         var_55.send(new class_2702());
+         var_55.send(new GetCollectibleWalletAddressesMessageComposer());
       }
       
       public function get walletAddresses() : Array

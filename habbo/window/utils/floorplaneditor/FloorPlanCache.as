@@ -1,9 +1,9 @@
 package com.sulake.habbo.window.utils.floorplaneditor
 {
    import flash.geom.Point;
-   import package_121.class_2442;
-   import package_193.class_3710;
-   import package_39.class_3205;
+   import com.sulake.habbo.communication.messages.incoming.room.layout.RoomOccupiedTilesMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.layout.RoomOccupiedTilesMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.FloorHeightMapMessageEvent;
    
    public class FloorPlanCache
    {
@@ -36,15 +36,15 @@ package com.sulake.habbo.window.utils.floorplaneditor
          _bcFloorPlanEditor = param1;
       }
       
-      public function onFloorHeightMap(param1:class_3205) : void
+      public function onFloorHeightMap(param1:FloorHeightMapMessageEvent) : void
       {
          updateFloorPlanCache(param1.getParser().text);
          _showedPopup = false;
       }
       
-      public function onOccupiedTiles(param1:class_2442) : void
+      public function onOccupiedTiles(param1:RoomOccupiedTilesMessageEvent) : void
       {
-         var _loc2_:class_3710 = null;
+         var _loc2_:RoomOccupiedTilesMessageEventParser = null;
          if(_floorPlanCache)
          {
             _loc2_ = param1.getParser();

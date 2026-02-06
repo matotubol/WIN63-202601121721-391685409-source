@@ -6,9 +6,9 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
    import com.sulake.core.window.components.class_1775;
    import com.sulake.core.window.components.class_1899;
    import com.sulake.core.window.events.WindowMouseEvent;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2528;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2751;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3207;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetErrorLogsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredClearErrorLogsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetRoomStatsMessageComposer;
    import com.sulake.habbo.roomevents.Util;
    import com.sulake.habbo.roomevents.wired_menu.WiredMenuController;
    import com.sulake.habbo.roomevents.wired_menu.roomlogs.WiredRoomLogsConfig;
@@ -18,12 +18,12 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
    import com.sulake.habbo.window.utils.tableview.TableView;
    import flash.utils.getTimer;
    import flash.utils.setTimeout;
-   import package_192.class_3529;
-   import package_97.WiredRoomStatsData;
-   import package_97.class_3373;
-   import package_97.class_3636;
-   import package_97.class_4089;
-   import package_99.class_2353;
+   import package_192.WiredGetRoomLogsComposer;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredRoomStatsData;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredErrorLogsEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredRoomStatsEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.class_4089;
+   import package_99.ProgressTreasureHuntMessageComposer;
    
    public class WiredMenuMonitorTab extends WiredMenuDefaultTab implements class_31
    {
@@ -74,8 +74,8 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
       {
          super(param1,param2);
          createLogTable();
-         addMessageEvent(new class_3636(onRoomStatsEvent));
-         addMessageEvent(new class_3373(onErrorLogsEvent));
+         addMessageEvent(new WiredRoomStatsEvent(onRoomStatsEvent));
+         addMessageEvent(new WiredErrorLogsEvent(onErrorLogsEvent));
          clearButton.addEventListener("WME_CLICK",onClearButtonClicked);
          logOverviewButton.addEventListener("WME_CLICK",onLogOverviewButtonClicked);
          monitorImage2.addEventListener("WME_CLICK",onClickMonitor);
@@ -124,11 +124,11 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
       private function requestData() : void
       {
          var_4210 = getTimer();
-         controller.send(new class_3207());
-         controller.send(new class_2528());
+         controller.send(new WiredGetRoomStatsMessageComposer());
+         controller.send(new WiredGetErrorLogsMessageComposer());
       }
       
-      private function onRoomStatsEvent(param1:class_3636) : void
+      private function onRoomStatsEvent(param1:WiredRoomStatsEvent) : void
       {
          var_99 = param1.getParser().roomStats;
          if(isLoading)
@@ -142,7 +142,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
          }
       }
       
-      private function onErrorLogsEvent(param1:class_3373) : void
+      private function onErrorLogsEvent(param1:WiredErrorLogsEvent) : void
       {
          var_1295 = param1.getParser().errors;
          if(isLoading)
@@ -160,14 +160,14 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
       private function onClearButtonClicked(param1:WindowMouseEvent) : void
       {
          clearButton.disable();
-         controller.send(new class_2751());
+         controller.send(new WiredClearErrorLogsMessageComposer());
          var_4656 = getTimer();
          setTimeout(updateButtonsUI,CLEAR_LOGS_TIMEOUT + 500);
       }
       
       private function onLogOverviewButtonClicked(param1:WindowMouseEvent) : void
       {
-         controller.roomLogListController.send(new class_3529(1,WiredRoomLogsConfig.PAGE_SIZE,-1,-1,""));
+         controller.roomLogListController.send(new WiredGetRoomLogsComposer(1,WiredRoomLogsConfig.PAGE_SIZE,-1,-1,""));
       }
       
       override protected function initializeInterface() : void
@@ -279,7 +279,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_monitor
          {
             return;
          }
-         controller.send(new class_2353("wf15",(param1.window as IStaticBitmapWrapperWindow).assetUri));
+         controller.send(new ProgressTreasureHuntMessageComposer("wf15",(param1.window as IStaticBitmapWrapperWindow).assetUri));
       }
       
       public function update(param1:uint) : void

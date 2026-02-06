@@ -5,10 +5,10 @@ package com.sulake.habbo.inventory
    import com.sulake.habbo.inventory.events.HabboUnseenItemsUpdatedEvent;
    import flash.events.IEventDispatcher;
    import flash.utils.Dictionary;
-   import package_114.class_2416;
-   import package_114.class_2905;
-   import package_26.class_2903;
-   import package_46.class_3565;
+   import com.sulake.habbo.communication.messages.outgoing.notifications.ResetUnseenItemIdsComposer;
+   import com.sulake.habbo.communication.messages.outgoing.notifications.ResetUnseenItemsComposer;
+   import com.sulake.habbo.communication.messages.incoming.notifications.UnseenItemsEvent;
+   import com.sulake.habbo.communication.messages.parser.notifications.UnseenItemsEventParser;
    
    public class UnseenItemTracker implements class_1954
    {
@@ -28,7 +28,7 @@ package com.sulake.habbo.inventory
          _inventory = param3;
          name_1 = param2;
          _unseenItems = new Dictionary();
-         _communication.addHabboConnectionMessageEvent(new class_2903(onUnseenItems));
+         _communication.addHabboConnectionMessageEvent(new UnseenItemsEvent(onUnseenItems));
       }
       
       public function dispose() : void
@@ -121,11 +121,11 @@ package com.sulake.habbo.inventory
          return 0;
       }
       
-      private function onUnseenItems(param1:class_2903) : void
+      private function onUnseenItems(param1:UnseenItemsEvent) : void
       {
          var _loc2_:Boolean = false;
          var _loc5_:Array = null;
-         var _loc3_:class_3565 = param1.getParser();
+         var _loc3_:UnseenItemsEventParser = param1.getParser();
          for each(var _loc4_ in _loc3_.getCategories())
          {
             _loc5_ = _loc3_.getItemsByCategory(_loc4_);
@@ -199,12 +199,12 @@ package com.sulake.habbo.inventory
       
       private function sendResetCategoryMessage(param1:int) : void
       {
-         _communication.connection.send(new class_2905(param1));
+         _communication.connection.send(new ResetUnseenItemsComposer(param1));
       }
       
       private function sendResetItemsMessage(param1:int, param2:Array) : void
       {
-         _communication.connection.send(new class_2416(param1,param2));
+         _communication.connection.send(new ResetUnseenItemIdsComposer(param1,param2));
       }
    }
 }

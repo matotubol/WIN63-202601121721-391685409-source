@@ -20,8 +20,8 @@ package com.sulake.habbo.ui.widget.crafting
    import com.sulake.habbo.ui.widget.crafting.utils.CraftingFurnitureItem;
    import com.sulake.habbo.window.class_38;
    import com.sulake.habbo.window.utils.IModalDialog;
-   import package_96.class_2347;
-   import package_96.class_2398;
+   import com.sulake.habbo.communication.messages.parser.crafting.class_2347;
+   import com.sulake.habbo.communication.messages.parser.crafting.class_2398;
    
    public class CraftingWidget extends RoomWidgetBase
    {

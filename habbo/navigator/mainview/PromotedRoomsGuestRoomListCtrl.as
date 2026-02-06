@@ -2,7 +2,7 @@ package com.sulake.habbo.navigator.mainview
 {
    import com.sulake.habbo.navigator.HabboNavigator;
    import com.sulake.habbo.navigator.domain.RoomSessionTags;
-   import package_42.class_4003;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_4003;
    
    public class PromotedRoomsGuestRoomListCtrl extends GuestRoomListCtrl
    {

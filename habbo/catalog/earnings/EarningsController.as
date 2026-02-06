@@ -20,12 +20,12 @@ package com.sulake.habbo.catalog.earnings
    import com.sulake.iid.IIDHabboToolbar;
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_129.class_2469;
-   import package_129.class_2915;
-   import package_129.class_2930;
-   import package_158.class_2697;
-   import package_158.class_3206;
-   import package_158.class_3482;
+   import com.sulake.habbo.communication.messages.incoming.vault.IncomeRewardNotificationMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.vault.IncomeRewardClaimResponseMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.vault.IncomeRewardStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.vault.IncomeRewardClaimResponseMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.vault.class_3206;
+   import com.sulake.habbo.communication.messages.parser.vault.IncomeRewardStatusMessageEventParser;
    
    public class EarningsController extends class_17 implements ILinkEventTracker, class_1839
    {
@@ -86,9 +86,9 @@ package com.sulake.habbo.catalog.earnings
       override protected function initComponent() : void
       {
          _messageEvents = new Vector.<IMessageEvent>(0);
-         addMessageEvent(new class_2930(onIncomeRewardStatusMessageEvent));
-         addMessageEvent(new class_2915(onIncomeRewardClaimResponseMessageEvent));
-         addMessageEvent(new class_2469(onIncomeRewardNotificationMessageEvent));
+         addMessageEvent(new IncomeRewardStatusMessageEvent(onIncomeRewardStatusMessageEvent));
+         addMessageEvent(new IncomeRewardClaimResponseMessageEvent(onIncomeRewardClaimResponseMessageEvent));
+         addMessageEvent(new IncomeRewardNotificationMessageEvent(onIncomeRewardNotificationMessageEvent));
          context.addLinkEventTracker(this);
       }
       
@@ -101,9 +101,9 @@ package com.sulake.habbo.catalog.earnings
          _messageEvents.push(_communicationManager.addHabboConnectionMessageEvent(param1));
       }
       
-      private function onIncomeRewardStatusMessageEvent(param1:class_2930) : void
+      private function onIncomeRewardStatusMessageEvent(param1:IncomeRewardStatusMessageEvent) : void
       {
-         var _loc3_:class_3482 = param1.getParser();
+         var _loc3_:IncomeRewardStatusMessageEventParser = param1.getParser();
          if(var_18 && !var_18.disposed)
          {
             var_18.onIncomeRewardDataReceived(_loc3_.data);
@@ -126,9 +126,9 @@ package com.sulake.habbo.catalog.earnings
          }
       }
       
-      private function onIncomeRewardClaimResponseMessageEvent(param1:class_2915) : void
+      private function onIncomeRewardClaimResponseMessageEvent(param1:IncomeRewardClaimResponseMessageEvent) : void
       {
-         var _loc2_:class_2697 = null;
+         var _loc2_:IncomeRewardClaimResponseMessageEventParser = null;
          if(var_18 && !var_18.disposed)
          {
             _loc2_ = param1.getParser();
@@ -136,7 +136,7 @@ package com.sulake.habbo.catalog.earnings
          }
       }
       
-      private function onIncomeRewardNotificationMessageEvent(param1:class_2469) : void
+      private function onIncomeRewardNotificationMessageEvent(param1:IncomeRewardNotificationMessageEvent) : void
       {
          _notifications.addItem("${notification.earning.new}","earning",null,"habboUI/open/vault");
          if(var_18)

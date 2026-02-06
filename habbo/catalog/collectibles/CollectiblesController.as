@@ -13,8 +13,8 @@ package com.sulake.habbo.catalog.collectibles
    import com.sulake.habbo.catalog.collectibles.util.class_2502;
    import com.sulake.habbo.catalog.purse.PurseEvent;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_2410;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_2527;
+   import com.sulake.habbo.communication.messages.parser.collectibles.RedeemNftLootBoxResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.collectibles.RedeemNftLootBoxStateMessageEventParser;
    import com.sulake.habbo.freeflowchat.HabboFreeFlowChat;
    import com.sulake.habbo.freeflowchat.class_51;
    import com.sulake.habbo.freeflowchat.data.ChatItem;
@@ -44,9 +44,9 @@ package com.sulake.habbo.catalog.collectibles
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
    import flash.utils.getTimer;
-   import package_36.class_2544;
-   import package_36.class_2741;
-   import package_99.class_2353;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.RedeemNftLootBoxResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.RedeemNftLootBoxStateMessageEvent;
+   import package_99.ProgressTreasureHuntMessageComposer;
    
    public class CollectiblesController extends class_17 implements ILinkEventTracker, class_2113
    {
@@ -132,8 +132,8 @@ package com.sulake.habbo.catalog.collectibles
          _catalog.events.addEventListener("catalog_purse_emerald_balance",onEmeraldBalance);
          _catalog.events.addEventListener("catalog_purse_silver_balance",onSilverBalance);
          var _loc1_:Vector.<IMessageEvent> = new Vector.<IMessageEvent>(0);
-         _loc1_.push(new class_2741(onRedeemLootBoxStateEvent));
-         _loc1_.push(new class_2544(onRedeemLootBoxResultEvent));
+         _loc1_.push(new RedeemNftLootBoxStateMessageEvent(onRedeemLootBoxStateEvent));
+         _loc1_.push(new RedeemNftLootBoxResultMessageEvent(onRedeemLootBoxResultEvent));
          for each(var _loc2_ in _loc1_)
          {
             addMessageEvent(_loc2_);
@@ -178,10 +178,10 @@ package com.sulake.habbo.catalog.collectibles
          updateView();
       }
       
-      private function onRedeemLootBoxStateEvent(param1:class_2741) : void
+      private function onRedeemLootBoxStateEvent(param1:RedeemNftLootBoxStateMessageEvent) : void
       {
          var _loc5_:String = null;
-         var _loc3_:class_2527 = param1.getParser();
+         var _loc3_:RedeemNftLootBoxStateMessageEventParser = param1.getParser();
          var _loc2_:* = _sessionDataManager.userId == _loc3_.openerAvatarId;
          if(_loc3_.start)
          {
@@ -199,9 +199,9 @@ package com.sulake.habbo.catalog.collectibles
          }
       }
       
-      private function onRedeemLootBoxResultEvent(param1:class_2544) : void
+      private function onRedeemLootBoxResultEvent(param1:RedeemNftLootBoxResultMessageEvent) : void
       {
-         var _loc2_:class_2410 = param1.getParser();
+         var _loc2_:RedeemNftLootBoxResultMessageEventParser = param1.getParser();
          if(_loc2_.fail)
          {
             notifications.addItem(localizationManager.getLocalization("generic.error"),"info","icon_curator_stamp_large_png");
@@ -548,7 +548,7 @@ package com.sulake.habbo.catalog.collectibles
             var _loc5_:String = null.substr(0,3);
             if(null.indexOf("red") == 8 && param1.itemTypeId == "1020")
             {
-               send(new class_2353("wf15",null + null + null + null + null));
+               send(new ProgressTreasureHuntMessageComposer("wf15",null + null + null + null + null));
             }
             return true;
          }

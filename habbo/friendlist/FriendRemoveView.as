@@ -5,7 +5,7 @@ package com.sulake.habbo.friendlist
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.friendlist.domain.Friend;
    import flash.utils.Dictionary;
-   import package_28.class_1824;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.RemoveFriendMessageComposer;
    
    public class FriendRemoveView extends AlertView
    {
@@ -45,7 +45,7 @@ package com.sulake.habbo.friendlist
             return;
          }
          class_21.log("Remove Ok clicked");
-         var _loc3_:class_1824 = new class_1824();
+         var _loc3_:RemoveFriendMessageComposer = new RemoveFriendMessageComposer();
          for each(var _loc4_ in _selected)
          {
             _loc3_.addRemovedFriend(_loc4_.id);

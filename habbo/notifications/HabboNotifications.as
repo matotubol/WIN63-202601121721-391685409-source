@@ -38,7 +38,7 @@ package com.sulake.habbo.notifications
    import com.sulake.iid.IIDSessionDataManager;
    import flash.display.BitmapData;
    import package_69.JSONDecoder;
-   import package_9.class_1890;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetMOTDMessageComposer;
    
    public class HabboNotifications extends class_17 implements class_536
    {
@@ -284,7 +284,7 @@ package com.sulake.habbo.notifications
          {
             var_1826.setFeedEnabled(true);
          }
-         _communication.connection.send(new class_1890());
+         _communication.connection.send(new GetMOTDMessageComposer());
       }
       
       public function get communication() : class_57

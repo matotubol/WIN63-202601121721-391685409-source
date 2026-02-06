@@ -33,8 +33,8 @@ package com.sulake.habbo.session
    import flash.events.Event;
    import flash.geom.Point;
    import flash.system.System;
-   import package_39.class_2199;
-   import package_51.class_2015;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomVisualizationSettingsEvent;
+   import com.sulake.habbo.communication.messages.outgoing.roomdirectory.RoomNetworkOpenConnectionMessageComposer;
    
    public class RoomSessionManager extends class_17 implements IRoomSessionManager, IRoomHandlerListener
    {
@@ -121,7 +121,7 @@ package com.sulake.habbo.session
          createHandlers();
          if(var_2667 && _communication != null)
          {
-            _communication.addHabboConnectionMessageEvent(new class_2199(onRoomVisualizationSettings));
+            _communication.addHabboConnectionMessageEvent(new RoomVisualizationSettingsEvent(onRoomVisualizationSettings));
          }
          executePendingSessionRequest();
       }
@@ -203,7 +203,7 @@ package com.sulake.habbo.session
          }
       }
       
-      private function onRoomVisualizationSettings(param1:class_2199) : void
+      private function onRoomVisualizationSettings(param1:RoomVisualizationSettingsEvent) : void
       {
          if(var_3965 || !var_2667)
          {
@@ -269,7 +269,7 @@ package com.sulake.habbo.session
          _loc3_.roomId = 1;
          _loc3_.roomPassword = "";
          _loc3_.habboTracking = _habboTracking;
-         _loc3_.openConnectionComposer = new class_2015(param1,param2);
+         _loc3_.openConnectionComposer = new RoomNetworkOpenConnectionMessageComposer(param1,param2);
          return createSession(_loc3_);
       }
       

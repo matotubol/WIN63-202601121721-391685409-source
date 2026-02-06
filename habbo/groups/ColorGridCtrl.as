@@ -9,7 +9,7 @@ package com.sulake.habbo.groups
    import com.sulake.core.window.events.class_1758;
    import flash.display.BitmapData;
    import flash.geom.ColorTransform;
-   import package_3.class_2927;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2927;
    
    public class ColorGridCtrl
    {

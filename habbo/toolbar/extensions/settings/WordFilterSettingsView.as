@@ -10,13 +10,13 @@ package com.sulake.habbo.toolbar.extensions.settings
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.toolbar.HabboToolbar;
-   import package_126.class_2455;
-   import package_126.class_2928;
-   import package_126.class_3127;
+   import package_126.RemoveFromCustomFilterMessageComposer;
+   import package_126.AddToCustomFilterMessageComposer;
+   import package_126.GetCustomFilterMessageComposer;
    import package_200.GetCustomFilterResultMessageEventParser;
    import package_200.ModifyCustomFilterResultMessageEventParser;
-   import package_93.class_2342;
-   import package_93.class_2519;
+   import package_93.ModifyCustomFilterResultMessageEvent;
+   import package_93.GetCustomFilterResultMessageEvent;
    
    public class WordFilterSettingsView implements class_13
    {
@@ -41,8 +41,8 @@ package com.sulake.habbo.toolbar.extensions.settings
          _toolbar = param1;
          var_516 = [];
          _messageEvents = new Vector.<IMessageEvent>(0);
-         addMessageEvent(new class_2342(onModifyCustomFilter));
-         addMessageEvent(new class_2519(onCustomWords));
+         addMessageEvent(new ModifyCustomFilterResultMessageEvent(onModifyCustomFilter));
+         addMessageEvent(new GetCustomFilterResultMessageEvent(onCustomWords));
          prepareWindow();
       }
       
@@ -59,10 +59,10 @@ package com.sulake.habbo.toolbar.extensions.settings
          _window.findChildByName("back_btn").addEventListener("WME_CLICK",onCloseButtonClick);
          var_1078 = _window.findChildByName("add_word_input") as ITextFieldWindow;
          var_490 = IItemListWindow(_window.findChildByName("wordlist"));
-         _toolbar.connection.send(new class_3127());
+         _toolbar.connection.send(new GetCustomFilterMessageComposer());
       }
       
-      private function onModifyCustomFilter(param1:class_2342) : void
+      private function onModifyCustomFilter(param1:ModifyCustomFilterResultMessageEvent) : void
       {
          var _loc2_:ModifyCustomFilterResultMessageEventParser = param1.getParser();
          if(_loc2_.result == 1)
@@ -80,7 +80,7 @@ package com.sulake.habbo.toolbar.extensions.settings
          refreshBadWords();
       }
       
-      private function onCustomWords(param1:class_2519) : void
+      private function onCustomWords(param1:GetCustomFilterResultMessageEvent) : void
       {
          var _loc3_:int = 0;
          var _loc2_:GetCustomFilterResultMessageEventParser = param1.getParser();
@@ -155,7 +155,7 @@ package com.sulake.habbo.toolbar.extensions.settings
          var _loc2_:String = var_1078.text;
          if(_loc2_ && _loc2_.length > 0 && var_516.indexOf(_loc2_) == -1)
          {
-            _toolbar.connection.send(new class_2928(_loc2_));
+            _toolbar.connection.send(new AddToCustomFilterMessageComposer(_loc2_));
             var_1078.text = "";
             var_361 = -1;
          }
@@ -174,7 +174,7 @@ package com.sulake.habbo.toolbar.extensions.settings
          }
          var _loc3_:String = _loc2_.findChildByName("text").caption;
          var_361 = -1;
-         _toolbar.connection.send(new class_2455(_loc3_));
+         _toolbar.connection.send(new RemoveFromCustomFilterMessageComposer(_loc3_));
       }
       
       private function refreshColorsAfterClick(param1:IItemListWindow) : void

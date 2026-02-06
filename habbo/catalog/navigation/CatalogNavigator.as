@@ -11,7 +11,7 @@ package com.sulake.habbo.catalog.navigation
    import com.sulake.habbo.catalog.event.CatalogEvent;
    import com.sulake.habbo.catalog.navigation.events.CatalogPageOpenedEvent;
    import flash.utils.Dictionary;
-   import package_10.class_2971;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2971;
    
    public class CatalogNavigator implements class_1737
    {

@@ -9,12 +9,12 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.WindowLinkEvent;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_1942;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2798;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3469;
+   import com.sulake.habbo.communication.messages.outgoing.quest.ActivateQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.AcceptQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.RejectQuestMessageComposer;
    import com.sulake.habbo.utils.HabboWebTools;
    import flash.geom.Point;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class QuestDetails implements class_13
    {
@@ -269,11 +269,11 @@ package com.sulake.habbo.quest
          {
             if(_questEngine.currentlyInRoom)
             {
-               _questEngine.send(new class_2798(var_147.id));
+               _questEngine.send(new AcceptQuestMessageComposer(var_147.id));
             }
             else
             {
-               _questEngine.send(new class_1942(var_147.id));
+               _questEngine.send(new ActivateQuestMessageComposer(var_147.id));
             }
             _window.visible = false;
             _questEngine.questController.seasonalCalendarWindow.close();
@@ -292,7 +292,7 @@ package com.sulake.habbo.quest
             {
                return;
             }
-            _questEngine.send(new class_3469(var_147.id));
+            _questEngine.send(new RejectQuestMessageComposer(var_147.id));
          }
       }
    }

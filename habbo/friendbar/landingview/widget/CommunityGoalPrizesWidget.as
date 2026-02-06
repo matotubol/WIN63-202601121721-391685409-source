@@ -10,10 +10,10 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.habbo.friendbar.landingview.layout.CommonWidgetSettings;
    import com.sulake.habbo.friendbar.landingview.layout.WidgetContainerLayout;
    import com.sulake.habbo.window.widgets.class_2478;
-   import package_39.class_1884;
-   import package_4.class_2005;
-   import package_62.class_2885;
-   import package_62.class_4083;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.UserChangeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.CommunityGoalProgressMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_4083;
    
    public class CommunityGoalPrizesWidget implements ILandingViewWidget, ISettingsAwareWidget
    {
@@ -47,9 +47,9 @@ package com.sulake.habbo.friendbar.landingview.widget
       public function initialize() : void
       {
          _container = class_1812(_landingView.getXmlWindow("achievement_competition_prizes"));
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_2005(onUserObject));
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_2885(onCommunityGoalProgress));
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_1884(onUserChange));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new UserObjectEvent(onUserObject));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new CommunityGoalProgressMessageEvent(onCommunityGoalProgress));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new UserChangeMessageEvent(onUserChange));
       }
       
       public function refresh() : void
@@ -123,7 +123,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          return var_24.rewardUserLimits[param1 - 1];
       }
       
-      private function onCommunityGoalProgress(param1:class_2885) : void
+      private function onCommunityGoalProgress(param1:CommunityGoalProgressMessageEvent) : void
       {
          var_24 = param1.getParser().data;
          refreshContent();
@@ -153,13 +153,13 @@ package com.sulake.habbo.friendbar.landingview.widget
          return "${" + _loc2_ + "}";
       }
       
-      private function onUserObject(param1:class_2005) : void
+      private function onUserObject(param1:UserObjectEvent) : void
       {
          var_975 = param1.getParser().figure;
          refreshAvatarInfo();
       }
       
-      private function onUserChange(param1:class_1884) : void
+      private function onUserChange(param1:UserChangeMessageEvent) : void
       {
          if(param1 != null && param1.id == -1)
          {

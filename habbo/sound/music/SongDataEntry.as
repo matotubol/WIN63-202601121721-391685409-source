@@ -2,7 +2,7 @@ package com.sulake.habbo.sound.music
 {
    import com.sulake.habbo.sound.ISongInfo;
    import com.sulake.habbo.sound.class_1814;
-   import package_154.class_3136;
+   import com.sulake.habbo.communication.messages.incoming.sound.class_3136;
    
    public class SongDataEntry extends class_3136 implements ISongInfo
    {

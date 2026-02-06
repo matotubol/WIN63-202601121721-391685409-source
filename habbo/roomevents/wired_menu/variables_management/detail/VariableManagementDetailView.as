@@ -25,8 +25,8 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
    import com.sulake.habbo.window.utils.tableview.ITableObject;
    import com.sulake.habbo.window.utils.tableview.TableColumn;
    import com.sulake.habbo.window.utils.tableview.TableView;
-   import package_117.class_2422;
-   import package_117.class_2567;
+   import package_117.WiredSetUserPermanentVariableComposer;
+   import package_117.WiredGetUserPermanentVariablesComposer;
    import package_188.VariableList;
    import package_189.WiredVariable;
    import package_201.WiredUserPermanentVariablesList;
@@ -80,7 +80,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
       private function onRefreshClick(param1:WindowMouseEvent) : void
       {
          var _loc2_:WiredUserPermanentVariablesList = var_55.data;
-         var_55.send(new class_2567(_loc2_.entityType,_loc2_.entityId));
+         var_55.send(new WiredGetUserPermanentVariablesComposer(_loc2_.entityType,_loc2_.entityId));
          _loadingIcon.setVisible(loadingIconWindow,true);
       }
       
@@ -168,7 +168,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
          var _loc7_:int = Util.getIntFromString(param3,-2147483648,true);
          if(_loc7_ != -2147483648)
          {
-            var_55.send(new class_2422(_loc4_.entityType,_loc4_.entityId,_loc5_.variableId,_loc7_,0));
+            var_55.send(new WiredSetUserPermanentVariableComposer(_loc4_.entityType,_loc4_.entityId,_loc5_.variableId,_loc7_,0));
             _loadingIcon.setVisible(loadingIconWindow,true);
          }
       }
@@ -230,7 +230,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
             return;
          }
          var _loc2_:WiredUserPermanentVariablesList = var_55.data;
-         var_55.send(new class_2422(_loc2_.entityType,_loc2_.entityId,_loc3_.variableId,0,2));
+         var_55.send(new WiredSetUserPermanentVariableComposer(_loc2_.entityType,_loc2_.entityId,_loc3_.variableId,0,2));
          _loadingIcon.setVisible(loadingIconWindow,true);
       }
       
@@ -248,7 +248,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
             _loc4_ = int(valueInput.text);
          }
          var _loc2_:WiredUserPermanentVariablesList = var_55.data;
-         var_55.send(new class_2422(_loc2_.entityType,_loc2_.entityId,_loc3_.variableId,_loc4_,1));
+         var_55.send(new WiredSetUserPermanentVariableComposer(_loc2_.entityType,_loc2_.entityId,_loc3_.variableId,_loc4_,1));
          _loadingIcon.setVisible(loadingIconWindow,true);
          createVariableBubble.visible = false;
          valueInput.text = "0";

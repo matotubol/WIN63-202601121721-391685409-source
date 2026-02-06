@@ -58,14 +58,14 @@ package com.sulake.habbo.freeflowchat
    import flash.geom.Point;
    import flash.geom.Rectangle;
    import flash.utils.getTimer;
-   import package_12.class_1767;
-   import package_12.class_1802;
-   import package_27.class_1809;
-   import package_32.class_2164;
-   import package_39.class_1980;
-   import package_42.class_2168;
-   import package_61.class_2091;
-   import package_64.class_2121;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetChatStylePreferenceComposer;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetChatPreferencesMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.preferences.AccountPreferencesEvent;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_2164;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.navigator.GetGuestRoomResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.chat.RoomChatSettingsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.perk.PerkAllowancesMessageEvent;
    
    public class HabboFreeFlowChat extends class_17 implements class_51
    {
@@ -216,14 +216,14 @@ package com.sulake.habbo.freeflowchat
       
       override protected function initComponent() : void
       {
-         _communication.addHabboConnectionMessageEvent(new class_2168(onGuestRoomData));
-         _communication.addHabboConnectionMessageEvent(new class_2121(onPerkAllowances));
-         _communication.addHabboConnectionMessageEvent(new class_1980(onRoomEnter));
-         _communication.addHabboConnectionMessageEvent(new class_1809(onAccountPreferences));
-         _communication.addHabboConnectionMessageEvent(new class_2091(onRoomChatSettings));
+         _communication.addHabboConnectionMessageEvent(new GetGuestRoomResultEvent(onGuestRoomData));
+         _communication.addHabboConnectionMessageEvent(new PerkAllowancesMessageEvent(onPerkAllowances));
+         _communication.addHabboConnectionMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
+         _communication.addHabboConnectionMessageEvent(new AccountPreferencesEvent(onAccountPreferences));
+         _communication.addHabboConnectionMessageEvent(new RoomChatSettingsMessageEvent(onRoomChatSettings));
       }
       
-      private function onPerkAllowances(param1:class_2121) : void
+      private function onPerkAllowances(param1:PerkAllowancesMessageEvent) : void
       {
          var _loc2_:Boolean = var_1579;
          var_1579 = true;
@@ -267,7 +267,7 @@ package com.sulake.habbo.freeflowchat
          }
       }
       
-      private function onGuestRoomData(param1:class_2168) : void
+      private function onGuestRoomData(param1:GetGuestRoomResultEvent) : void
       {
          if(var_990 && !var_3072)
          {
@@ -281,13 +281,13 @@ package com.sulake.habbo.freeflowchat
          }
       }
       
-      private function onRoomEnter(param1:class_1980) : void
+      private function onRoomEnter(param1:RoomEntryInfoMessageEvent) : void
       {
          var_3072 = false;
          clear();
       }
       
-      private function onRoomChatSettings(param1:class_2091) : void
+      private function onRoomChatSettings(param1:RoomChatSettingsMessageEvent) : void
       {
          var_2178 = param1.getParser().chatSettings;
          if(_isInRoom && var_549)
@@ -296,7 +296,7 @@ package com.sulake.habbo.freeflowchat
          }
       }
       
-      private function onAccountPreferences(param1:class_1809) : void
+      private function onAccountPreferences(param1:AccountPreferencesEvent) : void
       {
          setIsDisabledInPreferences(param1.getParser().freeFlowChatDisabled,true);
          var_2641 = param1.getParser().preferedChatStyle;
@@ -564,7 +564,7 @@ package com.sulake.habbo.freeflowchat
          var_3771 = param1;
          if(!param2)
          {
-            _communication.connection.send(new class_1802(var_3771));
+            _communication.connection.send(new SetChatPreferencesMessageComposer(var_3771));
          }
       }
       
@@ -585,7 +585,7 @@ package com.sulake.habbo.freeflowchat
       public function set preferedChatStyle(param1:int) : void
       {
          var_2641 = param1;
-         _communication.connection.send(new class_1767(var_2641));
+         _communication.connection.send(new SetChatStylePreferenceComposer(var_2641));
       }
       
       public function clear() : void

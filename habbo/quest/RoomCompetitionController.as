@@ -17,14 +17,14 @@ package com.sulake.habbo.quest
    import flash.geom.Point;
    import flash.geom.Rectangle;
    import flash.utils.Timer;
-   import package_140.class_2687;
-   import package_140.class_3081;
-   import package_39.class_1980;
-   import package_50.class_1996;
-   import package_53.class_3520;
-   import package_81.class_2348;
-   import package_81.class_3173;
-   import package_81.class_3384;
+   import com.sulake.habbo.communication.messages.incoming.competition.CompetitionVotingInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.competition.CompetitionEntrySubmitResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.engine.RoomEntryInfoMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.competition.VoteForRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.competition.SubmitRoomToCompetitionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.competition.RoomCompetitionInitMessageComposer;
    
    public class RoomCompetitionController implements class_13, class_1829
    {
@@ -110,7 +110,7 @@ package com.sulake.habbo.quest
          }
       }
       
-      public function onCompetitionVotingInfo(param1:class_2687) : void
+      public function onCompetitionVotingInfo(param1:CompetitionVotingInfoMessageEvent) : void
       {
          var_3773 = param1.getParser().votesRemaining;
          var _loc2_:Boolean = param1.getParser().isVotingAllowedForUser;
@@ -122,7 +122,7 @@ package com.sulake.habbo.quest
          getButtonInfoText().visible = _loc2_;
       }
       
-      public function onCompetitionEntrySubmitResult(param1:class_3081) : void
+      public function onCompetitionEntrySubmitResult(param1:CompetitionEntrySubmitResultMessageEvent) : void
       {
          if(param1.getParser().result == 5)
          {
@@ -208,7 +208,7 @@ package com.sulake.habbo.quest
          _window.activate();
       }
       
-      private function refreshRequiredFurnis(param1:class_3081) : void
+      private function refreshRequiredFurnis(param1:CompetitionEntrySubmitResultMessageEvent) : void
       {
          var _loc3_:int = 0;
          var _loc5_:String = null;
@@ -295,28 +295,28 @@ package com.sulake.habbo.quest
          close();
       }
       
-      public function onRoomEnter(param1:class_1980) : void
+      public function onRoomEnter(param1:RoomEntryInfoMessageEvent) : void
       {
          close();
-         var _loc3_:class_1996 = param1.getParser();
+         var _loc3_:RoomEntryInfoMessageEventParser = param1.getParser();
          var _loc2_:Boolean = _questEngine.getInteger("new.identity",0) == 0 || !_questEngine.getBoolean("new.identity.hide.ui");
          if(!_dontShowAgain && _loc2_)
          {
             _submit = _loc3_.owner;
-            _questEngine.send(new class_3384());
+            _questEngine.send(new RoomCompetitionInitMessageComposer());
          }
       }
       
       public function sendRoomCompetitionInit() : void
       {
-         _questEngine.send(new class_3384());
+         _questEngine.send(new RoomCompetitionInitMessageComposer());
       }
       
       public function onContextChanged() : void
       {
          if(_window != null && Boolean(_window.visible) && _submit)
          {
-            _questEngine.send(new class_3173(var_897,0));
+            _questEngine.send(new SubmitRoomToCompetitionMessageComposer(var_897,0));
          }
       }
       
@@ -378,7 +378,7 @@ package com.sulake.habbo.quest
          if(param1.type == "WME_CLICK")
          {
             _questEngine.tracking.trackTalentTrackOpen(_questEngine.sessionDataManager.currentTalentTrack,"roomcompetition");
-            _questEngine.send(new class_3520(_questEngine.sessionDataManager.currentTalentTrack));
+            _questEngine.send(new GetTalentTrackMessageComposer(_questEngine.sessionDataManager.currentTalentTrack));
          }
       }
       
@@ -386,7 +386,7 @@ package com.sulake.habbo.quest
       {
          if(param1.type == "WME_CLICK")
          {
-            _questEngine.send(new class_3173(var_897,1));
+            _questEngine.send(new SubmitRoomToCompetitionMessageComposer(var_897,1));
          }
       }
       
@@ -394,7 +394,7 @@ package com.sulake.habbo.quest
       {
          if(param1.type == "WME_CLICK")
          {
-            _questEngine.send(new class_3173(var_897,2));
+            _questEngine.send(new SubmitRoomToCompetitionMessageComposer(var_897,2));
          }
       }
       
@@ -402,7 +402,7 @@ package com.sulake.habbo.quest
       {
          if(param1.type == "WME_CLICK")
          {
-            _questEngine.send(new class_3173(var_897,3));
+            _questEngine.send(new SubmitRoomToCompetitionMessageComposer(var_897,3));
          }
       }
       
@@ -410,7 +410,7 @@ package com.sulake.habbo.quest
       {
          if(param1.type == "WME_CLICK")
          {
-            _questEngine.send(new class_2348(var_897));
+            _questEngine.send(new VoteForRoomMessageComposer(var_897));
          }
       }
       

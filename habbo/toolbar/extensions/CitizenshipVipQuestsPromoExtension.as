@@ -9,12 +9,12 @@ package com.sulake.habbo.toolbar.extensions
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.components.class_1993;
    import com.sulake.core.window.events.WindowMouseEvent;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3170;
+   import com.sulake.habbo.communication.messages.outgoing.quest.StartCampaignMessageComposer;
    import com.sulake.habbo.toolbar.HabboToolbar;
    import com.sulake.habbo.toolbar.IExtensionView;
    import com.sulake.habbo.window.class_38;
    import flash.events.IEventDispatcher;
-   import package_64.class_2477;
+   import com.sulake.habbo.communication.messages.incoming.perk.CitizenshipVipOfferPromoEnabledEvent;
    
    public class CitizenshipVipQuestsPromoExtension
    {
@@ -52,7 +52,7 @@ package com.sulake.habbo.toolbar.extensions
          _localization = param5;
          var_37 = param6;
          var_430 = param1.extensionView;
-         var_2129 = new class_2477(onCitizenshipQuestPromoEnabled);
+         var_2129 = new CitizenshipVipOfferPromoEnabledEvent(onCitizenshipQuestPromoEnabled);
          var_37.addMessageEvent(var_2129);
          _vipQuestsCampaignName = param1.getProperty("citizenship.vip.tutorial.quest.campaign.name");
       }
@@ -105,7 +105,7 @@ package com.sulake.habbo.toolbar.extensions
       {
          if(var_37)
          {
-            var_37.send(new class_3170(_vipQuestsCampaignName));
+            var_37.send(new StartCampaignMessageComposer(_vipQuestsCampaignName));
          }
          destroyWindow();
       }

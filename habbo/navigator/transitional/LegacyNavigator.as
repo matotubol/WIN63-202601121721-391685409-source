@@ -35,7 +35,7 @@ package com.sulake.habbo.navigator.transitional
    import flash.events.IEventDispatcher;
    import flash.geom.Point;
    import flash.utils.Dictionary;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class LegacyNavigator implements class_42
    {

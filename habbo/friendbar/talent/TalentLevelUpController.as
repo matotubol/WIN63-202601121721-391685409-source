@@ -8,11 +8,11 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.core.window.components.class_2010;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_153.class_2665;
-   import package_187.class_3707;
-   import package_187.class_3878;
-   import package_187.class_4056;
-   import package_53.class_3520;
+   import com.sulake.habbo.communication.messages.incoming.talent.TalentLevelUpMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.talent.TalentLevelUpMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3878;
+   import com.sulake.habbo.communication.messages.parser.talent.class_4056;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
    
    public class TalentLevelUpController implements class_13
    {
@@ -69,12 +69,12 @@ package com.sulake.habbo.friendbar.talent
       
       public function initialize() : void
       {
-         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new class_2665(onTalentLevelUp));
+         _habboTalent.communicationManager.addHabboConnectionMessageEvent(new TalentLevelUpMessageEvent(onTalentLevelUp));
       }
       
-      private function onTalentLevelUp(param1:class_2665) : void
+      private function onTalentLevelUp(param1:TalentLevelUpMessageEvent) : void
       {
-         var _loc2_:class_3707 = param1.getParser();
+         var _loc2_:TalentLevelUpMessageEventParser = param1.getParser();
          if(_loc2_.level == 1 && _loc2_.talentTrackName == "helper" && _habboTalent.citizenshipEnabled)
          {
             return;
@@ -172,7 +172,7 @@ package com.sulake.habbo.friendbar.talent
             case "talent_button":
                closeWindow();
                _habboTalent.tracking.trackTalentTrackOpen(var_3759,"levelup");
-               _habboTalent.send(new class_3520(var_3759));
+               _habboTalent.send(new GetTalentTrackMessageComposer(var_3759));
          }
       }
    }

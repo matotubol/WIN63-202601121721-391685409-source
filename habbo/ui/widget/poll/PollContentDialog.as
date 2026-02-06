@@ -12,8 +12,8 @@ package com.sulake.habbo.ui.widget.poll
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
    import com.sulake.habbo.ui.widget.messages.RoomWidgetPollMessage;
-   import package_133.class_3757;
-   import package_133.class_3851;
+   import com.sulake.habbo.communication.messages.parser.poll.class_3757;
+   import com.sulake.habbo.communication.messages.parser.poll.class_3851;
    
    public class PollContentDialog implements class_3726
    {

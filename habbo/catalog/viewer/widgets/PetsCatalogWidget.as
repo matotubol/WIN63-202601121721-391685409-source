@@ -24,7 +24,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import flash.display.BitmapData;
    import flash.geom.Matrix;
    import flash.geom.Point;
-   import package_6.class_2908;
+   import com.sulake.habbo.communication.messages.parser.catalog.class_2908;
    
    public class PetsCatalogWidget extends CatalogWidget implements class_2612, class_1829
    {

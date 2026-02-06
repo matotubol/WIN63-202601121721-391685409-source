@@ -3,7 +3,7 @@ package com.sulake.habbo.roomevents.wired_setup
    import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2397;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.PresetManager;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.styles.WiredStyle;
-   import package_3.class_2022;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipsMessageEvent;
    
    public interface class_1928
    {
@@ -54,7 +54,7 @@ package com.sulake.habbo.roomevents.wired_setup
       
       function update(param1:int = 0, param2:int = -1) : void;
       
-      function onGuildMemberships(param1:class_2022) : void;
+      function onGuildMemberships(param1:GuildMembershipsMessageEvent) : void;
       
       function clearCache() : void;
    }

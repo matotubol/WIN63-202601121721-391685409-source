@@ -28,15 +28,15 @@ package com.sulake.habbo.catalog.clubcenter
    import com.sulake.iid.IIDSessionDataManager;
    import flash.display.Stage;
    import flash.utils.getTimer;
-   import package_10.class_2167;
-   import package_109.class_2445;
-   import package_13.class_3176;
-   import package_168.class_2864;
-   import package_3.class_2639;
-   import package_3.class_3429;
-   import package_43.class_3013;
-   import package_8.class_3446;
-   import package_9.class_2616;
+   import com.sulake.habbo.communication.messages.incoming.catalog.ClubGiftInfoEvent;
+   import com.sulake.habbo.communication.messages.parser.inventory.badges.BadgesEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetClubGiftMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.BadgesEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.ScrSendKickbackInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3429;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.GetBadgesComposer;
+   import com.sulake.habbo.communication.messages.parser.users.ScrSendKickbackInfoMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.users.ScrGetKickbackInfoMessageComposer;
    
    public class HabboClubCenter extends class_17 implements ILinkEventTracker, IOfferExtension
    {
@@ -115,9 +115,9 @@ package com.sulake.habbo.catalog.clubcenter
       override protected function initComponent() : void
       {
          _messageEvents = new Vector.<IMessageEvent>(0);
-         addMessageEvent(new class_2167(onClubGiftInfo));
-         addMessageEvent(new class_2639(onKickbackInfoMessageEvent));
-         addMessageEvent(new class_2864(onBadges));
+         addMessageEvent(new ClubGiftInfoEvent(onClubGiftInfo));
+         addMessageEvent(new ScrSendKickbackInfoMessageEvent(onKickbackInfoMessageEvent));
+         addMessageEvent(new BadgesEvent(onBadges));
          context.addLinkEventTracker(this);
          if(getBoolean("offers.enabled") && getBoolean("offers.habboclub.enabled"))
          {
@@ -220,16 +220,16 @@ package com.sulake.habbo.catalog.clubcenter
          _messageEvents.push(_communicationManager.addHabboConnectionMessageEvent(param1));
       }
       
-      private function onKickbackInfoMessageEvent(param1:class_2639) : void
+      private function onKickbackInfoMessageEvent(param1:ScrSendKickbackInfoMessageEvent) : void
       {
-         var _loc2_:class_3446 = param1.getParser();
+         var _loc2_:ScrSendKickbackInfoMessageEventParser = param1.getParser();
          var_24 = _loc2_.data;
          var_2187 = false;
          var_3833 = getTimer();
          populate();
       }
       
-      private function onClubGiftInfo(param1:class_2167) : void
+      private function onClubGiftInfo(param1:ClubGiftInfoEvent) : void
       {
          var_2402 = param1.getParser().giftsAvailable;
          populate();
@@ -247,7 +247,7 @@ package com.sulake.habbo.catalog.clubcenter
       
       public function onBadges(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2445 = (param1 as class_2864).getParser();
+         var _loc3_:BadgesEventParser = (param1 as BadgesEvent).getParser();
          if(var_2561 == null)
          {
             var_2561 = new Vector.<class_55>(_loc3_.totalFragments,true);
@@ -271,9 +271,9 @@ package com.sulake.habbo.catalog.clubcenter
       private function updateData() : void
       {
          var_2187 = true;
-         _communicationManager.connection.send(new class_3013());
-         _communicationManager.connection.send(new class_3176());
-         _communicationManager.connection.send(new class_2616());
+         _communicationManager.connection.send(new GetBadgesComposer());
+         _communicationManager.connection.send(new GetClubGiftMessageComposer());
+         _communicationManager.connection.send(new ScrGetKickbackInfoMessageComposer());
       }
       
       private function populate() : void

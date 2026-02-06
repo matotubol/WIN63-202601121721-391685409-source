@@ -6,7 +6,7 @@ package com.sulake.habbo.groups
    import com.sulake.core.window.components.ISelectorWindow;
    import com.sulake.core.window.components.class_1885;
    import com.sulake.core.window.events.class_1758;
-   import package_3.class_1818;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1818;
    
    public class class_2447
    {

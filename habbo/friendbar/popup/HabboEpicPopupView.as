@@ -11,7 +11,7 @@ package com.sulake.habbo.friendbar.popup
    import com.sulake.habbo.friendbar.class_1847;
    import com.sulake.habbo.friendbar.view.AbstractView;
    import com.sulake.iid.IIDHabboCommunicationManager;
-   import package_62.class_2900;
+   import com.sulake.habbo.communication.messages.incoming.quest.EpicPopupMessageEvent;
    
    public class HabboEpicPopupView extends AbstractView implements class_1847
    {
@@ -45,10 +45,10 @@ package com.sulake.habbo.friendbar.popup
       
       override protected function initComponent() : void
       {
-         _communicationManager.addHabboConnectionMessageEvent(new class_2900(onEpicPopupMessageEvent));
+         _communicationManager.addHabboConnectionMessageEvent(new EpicPopupMessageEvent(onEpicPopupMessageEvent));
       }
       
-      private function onEpicPopupMessageEvent(param1:class_2900) : void
+      private function onEpicPopupMessageEvent(param1:EpicPopupMessageEvent) : void
       {
          showPopup(param1.getParser().imageUri);
       }

@@ -9,7 +9,7 @@ package com.sulake.habbo.avatar
    import flash.events.Event;
    import flash.net.URLRequest;
    import flash.utils.ByteArray;
-   import package_74.class_2217;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_2217;
    
    public class EffectAssetDownloadLibrary extends EventDispatcherWrapper implements class_2217
    {

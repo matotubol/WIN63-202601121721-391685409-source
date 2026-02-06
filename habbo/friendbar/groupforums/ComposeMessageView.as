@@ -10,9 +10,9 @@ package com.sulake.habbo.friendbar.groupforums
    import flash.events.TimerEvent;
    import flash.utils.Timer;
    import flash.utils.getTimer;
-   import package_155.class_2670;
-   import package_155.class_3434;
-   import package_155.class_3590;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_2670;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3434;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3590;
    
    public class ComposeMessageView
    {

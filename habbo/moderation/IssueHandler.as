@@ -12,11 +12,11 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
    import flash.utils.getTimer;
-   import package_122.class_2920;
-   import package_122.class_3539;
-   import package_18.class_2218;
-   import package_18.class_3499;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModToolPreferencesComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetCfhChatlogMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_2218;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_3499;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class IssueHandler implements ITrackedWindow, IIssueHandler, class_31
    {
@@ -220,7 +220,7 @@ package com.sulake.habbo.moderation
          }
          _chatFrame = class_1812(_window.findChildByName("chat_cont"));
          var_1387 = IItemListWindow(_chatFrame.findChildByName("evidence_list"));
-         var_1783 = new ChatlogCtrl(new class_3539(var_821.issueId),_moderationManager,3,var_821.issueId,var_821,_chatFrame,var_1387,true);
+         var_1783 = new ChatlogCtrl(new GetCfhChatlogMessageComposer(var_821.issueId),_moderationManager,3,var_821.issueId,var_821,_chatFrame,var_1387,true);
          var_1783.show();
          class_21.log("HARASSER: " + var_164.reportedUserId);
          updateIssueList();
@@ -234,7 +234,7 @@ package com.sulake.habbo.moderation
          _lastWindowWidth = _window.width;
          var_1319 = _window.height;
          _moderationManager.issueManager.setToolPreferences(var_1239,var_1204,_lastWindowWidth,var_1319);
-         _moderationManager.connection.send(new class_2920(var_1239,var_1204,_lastWindowWidth,var_1319));
+         _moderationManager.connection.send(new ModToolPreferencesComposer(var_1239,var_1204,_lastWindowWidth,var_1319));
       }
       
       private function windowDimensionsChanged() : Boolean

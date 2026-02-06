@@ -59,10 +59,10 @@ package com.sulake.habbo.game.snowwar
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
    import flash.events.Event;
-   import package_115.*;
-   import package_137.*;
-   import package_41.*;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.outgoing.game.arena.*;
+   import com.sulake.habbo.communication.messages.outgoing.game.ingame.*;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.*;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class SnowWarEngine extends class_17 implements class_31
    {
@@ -583,7 +583,7 @@ package com.sulake.habbo.game.snowwar
       public function startServerGame(param1:String) : void
       {
          initGameDirectoryConnection();
-         send(new class_1903(param1));
+         send(new Game2StartSnowWarMessageComposer(param1));
       }
       
       public function initGameDirectoryConnection() : void
@@ -593,7 +593,7 @@ package com.sulake.habbo.game.snowwar
       
       public function startQuickServerGame() : void
       {
-         send(new class_1964());
+         send(new Game2QuickJoinGameMessageComposer());
       }
       
       private function getCurrentStage() : class_2694
@@ -1311,7 +1311,7 @@ package com.sulake.habbo.game.snowwar
       
       public function logGameEvent(param1:String) : void
       {
-         send(new class_2196("GameFramework","SnowStorm",param1,"",freeGamesLeft));
+         send(new EventLogMessageComposer("GameFramework","SnowStorm",param1,"",freeGamesLeft));
       }
       
       public function registerHit(param1:HumanGameObject, param2:HumanGameObject) : void

@@ -7,7 +7,7 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.core.window.components.class_2010;
    import com.sulake.habbo.utils.class_2724;
    import com.sulake.habbo.window.widgets.class_2478;
-   import package_187.class_3929;
+   import com.sulake.habbo.communication.messages.parser.talent.class_3929;
    
    public class TalentProgressMeter implements class_13
    {

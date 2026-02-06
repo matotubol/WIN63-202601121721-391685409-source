@@ -7,9 +7,9 @@ package com.sulake.habbo.roomevents.wired_setup.conditions
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2397;
    import com.sulake.habbo.roomevents.HabboUserDefinedRoomEvents;
-   import package_3.class_2022;
-   import package_3.class_3489;
-   import package_9.class_3210;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3489;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetGuildMembershipsMessageComposer;
    
    public class class_3887 extends DefaultConditionType
    {
@@ -90,7 +90,7 @@ package com.sulake.habbo.roomevents.wired_setup.conditions
          if(_loc1_ > var_4172 + 1000 * REQUEST_TIMEOUT)
          {
             var_4172 = _loc1_;
-            var_59.send(new class_3210());
+            var_59.send(new GetGuildMembershipsMessageComposer());
          }
       }
       
@@ -112,7 +112,7 @@ package com.sulake.habbo.roomevents.wired_setup.conditions
          getGroupMenu().populateWithVector(_loc4_);
       }
       
-      override public function onGuildMemberships(param1:class_2022) : void
+      override public function onGuildMemberships(param1:GuildMembershipsMessageEvent) : void
       {
          initGuilds(param1.guilds);
       }

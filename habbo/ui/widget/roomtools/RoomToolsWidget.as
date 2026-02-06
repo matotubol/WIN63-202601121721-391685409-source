@@ -13,7 +13,7 @@ package com.sulake.habbo.ui.widget.roomtools
    import com.sulake.habbo.window.class_38;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class RoomToolsWidget extends RoomWidgetBase
    {

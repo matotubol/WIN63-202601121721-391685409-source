@@ -25,27 +25,27 @@ package com.sulake.habbo.friendbar.data
    import com.sulake.iid.IIDHabboFriendList;
    import com.sulake.iid.IIDHabboMessenger;
    import com.sulake.iid.IIDHabboTracking;
-   import package_11.class_1825;
-   import package_11.class_2137;
-   import package_11.class_2429;
-   import package_11.class_3096;
-   import package_14.class_1792;
-   import package_14.class_1820;
-   import package_14.class_1915;
-   import package_14.class_1937;
-   import package_14.class_2028;
-   import package_14.class_2083;
-   import package_14.class_2096;
-   import package_14.class_2140;
-   import package_14.class_2254;
-   import package_14.class_2980;
-   import package_14.class_3524;
-   import package_28.class_2712;
-   import package_28.class_2765;
-   import package_71.class_2196;
-   import package_9.class_1796;
-   import package_9.class_1879;
-   import package_9.class_3556;
+   import com.sulake.habbo.communication.messages.parser.friendlist.RoomInviteEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.NewConsoleMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.FriendListUpdateEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.FriendNotificationEventParser;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.RoomInviteEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.NewFriendRequestEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendListFragmentMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendListUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.NewConsoleMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_2083;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.MessengerInitEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendRequestsEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_2254;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FindFriendsProcessResultEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendNotificationEvent;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.FindNewFriendsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.FollowFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileByNameMessageComposer;
    
    public class HabboFriendBarData extends class_17 implements class_1813
    {
@@ -121,15 +121,15 @@ package com.sulake.habbo.friendbar.data
       
       override protected function initComponent() : void
       {
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_2096(onMessengerInitialized));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_2140(onFriendRequestList));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_2028(onNewConsoleMessage));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_2980(onFindFriendProcessResult));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_1792(onRoomInvite));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_1915(onFriendsListFragment));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_1937(onFriendListUpdate));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_1820(onNewFriendRequest));
-         _habboCommunicationManager.addHabboConnectionMessageEvent(new class_3524(onFriendNotification));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new MessengerInitEvent(onMessengerInitialized));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new FriendRequestsEvent(onFriendRequestList));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new NewConsoleMessageEvent(onNewConsoleMessage));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new FindFriendsProcessResultEvent(onFindFriendProcessResult));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new RoomInviteEvent(onRoomInvite));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new FriendListFragmentMessageEvent(onFriendsListFragment));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new FriendListUpdateEvent(onFriendListUpdate));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new NewFriendRequestEvent(onNewFriendRequest));
+         _habboCommunicationManager.addHabboConnectionMessageEvent(new FriendNotificationEvent(onFriendNotification));
          _habboFriendListComponent.events.addEventListener("FRE_ACCEPTED",onFriendRequestEvent);
          _habboFriendListComponent.events.addEventListener("FRE_DECLINED",onFriendRequestEvent);
       }
@@ -252,11 +252,11 @@ package com.sulake.habbo.friendbar.data
          {
             if(param1 > 0)
             {
-               _habboCommunicationManager.connection.send(new class_1879(param1));
+               _habboCommunicationManager.connection.send(new GetExtendedProfileMessageComposer(param1));
             }
             else
             {
-               _habboCommunicationManager.connection.send(new class_1796(Math.abs(param1),true));
+               _habboCommunicationManager.connection.send(new GetHabboGroupDetailsMessageComposer(Math.abs(param1),true));
             }
          }
       }
@@ -265,7 +265,7 @@ package com.sulake.habbo.friendbar.data
       {
          if(_habboCommunicationManager)
          {
-            _habboCommunicationManager.connection.send(new class_3556(param1));
+            _habboCommunicationManager.connection.send(new GetExtendedProfileByNameMessageComposer(param1));
          }
       }
       
@@ -315,8 +315,8 @@ package com.sulake.habbo.friendbar.data
       {
          if(_habboCommunicationManager)
          {
-            _habboCommunicationManager.connection.send(new class_2765(param1));
-            _habboCommunicationManager.connection.send(new class_2196("Navigation","Friend Bar","go.friendbar"));
+            _habboCommunicationManager.connection.send(new FollowFriendMessageComposer(param1));
+            _habboCommunicationManager.connection.send(new EventLogMessageComposer("Navigation","Friend Bar","go.friendbar"));
          }
       }
       
@@ -328,7 +328,7 @@ package com.sulake.habbo.friendbar.data
             events.dispatchEvent(new NewMessageEvent(false,param1));
             if(_habboCommunicationManager)
             {
-               _habboCommunicationManager.connection.send(new class_2196("Navigation","Friend Bar","chat_btn_click"));
+               _habboCommunicationManager.connection.send(new EventLogMessageComposer("Navigation","Friend Bar","chat_btn_click"));
             }
          }
       }
@@ -337,8 +337,8 @@ package com.sulake.habbo.friendbar.data
       {
          if(_habboCommunicationManager)
          {
-            _habboCommunicationManager.connection.send(new class_2712());
-            _habboCommunicationManager.connection.send(new class_2196("Navigation","Friend Bar","find_friends_btn_click"));
+            _habboCommunicationManager.connection.send(new FindNewFriendsMessageComposer());
+            _habboCommunicationManager.connection.send(new EventLogMessageComposer("Navigation","Friend Bar","find_friends_btn_click"));
          }
       }
       
@@ -368,7 +368,7 @@ package com.sulake.habbo.friendbar.data
       {
          if(_habboCommunicationManager)
          {
-            _habboCommunicationManager.connection.send(new class_2196("Navigation","Friend Bar",param1,param2,numFriends));
+            _habboCommunicationManager.connection.send(new EventLogMessageComposer("Navigation","Friend Bar",param1,param2,numFriends));
          }
       }
       
@@ -402,7 +402,7 @@ package com.sulake.habbo.friendbar.data
                }
                if(_habboCommunicationManager)
                {
-                  _habboCommunicationManager.connection.send(new class_2196("Toolbar","FRIENDLIST",_habboFriendListComponent.isOpen() ? "open" : "close"));
+                  _habboCommunicationManager.connection.send(new EventLogMessageComposer("Toolbar","FRIENDLIST",_habboFriendListComponent.isOpen() ? "open" : "close"));
                }
             }
          }
@@ -417,7 +417,7 @@ package com.sulake.habbo.friendbar.data
                _habboMessengerComponent.toggleMessenger();
                if(_habboCommunicationManager)
                {
-                  _habboCommunicationManager.connection.send(new class_2196("Toolbar","MESSENGER",_habboMessengerComponent.isOpen() ? "open" : "close"));
+                  _habboCommunicationManager.connection.send(new EventLogMessageComposer("Toolbar","MESSENGER",_habboMessengerComponent.isOpen() ? "open" : "close"));
                }
             }
          }
@@ -433,14 +433,14 @@ package com.sulake.habbo.friendbar.data
       
       private function onFriendsListFragment(param1:IMessageEvent) : void
       {
-         buildFriendList(class_1915(param1).getParser().friendFragment);
+         buildFriendList(FriendListFragmentMessageEvent(param1).getParser().friendFragment);
       }
       
       private function onFriendListUpdate(param1:IMessageEvent) : void
       {
          var _loc2_:FriendEntity = null;
          var _loc6_:* = null;
-         var _loc4_:class_2429 = class_1937(param1).getParser();
+         var _loc4_:FriendListUpdateEventParser = FriendListUpdateEvent(param1).getParser();
          var _loc3_:Array = _loc4_.removedFriendIds;
          var _loc8_:Array = _loc4_.updatedFriends;
          var _loc5_:Array = _loc4_.addedFriends;
@@ -504,12 +504,12 @@ package com.sulake.habbo.friendbar.data
          events.dispatchEvent(new FriendBarUpdateEvent());
       }
       
-      private function onFindFriendProcessResult(param1:class_2980) : void
+      private function onFindFriendProcessResult(param1:FindFriendsProcessResultEvent) : void
       {
          events.dispatchEvent(new FindFriendsNotificationEvent(param1.success));
       }
       
-      private function onNewFriendRequest(param1:class_1820) : void
+      private function onNewFriendRequest(param1:NewFriendRequestEvent) : void
       {
          var _loc2_:class_2254 = null;
          if(showFriendRequests)
@@ -520,7 +520,7 @@ package com.sulake.habbo.friendbar.data
          }
       }
       
-      private function onFriendRequestList(param1:class_2140) : void
+      private function onFriendRequestList(param1:FriendRequestsEvent) : void
       {
          var _loc3_:Array = null;
          if(showFriendRequests)
@@ -539,9 +539,9 @@ package com.sulake.habbo.friendbar.data
          removeFriendRequest(param1.requestId);
       }
       
-      private function onNewConsoleMessage(param1:class_2028) : void
+      private function onNewConsoleMessage(param1:NewConsoleMessageEvent) : void
       {
-         var _loc2_:class_2137 = param1.getParser();
+         var _loc2_:NewConsoleMessageEventParser = param1.getParser();
          var_1735 = _loc2_.chatId;
          var _loc3_:Boolean = true;
          if(_habboMessengerComponent)
@@ -566,9 +566,9 @@ package com.sulake.habbo.friendbar.data
          events.dispatchEvent(new ActiveConversationsCountEvent(param1.activeConversationsCount,param1.hasUnread));
       }
       
-      private function onRoomInvite(param1:class_1792) : void
+      private function onRoomInvite(param1:RoomInviteEvent) : void
       {
-         var _loc2_:class_1825 = param1.getParser();
+         var _loc2_:RoomInviteEventParser = param1.getParser();
          var_1735 = _loc2_.senderId;
          if(_habboMessengerComponent && !_habboMessengerComponent.isOpen())
          {
@@ -577,9 +577,9 @@ package com.sulake.habbo.friendbar.data
          }
       }
       
-      private function onFriendNotification(param1:class_3524) : void
+      private function onFriendNotification(param1:FriendNotificationEvent) : void
       {
-         var _loc4_:class_3096 = param1.getParser();
+         var _loc4_:FriendNotificationEventParser = param1.getParser();
          var _loc2_:* = _loc4_.typeCode != 3;
          var _loc5_:* = _loc4_.typeCode != 4;
          var _loc3_:* = _loc4_.typeCode != 3;

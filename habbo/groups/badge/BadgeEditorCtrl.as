@@ -8,7 +8,7 @@ package com.sulake.habbo.groups.badge
    import com.sulake.habbo.groups.events.HabboGroupsEditorData;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_3.class_2463;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2463;
    
    public class BadgeEditorCtrl implements class_13
    {

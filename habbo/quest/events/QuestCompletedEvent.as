@@ -1,7 +1,7 @@
 package com.sulake.habbo.quest.events
 {
    import flash.events.Event;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class QuestCompletedEvent extends Event
    {

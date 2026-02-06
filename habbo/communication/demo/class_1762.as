@@ -16,28 +16,28 @@ package com.sulake.habbo.communication.demo
    import flash.external.ExternalInterface;
    import flash.utils.ByteArray;
    import flash.utils.Dictionary;
-   import package_123.class_2450;
-   import package_169.class_2875;
-   import package_23.class_3610;
-   import package_23.class_3617;
-   import package_31.class_2653;
-   import package_31.class_2672;
-   import package_31.class_2837;
-   import package_31.class_2994;
-   import package_31.class_3290;
-   import package_4.class_1856;
-   import package_4.class_1971;
-   import package_4.class_2319;
-   import package_4.class_2436;
-   import package_4.class_2479;
-   import package_4.class_2819;
-   import package_4.class_3572;
-   import package_4.class_3641;
-   import package_44.class_2958;
-   import package_55.class_3024;
-   import package_71.class_2196;
-   import package_75.class_2539;
-   import package_75.class_3411;
+   import com.sulake.habbo.communication.messages.incoming.error.ErrorReportEvent;
+   import com.sulake.habbo.communication.messages.parser.error.ErrorReportEventParser;
+   import com.sulake.habbo.communication.messages.incoming.availability.LoginFailedHotelClosedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.availability.MaintenanceStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.PongMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.CompleteDiffieHandshakeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.ClientHelloMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.InitDiffieHandshakeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.InfoRetrieveMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.handshake.DisconnectReasonEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.AuthenticationOKMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.InitDiffieHandshakeEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UniqueMachineIDEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.PingMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.GenericErrorEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.CompleteDiffieHandshakeEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.IdentityAccountsEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.GenericErrorEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.GetFurnitureAliasesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.availability.MaintenanceStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.availability.LoginFailedHotelClosedMessageEventParser;
    
    [SecureSWF(rename="true")]
    public class class_1762
@@ -71,17 +71,17 @@ package com.sulake.habbo.communication.demo
          }
          _loc3_.addEventListener("connect",onConnectionEstablished);
          _loc3_.addEventListener("close",onConnectionDisconnected);
-         addHabboConnectionMessageEvent(new class_3617(onMaintenance));
-         addHabboConnectionMessageEvent(new class_3641(onIdentityAccounts));
-         addHabboConnectionMessageEvent(new class_2479(onPing));
-         addHabboConnectionMessageEvent(new class_2319(onInitDiffieHandshake));
-         addHabboConnectionMessageEvent(new class_1856(onDisconnectReason));
-         addHabboConnectionMessageEvent(new class_2819(onGenericError));
-         addHabboConnectionMessageEvent(new class_3572(onCompleteDiffieHandshake));
-         addHabboConnectionMessageEvent(new class_3610(onLoginFailedHotelClosed));
-         addHabboConnectionMessageEvent(new class_1971(onAuthenticationOK));
-         addHabboConnectionMessageEvent(new class_2450(onErrorReport));
-         addHabboConnectionMessageEvent(new class_2436(onUniqueMachineId));
+         addHabboConnectionMessageEvent(new MaintenanceStatusMessageEvent(onMaintenance));
+         addHabboConnectionMessageEvent(new IdentityAccountsEvent(onIdentityAccounts));
+         addHabboConnectionMessageEvent(new PingMessageEvent(onPing));
+         addHabboConnectionMessageEvent(new InitDiffieHandshakeEvent(onInitDiffieHandshake));
+         addHabboConnectionMessageEvent(new DisconnectReasonEvent(onDisconnectReason));
+         addHabboConnectionMessageEvent(new GenericErrorEvent(onGenericError));
+         addHabboConnectionMessageEvent(new CompleteDiffieHandshakeEvent(onCompleteDiffieHandshake));
+         addHabboConnectionMessageEvent(new LoginFailedHotelClosedMessageEvent(onLoginFailedHotelClosed));
+         addHabboConnectionMessageEvent(new AuthenticationOKMessageEvent(onAuthenticationOK));
+         addHabboConnectionMessageEvent(new ErrorReportEvent(onErrorReport));
+         addHabboConnectionMessageEvent(new UniqueMachineIDEvent(onUniqueMachineId));
          var_59.context.events.addEventListener("unload",unloading);
       }
       
@@ -130,7 +130,7 @@ package com.sulake.habbo.communication.demo
       private function onInitDiffieHandshake(param1:IMessageEvent) : void
       {
          var _loc16_:IConnection = param1.connection;
-         var _loc2_:class_2319 = param1 as class_2319;
+         var _loc2_:InitDiffieHandshakeEvent = param1 as InitDiffieHandshakeEvent;
          var _loc3_:ByteArray = new ByteArray();
          var _loc4_:ByteArray = new ByteArray();
          _loc3_.writeBytes(CryptoTools.hexStringToByteArray(_loc2_.encryptedPrime));
@@ -183,14 +183,14 @@ package com.sulake.habbo.communication.demo
          var _loc14_:ByteArray = new ByteArray();
          _loc15_.writeMultiByte(_loc6_,"iso-8859-1");
          _rsa.encrypt(_loc15_,_loc14_,_loc15_.length);
-         _loc16_.sendUnencrypted(new class_2672(CryptoTools.byteArrayToHexString(_loc14_)));
+         _loc16_.sendUnencrypted(new CompleteDiffieHandshakeMessageComposer(CryptoTools.byteArrayToHexString(_loc14_)));
       }
       
       private function onCompleteDiffieHandshake(param1:IMessageEvent) : void
       {
          var _loc9_:IEncryption = null;
          var _loc7_:IConnection = param1.connection;
-         var _loc4_:class_3572 = param1 as class_3572;
+         var _loc4_:CompleteDiffieHandshakeEvent = param1 as CompleteDiffieHandshakeEvent;
          var _loc6_:ByteArray = new ByteArray();
          var _loc3_:ByteArray = new ByteArray();
          _loc6_.writeBytes(CryptoTools.hexStringToByteArray(_loc4_.encryptedPublicKey));
@@ -217,15 +217,15 @@ package com.sulake.habbo.communication.demo
          var_59.sendConnectionParameters(_loc7_);
       }
       
-      private function onAuthenticationOK(param1:class_1971) : void
+      private function onAuthenticationOK(param1:AuthenticationOKMessageEvent) : void
       {
          var _loc4_:IConnection = param1.connection;
          var_59.dispatchLoginStepEvent("HABBO_CONNECTION_EVENT_AUTHENTICATED");
-         var _loc2_:class_3290 = new class_3290();
+         var _loc2_:InfoRetrieveMessageComposer = new InfoRetrieveMessageComposer();
          _loc4_.send(_loc2_);
-         var _loc3_:class_2196 = new class_2196("Login","socket","client.auth_ok");
+         var _loc3_:EventLogMessageComposer = new EventLogMessageComposer("Login","socket","client.auth_ok");
          _loc4_.send(_loc3_);
-         var _loc5_:class_3024 = new class_3024();
+         var _loc5_:GetFurnitureAliasesMessageComposer = new GetFurnitureAliasesMessageComposer();
          _loc4_.send(_loc5_);
          _communication.suggestedLoginActions = param1.suggestedLoginActions;
          var_59.loginOk();
@@ -233,13 +233,13 @@ package com.sulake.habbo.communication.demo
       
       private function onLoginFailedHotelClosed(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3411 = (param1 as class_3610).getParser();
+         var _loc2_:LoginFailedHotelClosedMessageEventParser = (param1 as LoginFailedHotelClosedMessageEvent).getParser();
          var_59.handleLoginFailedHotelClosedMessage(_loc2_.openHour,_loc2_.openMinute);
       }
       
       private function onGenericError(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2958 = (param1 as class_2819).getParser();
+         var _loc2_:GenericErrorEventParser = (param1 as GenericErrorEvent).getParser();
          switch(_loc2_.errorCode)
          {
             case -3:
@@ -253,17 +253,17 @@ package com.sulake.habbo.communication.demo
       private function onPing(param1:IMessageEvent) : void
       {
          var _loc2_:IConnection = param1.connection;
-         var _loc3_:class_2653 = new class_2653();
+         var _loc3_:PongMessageComposer = new PongMessageComposer();
          _loc2_.send(_loc3_);
       }
       
       [SecureSWF(controlFlow="0",codeWrap="off")]
-      private function onUniqueMachineId(param1:class_2436) : void
+      private function onUniqueMachineId(param1:UniqueMachineIDEvent) : void
       {
          CommunicationUtils.writeSOLProperty("machineid",param1.machineID);
       }
       
-      private function onIdentityAccounts(param1:class_3641) : void
+      private function onIdentityAccounts(param1:IdentityAccountsEvent) : void
       {
          var _loc3_:String = null;
          var _loc6_:AvatarData = null;
@@ -282,7 +282,7 @@ package com.sulake.habbo.communication.demo
       
       private function onErrorReport(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2875 = (param1 as class_2450).getParser();
+         var _loc2_:ErrorReportEventParser = (param1 as ErrorReportEvent).getParser();
          var _loc3_:int = _loc2_.errorCode;
          var _loc4_:int = _loc2_.messageId;
          var_59.handleErrorMessage(_loc3_,_loc4_);
@@ -297,21 +297,21 @@ package com.sulake.habbo.communication.demo
             _logoutInProgress = false;
             _handshakeInProgress = true;
             var_59.dispatchLoginStepEvent("HABBO_CONNECTION_EVENT_HANDSHAKING");
-            _loc2_.sendUnencrypted(new class_2837());
-            _loc2_.sendUnencrypted(new class_2994());
+            _loc2_.sendUnencrypted(new ClientHelloMessageComposer());
+            _loc2_.sendUnencrypted(new InitDiffieHandshakeMessageComposer());
          }
       }
       
-      private function onMaintenance(param1:class_3617) : void
+      private function onMaintenance(param1:MaintenanceStatusMessageEvent) : void
       {
-         var _loc2_:class_2539 = param1.parser as class_2539;
+         var _loc2_:MaintenanceStatusMessageEventParser = param1.parser as MaintenanceStatusMessageEventParser;
          class_21.log("Got maintenance status, with minutes left: " + _loc2_.minutesUntilMaintenance.toString());
          var_59.localization.registerParameter("disconnected.maintenance_status","%minutes%",_loc2_.minutesUntilMaintenance.toString());
          var _loc3_:String = var_59.localization.getLocalization("disconnected.maintenance_status");
          var_59.disconnected(-2,_loc3_);
       }
       
-      private function onDisconnectReason(param1:class_1856) : void
+      private function onDisconnectReason(param1:DisconnectReasonEvent) : void
       {
          if(_handshakeInProgress)
          {
@@ -323,7 +323,7 @@ package com.sulake.habbo.communication.demo
          _logoutInProgress = true;
       }
       
-      private function handleWebLogout(param1:class_1856) : void
+      private function handleWebLogout(param1:DisconnectReasonEvent) : void
       {
          var _loc2_:String = var_59.getProperty("logout.url");
          if(_loc2_.length > 0)

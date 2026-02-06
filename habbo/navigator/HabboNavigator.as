@@ -53,12 +53,12 @@ package com.sulake.habbo.navigator
    import flash.external.ExternalInterface;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_1.class_1735;
-   import package_1.class_1914;
-   import package_1.class_1989;
-   import package_1.class_2003;
-   import package_42.class_1904;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.ConvertGlobalRoomIdMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.ForwardToSomeRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.RemoveOwnRoomRightsRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.GetGuestRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1904;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class HabboNavigator extends class_17 implements class_41, class_42, ILinkEventTracker
    {
@@ -309,7 +309,7 @@ package com.sulake.habbo.navigator
       {
          var_5153 = param2;
          _webRoomReportedName = param3;
-         send(new class_1735(param1));
+         send(new ConvertGlobalRoomIdMessageComposer(param1));
       }
       
       override public function dispose() : void
@@ -377,12 +377,12 @@ package com.sulake.habbo.navigator
       
       public function goToPrivateRoom(param1:int) : void
       {
-         send(new class_2003(param1,false,true));
+         send(new GetGuestRoomMessageComposer(param1,false,true));
       }
       
       public function removeRoomRights(param1:int) : void
       {
-         send(new class_1989(param1));
+         send(new RemoveOwnRoomRightsRoomMessageComposer(param1));
       }
       
       public function hasRoomRightsButIsNotOwner(param1:int) : Boolean
@@ -796,7 +796,7 @@ package com.sulake.habbo.navigator
                         goToPrivateRoom(_loc3_);
                         break;
                      }
-                     send(new class_1914(_loc2_[2]));
+                     send(new ForwardToSomeRoomMessageComposer(_loc2_[2]));
                      break;
                   }
                   goToHomeRoom();

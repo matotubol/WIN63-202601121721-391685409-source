@@ -2,7 +2,7 @@ package com.sulake.habbo.navigator.context
 {
    import com.sulake.core.utils.class_55;
    import com.sulake.habbo.navigator.HabboNewNavigator;
-   import package_15.class_1773;
+   import package_15.NavigatorMetaDataEventParser;
    import package_25.class_2073;
    import package_25.class_3644;
    
@@ -30,7 +30,7 @@ package com.sulake.habbo.navigator.context
          return var_2074.hasKey(param1);
       }
       
-      public function initialize(param1:class_1773) : void
+      public function initialize(param1:NavigatorMetaDataEventParser) : void
       {
          var_2074 = new class_55();
          for each(var _loc2_ in param1.topLevelContexts)

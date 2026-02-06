@@ -22,8 +22,8 @@ package com.sulake.habbo.catalog.collectibles.tabs
    import com.sulake.habbo.catalog.collectibles.tabs.subviews.CollectionView;
    import com.sulake.habbo.catalog.purse.class_1831;
    import com.sulake.habbo.communication.messages.parser.collectibles.class_3631;
-   import package_36.class_2632;
-   import package_70.class_3184;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftStoreOffersMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetNftStoreOffersMessageComposer;
    
    public class ShopTab implements class_31
    {
@@ -102,14 +102,14 @@ package com.sulake.habbo.catalog.collectibles.tabs
       private function addMessageEvents() : void
       {
          _messageEvents = new Vector.<IMessageEvent>(0);
-         _messageEvents.push(new class_2632(onNftStoreOffers));
+         _messageEvents.push(new NftStoreOffersMessageEvent(onNftStoreOffers));
          for each(var _loc1_ in _messageEvents)
          {
             var_196.addMessageEvent(_loc1_);
          }
       }
       
-      private function onNftStoreOffers(param1:class_2632) : void
+      private function onNftStoreOffers(param1:NftStoreOffersMessageEvent) : void
       {
          if(!_waitingForOffers || _navigationList.numListItems != 0)
          {
@@ -173,7 +173,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
       {
          clearNavigationList();
          _waitingForOffers = true;
-         var_196.send(new class_3184());
+         var_196.send(new GetNftStoreOffersMessageComposer());
       }
       
       public function activateCategory(param1:ShopNavigationNodeRenderer) : void

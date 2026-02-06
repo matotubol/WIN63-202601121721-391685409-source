@@ -23,98 +23,98 @@ package com.sulake.habbo.inventory
    import com.sulake.habbo.session.class_2146;
    import com.sulake.habbo.session.furniture.class_1800;
    import flash.utils.getTimer;
-   import package_10.class_2053;
-   import package_105.class_2485;
-   import package_105.class_2545;
-   import package_105.class_3367;
-   import package_109.class_2384;
-   import package_109.class_2433;
-   import package_109.class_2445;
-   import package_109.class_2566;
-   import package_111.class_2392;
+   import com.sulake.habbo.communication.messages.incoming.catalog.NotEnoughBalanceMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.PetAddedToInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.PetInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.PetRemovedFromInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.badges.class_2384;
+   import com.sulake.habbo.communication.messages.parser.inventory.badges.BadgeReceivedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.badges.BadgesEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.badges.BadgePointLimitsEventParser;
+   import package_111.TradeNftAssetInventoryMessageEventParser;
    import package_111.class_3106;
-   import package_111.class_3185;
-   import package_119.class_2432;
-   import package_119.class_2511;
-   import package_119.class_2606;
-   import package_119.class_2662;
-   import package_119.class_2760;
-   import package_119.class_2853;
-   import package_119.class_3149;
-   import package_124.class_2467;
-   import package_124.class_2592;
-   import package_124.class_2943;
-   import package_124.class_3589;
-   import package_124.class_3660;
-   import package_131.class_2471;
-   import package_131.class_2942;
-   import package_131.class_2947;
-   import package_145.class_2577;
-   import package_145.class_2970;
-   import package_145.class_3308;
-   import package_145.class_3460;
-   import package_145.class_3608;
-   import package_159.class_3593;
-   import package_163.class_3661;
-   import package_168.class_2864;
-   import package_168.class_2997;
-   import package_168.class_3521;
-   import package_17.class_3447;
-   import package_179.class_3090;
-   import package_179.class_3241;
-   import package_182.class_3126;
-   import package_182.class_3211;
-   import package_182.class_3263;
-   import package_183.class_3147;
-   import package_26.class_1799;
-   import package_29.class_1832;
-   import package_29.class_1943;
-   import package_29.class_2170;
-   import package_29.class_3422;
-   import package_3.class_2125;
-   import package_3.class_2238;
-   import package_39.class_1980;
-   import package_4.class_1757;
-   import package_42.class_3544;
-   import package_46.class_1918;
-   import package_5.class_1746;
-   import package_5.class_2097;
-   import package_5.class_2172;
-   import package_5.class_3584;
-   import package_54.class_2039;
-   import package_54.class_3653;
-   import package_8.class_2014;
-   import package_82.class_2302;
-   import package_82.class_2317;
-   import package_82.class_2487;
-   import package_82.class_2878;
-   import package_82.class_2899;
-   import package_82.class_3088;
-   import package_82.class_3099;
-   import package_82.class_3335;
-   import package_82.class_3471;
-   import package_82.class_3477;
-   import package_86.class_2327;
-   import package_86.class_2362;
-   import package_86.class_2646;
-   import package_86.class_3075;
-   import package_87.class_2493;
-   import package_87.class_2518;
-   import package_87.class_2966;
-   import package_87.class_3116;
-   import package_88.class_2393;
-   import package_88.class_2491;
-   import package_88.class_2568;
-   import package_88.class_2622;
-   import package_88.class_2668;
-   import package_88.class_2706;
-   import package_88.class_2871;
-   import package_88.class_2882;
-   import package_88.class_2941;
-   import package_88.class_3066;
-   import package_88.class_3098;
-   import package_88.class_3329;
-   import package_88.class_3503;
+   import package_111.TradeNftAssetsMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.PostItPlacedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListInvalidateEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListAddOrUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListRemoveEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListRemoveMultipleEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.class_3149;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectAddedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectExpiredMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.class_2943;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.avatareffect.AvatarEffectActivatedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.bots.BotRemovedFromInventoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.bots.BotInventoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.bots.BotAddedToInventoryEvent;
+   import com.sulake.habbo.communication.messages.parser.inventory.furni.PostItPlacedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.furni.FurniListRemoveMultipleEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.furni.FurniListAddOrUpdateEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.furni.FurniListEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.furni.FurniListRemoveEventParser;
+   import com.sulake.habbo.communication.messages.incoming.inventory.clothing.FigureSetIdsEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.AchievementsScoreEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.BadgesEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.BadgePointLimitsEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.badges.BadgeReceivedEvent;
+   import com.sulake.habbo.communication.messages.parser.navigator.FlatAccessDeniedMessageEventParser;
+   import package_179.TradeNftAssetInventoryMessageEvent;
+   import package_179.TradeNftAssetsMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.inventory.bots.BotRemovedFromInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.bots.BotAddedToInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.bots.BotInventoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.achievements.AchievementsScoreEventParser;
+   import com.sulake.habbo.communication.messages.incoming.notifications.HabboAchievementNotificationMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceConfigurationEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceItemStatsEvent;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceMakeOfferResult;
+   import com.sulake.habbo.communication.messages.incoming.marketplace.MarketplaceCanMakeOfferResult;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboUserBadgesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.ScrSendUserInfoEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.navigator.FlatAccessDeniedMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.notifications.HabboAchievementNotificationMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceItemStatsEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceConfigurationEventParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceMakeOfferResultParser;
+   import com.sulake.habbo.communication.messages.parser.marketplace.MarketplaceCanMakeOfferResultParser;
+   import com.sulake.habbo.communication.messages.incoming.room.session.CloseConnectionMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.session.OpenConnectionMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.users.ScrSendUserInfoEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingCloseEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingCompletedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingNotOpenEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingConfirmationEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingItemListEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradeOpenFailedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingOpenEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingAcceptEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingOtherNotAllowedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.trading.TradingYouAreNotAllowedEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.avatareffect.AvatarEffectActivatedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.avatareffect.AvatarEffectExpiredMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.avatareffect.AvatarEffectAddedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.avatareffect.AvatarEffectsMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.inventory.pets.GoToBreedingNestFailureEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.pets.PetAddedToInventoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.pets.PetInventoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.pets.PetRemovedFromInventoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingConfirmationEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingOtherNotAllowedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingAcceptEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingYouAreNotAllowedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeSilverFeeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingNotOpenEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingCloseEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingCompletedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeSilverSetMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.class_3066;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradeOpenFailedEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingItemListEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.trading.TradingOpenEvent;
    
    [SecureSWF(rename="true")]
    public class class_1762
@@ -141,55 +141,55 @@ package com.sulake.habbo.inventory
          super();
          _inventory = param1;
          _com = _inventory.communication;
-         _com.addHabboConnectionMessageEvent(new class_3593(onFigureSetIds));
-         _com.addHabboConnectionMessageEvent(new class_1943(onMarketplaceItemStats));
-         _com.addHabboConnectionMessageEvent(new class_2871(onTradingClose,class_2302));
-         _com.addHabboConnectionMessageEvent(new class_1980(onRoomEnter));
-         _com.addHabboConnectionMessageEvent(new class_3329(onTradingItemList,class_2899));
-         _com.addHabboConnectionMessageEvent(new class_2864(onBadges));
-         _com.addHabboConnectionMessageEvent(new class_2493(onGoToBreedingNestFailure));
-         _com.addHabboConnectionMessageEvent(new class_2706(onTradingNotOpen,class_2487));
-         _com.addHabboConnectionMessageEvent(new class_2039(onRoomLeft));
-         _com.addHabboConnectionMessageEvent(new class_2606(onFurniListInvalidate));
-         _com.addHabboConnectionMessageEvent(new class_2966(onPets));
-         _com.addHabboConnectionMessageEvent(new class_3503(onTradingOpen,class_3099));
-         _com.addHabboConnectionMessageEvent(new class_2662(onFurnitureAddOrUpdate));
-         _com.addHabboConnectionMessageEvent(new class_2125(onUserBadges));
-         _com.addHabboConnectionMessageEvent(new class_1799(onAchievementReceived));
-         _com.addHabboConnectionMessageEvent(new class_3422(onMarketplaceCanMakeOfferResult));
-         _com.addHabboConnectionMessageEvent(new class_1757(onUserRights));
-         _com.addHabboConnectionMessageEvent(new class_2170(onMarketplaceMakeOfferResult));
-         _com.addHabboConnectionMessageEvent(new class_3098(onTradingOpenFailed,class_3088));
-         _com.addHabboConnectionMessageEvent(new class_3521(onBadgeReceived));
-         _com.addHabboConnectionMessageEvent(new class_2668(onTradeSilverFee));
-         _com.addHabboConnectionMessageEvent(new class_2941(onTradeSilverSet));
-         _com.addHabboConnectionMessageEvent(new class_2882(onTradingCompleted,class_2317));
-         _com.addHabboConnectionMessageEvent(new class_2622(onTradingYouAreNotAllowed,class_3477));
-         _com.addHabboConnectionMessageEvent(new class_2393(onTradingConfirmation,class_2878));
-         _com.addHabboConnectionMessageEvent(new class_2511(onPostItPlaced));
-         _com.addHabboConnectionMessageEvent(new class_2853(onFurniListRemoveMultiple));
-         _com.addHabboConnectionMessageEvent(new class_2760(onFurniListRemove));
-         _com.addHabboConnectionMessageEvent(new class_2997(onBadgePointLimits));
-         _com.addHabboConnectionMessageEvent(new class_2467(onAvatarEffectAdded));
-         _com.addHabboConnectionMessageEvent(new class_2471(onBotRemoved));
-         _com.addHabboConnectionMessageEvent(new class_2592(onAvatarEffectExpired));
-         _com.addHabboConnectionMessageEvent(new class_2053(onNotEnoughCredits));
-         _com.addHabboConnectionMessageEvent(new class_2238(onClubStatus));
-         _com.addHabboConnectionMessageEvent(new class_3589(onAvatarEffects));
-         _com.addHabboConnectionMessageEvent(new class_3653(onRoomLeft));
-         _com.addHabboConnectionMessageEvent(new class_2942(onBots));
-         _com.addHabboConnectionMessageEvent(new class_3116(onPetRemoved));
-         _com.addHabboConnectionMessageEvent(new class_3241(onTradeNfts));
-         _com.addHabboConnectionMessageEvent(new class_2568(onTradingAccepted,class_3335));
-         _com.addHabboConnectionMessageEvent(new class_2432(onFurniList));
-         _com.addHabboConnectionMessageEvent(new class_3660(onAvatarEffectActivated));
-         _com.addHabboConnectionMessageEvent(new class_2491(onTradingOtherNotAllowed,class_3471));
-         _com.addHabboConnectionMessageEvent(new class_3661(onAchievementsScore));
-         _com.addHabboConnectionMessageEvent(new class_2518(onPetAdded));
-         _com.addHabboConnectionMessageEvent(new class_2947(onBotAdded));
-         _com.addHabboConnectionMessageEvent(new class_1832(onMarketplaceConfiguration));
-         _com.addHabboConnectionMessageEvent(new class_3544(onFlatAccessDenied));
-         _com.addHabboConnectionMessageEvent(new class_3090(onCollectibles));
+         _com.addHabboConnectionMessageEvent(new FigureSetIdsEvent(onFigureSetIds));
+         _com.addHabboConnectionMessageEvent(new MarketplaceItemStatsEvent(onMarketplaceItemStats));
+         _com.addHabboConnectionMessageEvent(new TradingCloseEvent(onTradingClose,TradingCloseEventParser));
+         _com.addHabboConnectionMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
+         _com.addHabboConnectionMessageEvent(new TradingItemListEvent(onTradingItemList,TradingItemListEventParser));
+         _com.addHabboConnectionMessageEvent(new BadgesEvent(onBadges));
+         _com.addHabboConnectionMessageEvent(new GoToBreedingNestFailureEvent(onGoToBreedingNestFailure));
+         _com.addHabboConnectionMessageEvent(new TradingNotOpenEvent(onTradingNotOpen,TradingNotOpenEventParser));
+         _com.addHabboConnectionMessageEvent(new CloseConnectionMessageEvent(onRoomLeft));
+         _com.addHabboConnectionMessageEvent(new FurniListInvalidateEvent(onFurniListInvalidate));
+         _com.addHabboConnectionMessageEvent(new PetInventoryEvent(onPets));
+         _com.addHabboConnectionMessageEvent(new TradingOpenEvent(onTradingOpen,TradingOpenEventParser));
+         _com.addHabboConnectionMessageEvent(new FurniListAddOrUpdateEvent(onFurnitureAddOrUpdate));
+         _com.addHabboConnectionMessageEvent(new HabboUserBadgesMessageEvent(onUserBadges));
+         _com.addHabboConnectionMessageEvent(new HabboAchievementNotificationMessageEvent(onAchievementReceived));
+         _com.addHabboConnectionMessageEvent(new MarketplaceCanMakeOfferResult(onMarketplaceCanMakeOfferResult));
+         _com.addHabboConnectionMessageEvent(new UserRightsMessageEvent(onUserRights));
+         _com.addHabboConnectionMessageEvent(new MarketplaceMakeOfferResult(onMarketplaceMakeOfferResult));
+         _com.addHabboConnectionMessageEvent(new TradeOpenFailedEvent(onTradingOpenFailed,TradeOpenFailedEventParser));
+         _com.addHabboConnectionMessageEvent(new BadgeReceivedEvent(onBadgeReceived));
+         _com.addHabboConnectionMessageEvent(new TradeSilverFeeMessageEvent(onTradeSilverFee));
+         _com.addHabboConnectionMessageEvent(new TradeSilverSetMessageEvent(onTradeSilverSet));
+         _com.addHabboConnectionMessageEvent(new TradingCompletedEvent(onTradingCompleted,TradingCompletedEventParser));
+         _com.addHabboConnectionMessageEvent(new TradingYouAreNotAllowedEvent(onTradingYouAreNotAllowed,TradingYouAreNotAllowedEventParser));
+         _com.addHabboConnectionMessageEvent(new TradingConfirmationEvent(onTradingConfirmation,TradingConfirmationEventParser));
+         _com.addHabboConnectionMessageEvent(new PostItPlacedEvent(onPostItPlaced));
+         _com.addHabboConnectionMessageEvent(new FurniListRemoveMultipleEvent(onFurniListRemoveMultiple));
+         _com.addHabboConnectionMessageEvent(new FurniListRemoveEvent(onFurniListRemove));
+         _com.addHabboConnectionMessageEvent(new BadgePointLimitsEvent(onBadgePointLimits));
+         _com.addHabboConnectionMessageEvent(new AvatarEffectAddedMessageEvent(onAvatarEffectAdded));
+         _com.addHabboConnectionMessageEvent(new BotRemovedFromInventoryEvent(onBotRemoved));
+         _com.addHabboConnectionMessageEvent(new AvatarEffectExpiredMessageEvent(onAvatarEffectExpired));
+         _com.addHabboConnectionMessageEvent(new NotEnoughBalanceMessageEvent(onNotEnoughCredits));
+         _com.addHabboConnectionMessageEvent(new ScrSendUserInfoEvent(onClubStatus));
+         _com.addHabboConnectionMessageEvent(new AvatarEffectsMessageEvent(onAvatarEffects));
+         _com.addHabboConnectionMessageEvent(new OpenConnectionMessageEvent(onRoomLeft));
+         _com.addHabboConnectionMessageEvent(new BotInventoryEvent(onBots));
+         _com.addHabboConnectionMessageEvent(new PetRemovedFromInventoryEvent(onPetRemoved));
+         _com.addHabboConnectionMessageEvent(new TradeNftAssetsMessageEvent(onTradeNfts));
+         _com.addHabboConnectionMessageEvent(new TradingAcceptEvent(onTradingAccepted,TradingAcceptEventParser));
+         _com.addHabboConnectionMessageEvent(new FurniListEvent(onFurniList));
+         _com.addHabboConnectionMessageEvent(new AvatarEffectActivatedMessageEvent(onAvatarEffectActivated));
+         _com.addHabboConnectionMessageEvent(new TradingOtherNotAllowedEvent(onTradingOtherNotAllowed,TradingOtherNotAllowedEventParser));
+         _com.addHabboConnectionMessageEvent(new AchievementsScoreEvent(onAchievementsScore));
+         _com.addHabboConnectionMessageEvent(new PetAddedToInventoryEvent(onPetAdded));
+         _com.addHabboConnectionMessageEvent(new BotAddedToInventoryEvent(onBotAdded));
+         _com.addHabboConnectionMessageEvent(new MarketplaceConfigurationEvent(onMarketplaceConfiguration));
+         _com.addHabboConnectionMessageEvent(new FlatAccessDeniedMessageEvent(onFlatAccessDenied));
+         _com.addHabboConnectionMessageEvent(new TradeNftAssetInventoryMessageEvent(onCollectibles));
       }
       
       public function dispose() : void
@@ -198,9 +198,9 @@ package com.sulake.habbo.inventory
          _com = null;
       }
       
-      public function onFurniList(param1:class_2432) : void
+      public function onFurniList(param1:FurniListEvent) : void
       {
-         var _loc4_:class_3460 = param1.getParser();
+         var _loc4_:FurniListEventParser = param1.getParser();
          if(_loc4_ == null)
          {
             return;
@@ -234,7 +234,7 @@ package com.sulake.habbo.inventory
       {
          var _loc2_:FurnitureItem = null;
          var _loc5_:GroupItem = null;
-         var _loc3_:class_3308 = (param1 as class_2662).getParser();
+         var _loc3_:FurniListAddOrUpdateEventParser = (param1 as FurniListAddOrUpdateEvent).getParser();
          if(_loc3_ == null)
          {
             return;
@@ -269,7 +269,7 @@ package com.sulake.habbo.inventory
       
       public function onFurniListRemove(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3608 = (param1 as class_2760).getParser();
+         var _loc2_:FurniListRemoveEventParser = (param1 as FurniListRemoveEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -289,7 +289,7 @@ package com.sulake.habbo.inventory
       
       public function onFurniListRemoveMultiple(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2970 = (param1 as class_2853).getParser();
+         var _loc2_:FurniListRemoveMultipleEventParser = (param1 as FurniListRemoveMultipleEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -314,7 +314,7 @@ package com.sulake.habbo.inventory
       
       public function onPostItPlaced(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2577 = (param1 as class_2511).getParser();
+         var _loc2_:PostItPlacedEventParser = (param1 as PostItPlacedEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -343,7 +343,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc3_:class_3075 = (param1 as class_3589).getParser();
+         var _loc3_:AvatarEffectsMessageEventParser = (param1 as AvatarEffectsMessageEvent).getParser();
          if(_loc3_ == null)
          {
             return;
@@ -385,7 +385,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_2646 = (param1 as class_2467).getParser();
+         var _loc2_:AvatarEffectAddedMessageEventParser = (param1 as AvatarEffectAddedMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -411,7 +411,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_2327 = (param1 as class_3660).getParser();
+         var _loc2_:AvatarEffectActivatedMessageEventParser = (param1 as AvatarEffectActivatedMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -428,7 +428,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_2362 = (param1 as class_2592).getParser();
+         var _loc2_:AvatarEffectExpiredMessageEventParser = (param1 as AvatarEffectExpiredMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -440,7 +440,7 @@ package com.sulake.habbo.inventory
       
       public function onClubStatus(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2014 = (param1 as class_2238).getParser();
+         var _loc2_:ScrSendUserInfoEventParser = (param1 as ScrSendUserInfoEvent).getParser();
          if(_loc2_.productName == "habbo_club" || _loc2_.productName == "club_habbo")
          {
             _inventory.setClubStatus(_loc2_.periodsSubscribedAhead,_loc2_.daysToPeriodEnd,_loc2_.hasEverBeenMember,_loc2_.isVIP,_loc2_.responseType == 3,_loc2_.responseType == 4,_loc2_.minutesUntilExpiration,_loc2_.minutesSinceLastModified);
@@ -450,7 +450,7 @@ package com.sulake.habbo.inventory
       
       public function onBadges(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2445 = (param1 as class_2864).getParser();
+         var _loc3_:BadgesEventParser = (param1 as BadgesEvent).getParser();
          if(_loc3_ == null)
          {
             return;
@@ -487,7 +487,7 @@ package com.sulake.habbo.inventory
       
       public function onCollectibles(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2392 = (param1 as class_3090).getParser();
+         var _loc3_:TradeNftAssetInventoryMessageEventParser = (param1 as TradeNftAssetInventoryMessageEvent).getParser();
          if(_loc3_ == null)
          {
             return;
@@ -507,7 +507,7 @@ package com.sulake.habbo.inventory
       
       public function onTradeNfts(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3185 = (param1 as class_3241).getParser();
+         var _loc2_:TradeNftAssetsMessageEventParser = (param1 as TradeNftAssetsMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -555,7 +555,7 @@ package com.sulake.habbo.inventory
       
       public function onBadgePointLimits(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2566 = (param1 as class_2997).getParser();
+         var _loc2_:BadgePointLimitsEventParser = (param1 as BadgePointLimitsEvent).getParser();
          for each(var _loc3_ in _loc2_.data)
          {
             _inventory.localization.setBadgePointLimit(_loc3_.badgeId,_loc3_.limit);
@@ -564,7 +564,7 @@ package com.sulake.habbo.inventory
       
       public function onUserBadges(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2125 = param1 as class_2125;
+         var _loc3_:HabboUserBadgesMessageEvent = param1 as HabboUserBadgesMessageEvent;
          if(_loc3_.userId != _inventory.sessionData.userId)
          {
             return;
@@ -591,8 +591,8 @@ package com.sulake.habbo.inventory
       
       public function onAchievementReceived(param1:IMessageEvent) : void
       {
-         var _loc4_:class_1799 = param1 as class_1799;
-         var _loc3_:class_1918 = _loc4_.getParser();
+         var _loc4_:HabboAchievementNotificationMessageEvent = param1 as HabboAchievementNotificationMessageEvent;
+         var _loc3_:HabboAchievementNotificationMessageEventParser = _loc4_.getParser();
          var _loc2_:BadgesModel = _inventory.badgesModel;
          if(_loc2_ != null)
          {
@@ -604,7 +604,7 @@ package com.sulake.habbo.inventory
       
       public function onBadgeReceived(param1:IMessageEvent) : void
       {
-         var _loc3_:class_2433 = class_3521(param1).getParser();
+         var _loc3_:BadgeReceivedEventParser = BadgeReceivedEvent(param1).getParser();
          var _loc2_:BadgesModel = _inventory.badgesModel;
          if(_loc2_ != null)
          {
@@ -615,8 +615,8 @@ package com.sulake.habbo.inventory
       
       public function onAchievementsScore(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3661 = param1 as class_3661;
-         var _loc3_:class_3147 = _loc2_.getParser() as class_3147;
+         var _loc2_:AchievementsScoreEvent = param1 as AchievementsScoreEvent;
+         var _loc3_:AchievementsScoreEventParser = _loc2_.getParser() as AchievementsScoreEventParser;
          if(_loc3_ == null)
          {
             return;
@@ -645,7 +645,7 @@ package com.sulake.habbo.inventory
             return;
          }
          _inventory.toggleInventorySubPage("trading");
-         var _loc5_:class_3503 = param1 as class_3503;
+         var _loc5_:TradingOpenEvent = param1 as TradingOpenEvent;
          if(!_loc5_)
          {
             ErrorReportStorage.addDebugData("IncomingEvent","event is of unknown type:" + param1 + "!");
@@ -754,7 +754,7 @@ package com.sulake.habbo.inventory
       private function onTradingItemList(param1:IMessageEvent) : void
       {
          var _loc8_:GroupItem = null;
-         var _loc2_:class_3329 = param1 as class_3329;
+         var _loc2_:TradingItemListEvent = param1 as TradingItemListEvent;
          var _loc4_:class_55 = new class_55();
          var _loc5_:class_55 = new class_55();
          var _loc6_:int = _inventory.sessionData.userId;
@@ -857,7 +857,7 @@ package com.sulake.habbo.inventory
       
       private function onFlatAccessDenied(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3447 = (param1 as class_3544).getParser();
+         var _loc2_:FlatAccessDeniedMessageEventParser = (param1 as FlatAccessDeniedMessageEvent).getParser();
          if(_inventory.sessionData == null || _loc2_.userName != _inventory.sessionData.userName)
          {
             return;
@@ -866,7 +866,7 @@ package com.sulake.habbo.inventory
          _inventory.furniModel.roomLeft();
       }
       
-      private function onPets(param1:class_2966) : void
+      private function onPets(param1:PetInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -877,7 +877,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc3_:class_2545 = param1.getParser();
+         var _loc3_:PetInventoryEventParser = param1.getParser();
          if(var_2341 == null)
          {
             var_2341 = new Vector.<class_55>(_loc3_.totalFragments,true);
@@ -893,7 +893,7 @@ package com.sulake.habbo.inventory
          var_2341 = null;
       }
       
-      private function onPetAdded(param1:class_2518) : void
+      private function onPetAdded(param1:PetAddedToInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -904,14 +904,14 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_2485 = param1.getParser();
+         var _loc2_:PetAddedToInventoryEventParser = param1.getParser();
          _loc3_.addPet(_loc2_.pet);
          if(_loc2_.openInventory())
          {
          }
       }
       
-      private function onGoToBreedingNestFailure(param1:class_2493) : void
+      private function onGoToBreedingNestFailure(param1:GoToBreedingNestFailureEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -939,7 +939,7 @@ package com.sulake.habbo.inventory
          _inventory.catalog.openCatalogPage(_loc1_);
       }
       
-      private function onPetRemoved(param1:class_3116) : void
+      private function onPetRemoved(param1:PetRemovedFromInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -950,11 +950,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_3367 = param1.getParser();
+         var _loc2_:PetRemovedFromInventoryEventParser = param1.getParser();
          _loc3_.removePet(_loc2_.petId);
       }
       
-      private function onBots(param1:class_2942) : void
+      private function onBots(param1:BotInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -965,13 +965,13 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_3263 = param1.getParser();
+         var _loc2_:BotInventoryEventParser = param1.getParser();
          _loc3_.updateItems(_loc2_.items);
          _inventory.setInventoryCategoryInit("bots");
          _loc3_.setListInitialized();
       }
       
-      private function onBotRemoved(param1:class_2471) : void
+      private function onBotRemoved(param1:BotRemovedFromInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -982,11 +982,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_3126 = param1.getParser();
+         var _loc2_:BotRemovedFromInventoryEventParser = param1.getParser();
          _loc3_.removeItem(_loc2_.itemId);
       }
       
-      private function onBotAdded(param1:class_2947) : void
+      private function onBotAdded(param1:BotAddedToInventoryEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -1001,11 +1001,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_3211 = param1.getParser();
+         var _loc2_:BotAddedToInventoryEventParser = param1.getParser();
          _loc3_.addItem(_loc2_.item);
       }
       
-      private function onMarketplaceConfiguration(param1:class_1832) : void
+      private function onMarketplaceConfiguration(param1:MarketplaceConfigurationEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -1016,7 +1016,7 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc3_:class_2097 = param1.getParser();
+         var _loc3_:MarketplaceConfigurationEventParser = param1.getParser();
          _loc4_.isEnabled = _loc3_.isEnabled;
          _loc4_.commission = _loc3_.commission;
          _loc4_.tokenBatchPrice = _loc3_.tokenBatchPrice;
@@ -1036,7 +1036,7 @@ package com.sulake.habbo.inventory
          }
       }
       
-      private function onMarketplaceCanMakeOfferResult(param1:class_3422) : void
+      private function onMarketplaceCanMakeOfferResult(param1:MarketplaceCanMakeOfferResult) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -1047,11 +1047,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_3584 = param1.getParser();
+         var _loc2_:MarketplaceCanMakeOfferResultParser = param1.getParser();
          _loc3_.proceedOfferMaking(_loc2_.resultCode,_loc2_.tokenCount);
       }
       
-      private function onMarketplaceMakeOfferResult(param1:class_2170) : void
+      private function onMarketplaceMakeOfferResult(param1:MarketplaceMakeOfferResult) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -1062,11 +1062,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_2172 = param1.getParser();
+         var _loc2_:MarketplaceMakeOfferResultParser = param1.getParser();
          _loc3_.endOfferMaking(_loc2_.result);
       }
       
-      private function onMarketplaceItemStats(param1:class_1943) : void
+      private function onMarketplaceItemStats(param1:MarketplaceItemStatsEvent) : void
       {
          if(param1 == null || _inventory == null)
          {
@@ -1077,11 +1077,11 @@ package com.sulake.habbo.inventory
          {
             return;
          }
-         var _loc2_:class_1746 = param1.getParser();
+         var _loc2_:MarketplaceItemStatsEventParser = param1.getParser();
          _loc3_.setAveragePrice(_loc2_.furniCategoryId,_loc2_.furniTypeId,_loc2_.averagePrice);
       }
       
-      private function onNotEnoughCredits(param1:class_2053) : void
+      private function onNotEnoughCredits(param1:NotEnoughBalanceMessageEvent) : void
       {
          if(!param1 || !_inventory)
          {
@@ -1109,7 +1109,7 @@ package com.sulake.habbo.inventory
          }
       }
       
-      private function onFigureSetIds(param1:class_3593) : void
+      private function onFigureSetIds(param1:FigureSetIdsEvent) : void
       {
          _inventory.updatePurchasedFigureSetIds(param1.getParser().figureSetIds,param1.getParser().boundFurnitureNames);
       }

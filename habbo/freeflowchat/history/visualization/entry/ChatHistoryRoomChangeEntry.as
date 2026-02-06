@@ -7,7 +7,7 @@ package com.sulake.habbo.freeflowchat.history.visualization.entry
    import flash.geom.Point;
    import flash.geom.Rectangle;
    import flash.text.TextField;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class ChatHistoryRoomChangeEntry implements class_2434
    {

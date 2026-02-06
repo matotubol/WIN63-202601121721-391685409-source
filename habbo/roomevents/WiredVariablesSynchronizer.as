@@ -2,14 +2,14 @@ package com.sulake.habbo.roomevents
 {
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.core.runtime.class_13;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2812;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3388;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.class_2729;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetAllVariablesHashMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetAllVariablesDiffsMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.WiredAllVariablesDiffsEventParser;
    import flash.utils.Dictionary;
    import flash.utils.getTimer;
    import package_189.WiredVariable;
-   import package_97.class_2627;
-   import package_97.class_3038;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredAllVariablesHashEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredAllVariablesDiffsEvent;
    
    public class WiredVariablesSynchronizer implements class_13
    {
@@ -47,8 +47,8 @@ package com.sulake.habbo.roomevents
          super();
          this.name_1 = param1;
          _messageEvents = [];
-         _messageEvents.push(new class_2627(onAllVariablesHashEvent));
-         _messageEvents.push(new class_3038(onAllVariablesDiffEvent));
+         _messageEvents.push(new WiredAllVariablesHashEvent(onAllVariablesHashEvent));
+         _messageEvents.push(new WiredAllVariablesDiffsEvent(onAllVariablesDiffEvent));
          for each(var _loc2_ in _messageEvents)
          {
             name_1.communication.addHabboConnectionMessageEvent(_loc2_);
@@ -85,7 +85,7 @@ package com.sulake.habbo.roomevents
          }
          else
          {
-            name_1.send(new class_2812());
+            name_1.send(new WiredGetAllVariablesHashMessageComposer());
          }
          return false;
       }
@@ -95,7 +95,7 @@ package com.sulake.habbo.roomevents
          return var_610[param1];
       }
       
-      private function onAllVariablesHashEvent(param1:class_2627) : void
+      private function onAllVariablesHashEvent(param1:WiredAllVariablesHashEvent) : void
       {
          onAllVariablesHash(param1.getParser().allVariablesHash);
       }
@@ -116,18 +116,18 @@ package com.sulake.habbo.roomevents
          {
             _allVariablesHash = param1;
             _status = STATUS_AWAIT_DIFFS;
-            name_1.send(new class_3388(_variableIdToHash));
+            name_1.send(new WiredGetAllVariablesDiffsMessageComposer(_variableIdToHash));
          }
       }
       
-      private function onAllVariablesDiffEvent(param1:class_3038) : void
+      private function onAllVariablesDiffEvent(param1:WiredAllVariablesDiffsEvent) : void
       {
          if(_status != STATUS_AWAIT_DIFFS)
          {
             return;
          }
          var_820 = getTimer();
-         var _loc2_:class_2729 = param1.getParser();
+         var _loc2_:WiredAllVariablesDiffsEventParser = param1.getParser();
          _allVariablesHash = _loc2_.allVariablesHash;
          if(var_610 == null)
          {

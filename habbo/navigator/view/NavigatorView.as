@@ -21,7 +21,7 @@ package com.sulake.habbo.navigator.view
    import flash.utils.getTimer;
    import package_25.class_1995;
    import package_25.class_2073;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class NavigatorView implements class_31
    {

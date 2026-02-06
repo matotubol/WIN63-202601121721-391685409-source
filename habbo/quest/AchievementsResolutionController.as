@@ -12,11 +12,11 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.utils.class_2001;
    import com.sulake.habbo.window.widgets.class_2728;
    import com.sulake.habbo.window.widgets.class_3087;
-   import package_103.class_2361;
-   import package_103.class_3070;
-   import package_163.class_3292;
-   import package_163.class_3303;
-   import package_26.class_2847;
+   import com.sulake.habbo.communication.messages.outgoing.game.lobby.class_2361;
+   import com.sulake.habbo.communication.messages.outgoing.game.lobby.GetResolutionAchievementsMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.class_3292;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.class_3303;
+   import com.sulake.habbo.communication.messages.incoming.notifications.class_2847;
    
    public class AchievementsResolutionController implements class_13
    {
@@ -117,7 +117,7 @@ package com.sulake.habbo.quest
       {
          if(_progressView && _progressView.visible && param1.type == _progressView.achievementId)
          {
-            _questEngine.send(new class_3070(_progressView.stuffId,0));
+            _questEngine.send(new GetResolutionAchievementsMessageComposer(_progressView.stuffId,0));
          }
       }
       
@@ -125,7 +125,7 @@ package com.sulake.habbo.quest
       {
          if(_progressView && _progressView.visible && param1.achievementId == _progressView.achievementId)
          {
-            _questEngine.send(new class_3070(_progressView.stuffId,0));
+            _questEngine.send(new GetResolutionAchievementsMessageComposer(_progressView.stuffId,0));
          }
       }
       
@@ -144,7 +144,7 @@ package com.sulake.habbo.quest
                if(param2.type == "WE_OK")
                {
                   _questEngine.send(new class_2361(stuffId));
-                  _questEngine.send(new class_3070(_progressView.stuffId,0));
+                  _questEngine.send(new GetResolutionAchievementsMessageComposer(_progressView.stuffId,0));
                }
             });
          }
@@ -214,7 +214,7 @@ package com.sulake.habbo.quest
                   param1.dispose();
                   if(param2.type == "WE_OK")
                   {
-                     _questEngine.send(new class_3070(_stuffId,_selectedAchievementId));
+                     _questEngine.send(new GetResolutionAchievementsMessageComposer(_stuffId,_selectedAchievementId));
                   }
                   else
                   {

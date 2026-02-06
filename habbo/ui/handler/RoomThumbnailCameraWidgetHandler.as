@@ -1,7 +1,7 @@
 package com.sulake.habbo.ui.handler
 {
    import com.sulake.core.runtime.class_13;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2077;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomThumbnailMessageComposer;
    import com.sulake.habbo.ui.IRoomWidgetHandler;
    import com.sulake.habbo.ui.IRoomWidgetHandlerContainer;
    import com.sulake.habbo.ui.RoomDesktop;
@@ -9,7 +9,7 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.events.RoomWidgetUpdateEvent;
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import flash.events.Event;
-   import package_147.class_3160;
+   import com.sulake.habbo.communication.messages.incoming.camera.ThumbnailStatusMessageEvent;
    
    public class RoomThumbnailCameraWidgetHandler implements IRoomWidgetHandler, class_13
    {
@@ -20,7 +20,7 @@ package com.sulake.habbo.ui.handler
       
       private var var_16:RoomThumbnailCameraWidget;
       
-      private var var_3293:class_3160;
+      private var var_3293:ThumbnailStatusMessageEvent;
       
       public function RoomThumbnailCameraWidgetHandler(param1:RoomDesktop)
       {
@@ -56,7 +56,7 @@ package com.sulake.habbo.ui.handler
       public function set container(param1:IRoomWidgetHandlerContainer) : void
       {
          _container = param1;
-         var_3293 = new class_3160(onThumbnailStatus);
+         var_3293 = new ThumbnailStatusMessageEvent(onThumbnailStatus);
          _container.connection.addMessageEvent(var_3293);
       }
       
@@ -91,17 +91,17 @@ package com.sulake.habbo.ui.handler
          return _container;
       }
       
-      public function collectPhotoData() : class_2077
+      public function collectPhotoData() : RenderRoomThumbnailMessageComposer
       {
-         return class_2077(var_1099.roomEngine.getRenderRoomMessage(var_16.viewPort,var_1099.roomBackgroundColor,true));
+         return RenderRoomThumbnailMessageComposer(var_1099.roomEngine.getRenderRoomMessage(var_16.viewPort,var_1099.roomBackgroundColor,true));
       }
       
-      public function sendPhotoData(param1:class_2077) : void
+      public function sendPhotoData(param1:RenderRoomThumbnailMessageComposer) : void
       {
          _container.connection.send(param1);
       }
       
-      private function onThumbnailStatus(param1:class_3160) : void
+      private function onThumbnailStatus(param1:ThumbnailStatusMessageEvent) : void
       {
          var_16.destroy();
          if(param1.getParser().isOk())

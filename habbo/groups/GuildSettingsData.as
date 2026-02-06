@@ -1,6 +1,6 @@
 package com.sulake.habbo.groups
 {
-   import package_3.class_1818;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1818;
    
    public class GuildSettingsData
    {

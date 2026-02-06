@@ -11,8 +11,8 @@ package com.sulake.habbo.ui.widget.furniture.contextmenu
    import com.sulake.habbo.window.class_38;
    import com.sulake.habbo.window.widgets.class_2478;
    import com.sulake.room.object.IRoomObject;
-   import package_107.class_2379;
-   import package_177.class_3061;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.CustomizeAvatarWithFurniMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.register.UpdateFigureDataMessageComposer;
    
    public class PurchasableClothingConfirmationView implements class_13
    {
@@ -97,7 +97,7 @@ package com.sulake.habbo.ui.widget.furniture.contextmenu
             _newFigureString = var_16.handler.container.avatarRenderManager.getFigureStringWithFigureIds(var_16.handler.container.sessionDataManager.figure,var_16.handler.container.sessionDataManager.gender,_loc2_);
             if(var_16.handler.container.inventory.hasBoundFigureSetFurniture(var_587.className))
             {
-               var_16.handler.container.connection.send(new class_3061(_newFigureString,var_16.handler.container.sessionDataManager.gender));
+               var_16.handler.container.connection.send(new UpdateFigureDataMessageComposer(_newFigureString,var_16.handler.container.sessionDataManager.gender));
             }
             else
             {
@@ -182,8 +182,8 @@ package com.sulake.habbo.ui.widget.furniture.contextmenu
                close();
                break;
             case "save_button":
-               var_16.handler.container.connection.send(new class_2379(var_2259));
-               var_16.handler.container.connection.send(new class_3061(_newFigureString,var_16.handler.container.sessionDataManager.gender));
+               var_16.handler.container.connection.send(new CustomizeAvatarWithFurniMessageComposer(var_2259));
+               var_16.handler.container.connection.send(new UpdateFigureDataMessageComposer(_newFigureString,var_16.handler.container.sessionDataManager.gender));
                close();
          }
       }

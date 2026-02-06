@@ -6,7 +6,7 @@ package com.sulake.habbo.ui.widget.camera
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.components.class_2251;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2076;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomMessageComposer;
    import com.sulake.habbo.tracking.HabboTracking;
    import flash.display.BitmapData;
    import flash.display.Loader;
@@ -30,7 +30,7 @@ package com.sulake.habbo.ui.widget.camera
       
       private static var var_340:Vector.<CameraSlotData> = new Vector.<CameraSlotData>(5);
       
-      private static var var_3484:Vector.<class_2076> = new Vector.<class_2076>(5);
+      private static var var_3484:Vector.<RenderRoomMessageComposer> = new Vector.<RenderRoomMessageComposer>(5);
       
       private var var_16:CameraWidget;
       
@@ -235,7 +235,7 @@ package com.sulake.habbo.ui.widget.camera
                   break;
                }
                var_16.triggetCameraShutterSound();
-               var _loc4_:class_2076 = var_16.handler.collectPhotoData();
+               var _loc4_:RenderRoomMessageComposer = var_16.handler.collectPhotoData();
                if(_loc4_ != null && Boolean(null.isSendable()))
                {
                   var_3484[var_157] = null;
@@ -471,7 +471,7 @@ package com.sulake.habbo.ui.widget.camera
          }
       }
       
-      public function getRenderRoomMessage() : class_2076
+      public function getRenderRoomMessage() : RenderRoomMessageComposer
       {
          return var_3484[var_157];
       }

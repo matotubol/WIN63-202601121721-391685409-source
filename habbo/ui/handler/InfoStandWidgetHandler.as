@@ -69,21 +69,21 @@ package com.sulake.habbo.ui.handler
    import flash.display.BitmapData;
    import flash.events.Event;
    import flash.utils.getTimer;
-   import package_107.class_2596;
-   import package_107.class_2752;
-   import package_107.class_3162;
-   import package_3.class_1846;
-   import package_3.class_1950;
-   import package_3.class_2123;
-   import package_32.class_3348;
-   import package_37.class_3889;
-   import package_55.class_3044;
-   import package_55.class_3155;
-   import package_66.class_2126;
-   import package_66.class_2562;
-   import package_9.class_1796;
-   import package_9.class_1879;
-   import package_9.class_3140;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.DropCarryItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.PassCarryItemToPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.PassCarryItemMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
+   import com.sulake.habbo.communication.messages.incoming.users.RelationshipStatusInfoEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboGroupDetailsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.class_3348;
+   import com.sulake.habbo.communication.messages.incoming.room.pets.class_3889;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.SetObjectDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.GiveSupplementToPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.RespectPetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.PetSelectedMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetRelationshipStatusInfoMessageComposer;
    
    public class InfoStandWidgetHandler implements IRoomWidgetHandler
    {
@@ -184,14 +184,14 @@ package com.sulake.habbo.ui.handler
          }
          if(_container.connection)
          {
-            var_1603 = new class_2123(onGroupDetails);
+            var_1603 = new HabboGroupDetailsMessageEvent(onGroupDetails);
             _container.connection.addMessageEvent(var_1603);
-            var_1614 = new class_1950(onRelationshipStatusEvent);
+            var_1614 = new RelationshipStatusInfoEvent(onRelationshipStatusEvent);
             _container.connection.addMessageEvent(var_1614);
          }
       }
       
-      private function onGroupDetails(param1:class_2123) : void
+      private function onGroupDetails(param1:HabboGroupDetailsMessageEvent) : void
       {
          var _loc2_:class_1846 = param1.data;
          if(var_16.furniData.groupId == _loc2_.groupId)
@@ -377,7 +377,7 @@ package com.sulake.habbo.ui.handler
                (_container.roomEngine as class_17).context.createLinkEvent(_loc8_);
                break;
             case "RWUAM_OPEN_PROFILE":
-               _container.connection.send(new class_1879(_loc2_.webID));
+               _container.connection.send(new GetExtendedProfileMessageComposer(_loc2_.webID));
                break;
             case " RWUAM_RESPECT_PET":
                _container.sessionDataManager.givePetRespect(_loc22_);
@@ -441,22 +441,22 @@ package com.sulake.habbo.ui.handler
                _container.roomSession.removeSaddleFromPet(_loc22_);
                break;
             case "RWUAM_PASS_CARRY_ITEM":
-               _container.connection.send(new class_3162(_loc22_));
+               _container.connection.send(new PassCarryItemMessageComposer(_loc22_));
                break;
             case "RWUAM_GIVE_CARRY_ITEM_TO_PET":
-               _container.connection.send(new class_2752(_loc22_));
+               _container.connection.send(new PassCarryItemToPetMessageComposer(_loc22_));
                break;
             case "RWUAM_GIVE_WATER_TO_PET":
-               _container.connection.send(new class_3155(_loc22_,0));
+               _container.connection.send(new GiveSupplementToPetMessageComposer(_loc22_,0));
                break;
             case "RWUAM_GIVE_LIGHT_TO_PET":
-               _container.connection.send(new class_3155(_loc22_,1));
+               _container.connection.send(new GiveSupplementToPetMessageComposer(_loc22_,1));
                break;
             case "RWUAM_TREAT_PET":
-               _container.connection.send(new class_2126(_loc22_));
+               _container.connection.send(new RespectPetMessageComposer(_loc22_));
                break;
             case "RWUAM_DROP_CARRY_ITEM":
-               _container.connection.send(new class_2596());
+               _container.connection.send(new DropCarryItemMessageComposer());
                break;
             case "RWFUAM_ROTATE":
                _container.roomEngine.modifyRoomObject(_loc19_,_loc20_,"OBJECT_ROTATE_POSITIVE");
@@ -578,7 +578,7 @@ package com.sulake.habbo.ui.handler
                {
                   _container.habboTracking.trackGoogle("extendedProfile",null.trackingLocation);
                }
-               _container.connection.send(new class_1879(null.userId));
+               _container.connection.send(new GetExtendedProfileMessageComposer(null.userId));
                break;
             case "RWPOM_OPEN_PRESENT":
                var _loc10_:RoomWidgetPresentOpenMessage = param1 as RoomWidgetPresentOpenMessage;
@@ -745,7 +745,7 @@ package com.sulake.habbo.ui.handler
          var _loc2_:Boolean = container.config.getBoolean("petSelect.enabled");
          if(_loc2_)
          {
-            _container.connection.send(new class_2562(param1));
+            _container.connection.send(new PetSelectedMessageComposer(param1));
          }
          _container.roomSession.userDataManager.requestPetInfo(param1);
       }
@@ -905,7 +905,7 @@ package com.sulake.habbo.ui.handler
          _loc5_.figure = param4.figure;
          _container.events.dispatchEvent(_loc5_);
          _container.habboGroupsManager.updateVisibleExtendedProfile(param4.webID);
-         _container.connection.send(new class_3140(param4.webID));
+         _container.connection.send(new GetRelationshipStatusInfoMessageComposer(param4.webID));
       }
       
       private function determineCanBeMuted(param1:RoomWidgetUserInfoUpdateEvent) : Boolean
@@ -1077,7 +1077,7 @@ package com.sulake.habbo.ui.handler
          if(_loc6_ != 0)
          {
             _loc20_.groupId = _loc6_;
-            container.connection.send(new class_1796(_loc6_,false));
+            container.connection.send(new GetHabboGroupDetailsMessageComposer(_loc6_,false));
          }
          if(_container.isOwnerOfFurniture(_loc9_))
          {
@@ -1444,7 +1444,7 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onRelationshipStatusEvent(param1:class_1950) : void
+      private function onRelationshipStatusEvent(param1:RelationshipStatusInfoEvent) : void
       {
          if(var_16 && var_16.mainWindow.visible)
          {
@@ -1461,7 +1461,7 @@ package com.sulake.habbo.ui.handler
       {
          if(_container.sessionDataManager.hasSecurity(5))
          {
-            _container.connection.send(new class_3044(var_16.furniData.id,param1));
+            _container.connection.send(new SetObjectDataMessageComposer(var_16.furniData.id,param1));
          }
       }
    }

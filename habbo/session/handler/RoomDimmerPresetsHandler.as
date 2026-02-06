@@ -5,9 +5,9 @@ package com.sulake.habbo.session.handler
    import com.sulake.habbo.session.IRoomHandlerListener;
    import com.sulake.habbo.session.IRoomSession;
    import com.sulake.habbo.session.events.RoomSessionDimmerPresetsEvent;
-   import package_100.class_3337;
-   import package_100.class_3344;
-   import package_91.class_2648;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.RoomDimmerPresetsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.class_3344;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.RoomDimmerPresetsMessageEventParser;
    
    public class RoomDimmerPresetsHandler extends BaseHandler
    {
@@ -19,19 +19,19 @@ package com.sulake.habbo.session.handler
          {
             return;
          }
-         param1.addMessageEvent(new class_3337(onRoomDimmerPresets));
+         param1.addMessageEvent(new RoomDimmerPresetsMessageEvent(onRoomDimmerPresets));
       }
       
       private function onRoomDimmerPresets(param1:IMessageEvent) : void
       {
          var _loc4_:int = 0;
          var _loc6_:class_3344 = null;
-         var _loc5_:class_3337 = param1 as class_3337;
+         var _loc5_:RoomDimmerPresetsMessageEvent = param1 as RoomDimmerPresetsMessageEvent;
          if(_loc5_ == null || _loc5_.getParser() == null)
          {
             return;
          }
-         var _loc2_:class_2648 = _loc5_.getParser();
+         var _loc2_:RoomDimmerPresetsMessageEventParser = _loc5_.getParser();
          var _loc3_:IRoomSession = listener.getSession(var_56);
          if(_loc3_ == null)
          {

@@ -6,8 +6,8 @@ package com.sulake.habbo.navigator.roomsettings
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.class_42;
    import com.sulake.habbo.window.utils.IModalDialog;
-   import package_104.class_3533;
-   import package_42.class_3364;
+   import com.sulake.habbo.communication.messages.outgoing.roomsettings.UpdateRoomCategoryAndTradeSettingsComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3364;
    
    public class EnforceCategoryCtrl
    {
@@ -82,7 +82,7 @@ package com.sulake.habbo.navigator.roomsettings
             if("ok" === _loc4_)
             {
                _loc3_ = int(class_3364(var_1904[Math.max(0,var_2551)]).nodeId);
-               _navigator.communication.connection.send(new class_3533(_navigator.data.currentRoomId,_loc3_,var_4453));
+               _navigator.communication.connection.send(new UpdateRoomCategoryAndTradeSettingsComposer(_navigator.data.currentRoomId,_loc3_,var_4453));
                close();
             }
          }

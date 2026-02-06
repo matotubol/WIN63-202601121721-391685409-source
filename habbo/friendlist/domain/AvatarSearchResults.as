@@ -1,7 +1,7 @@
 package com.sulake.habbo.friendlist.domain
 {
    import flash.utils.Dictionary;
-   import package_14.class_3180;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_3180;
    
    public class AvatarSearchResults
    {

@@ -7,8 +7,8 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.ILandingViewWidget;
    import com.sulake.habbo.window.widgets.class_2478;
-   import package_39.class_1884;
-   import package_4.class_2005;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.UserChangeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
    
    public class AvatarImageWidget implements ILandingViewWidget
    {
@@ -17,16 +17,16 @@ package com.sulake.habbo.friendbar.landingview.widget
       
       private var var_2185:class_2010;
       
-      private var var_1875:class_2005;
+      private var var_1875:UserObjectEvent;
       
-      private var var_2100:class_1884;
+      private var var_2100:UserChangeMessageEvent;
       
       public function AvatarImageWidget(param1:HabboLandingView)
       {
          super();
          _landingView = param1;
-         var_1875 = new class_2005(onUserObject);
-         var_2100 = new class_1884(onUserChange);
+         var_1875 = new UserObjectEvent(onUserObject);
+         var_2100 = new UserChangeMessageEvent(onUserChange);
          _landingView.communicationManager.addHabboConnectionMessageEvent(var_1875);
          _landingView.communicationManager.addHabboConnectionMessageEvent(var_2100);
          _landingView.avatarEditor.events.addEventListener("AVATAR_FIGURE_UPDATED",onAvatarFigureUpdated);
@@ -72,14 +72,14 @@ package com.sulake.habbo.friendbar.landingview.widget
          return _landingView == null;
       }
       
-      private function onUserObject(param1:class_2005) : void
+      private function onUserObject(param1:UserObjectEvent) : void
       {
          refreshAvatarInfo(param1.getParser().figure);
       }
       
       private function onUserChange(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1884 = param1 as class_1884;
+         var _loc2_:UserChangeMessageEvent = param1 as UserChangeMessageEvent;
          if(_loc2_ == null)
          {
             return;

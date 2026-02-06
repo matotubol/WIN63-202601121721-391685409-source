@@ -4,7 +4,7 @@ package com.sulake.habbo.navigator.mainview.tabpagedecorators
    import com.sulake.core.window.components.class_2261;
    import com.sulake.core.window.events.*;
    import com.sulake.habbo.navigator.HabboNavigator;
-   import package_42.class_3364;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3364;
    
    public class RoomsTabPageDecorator implements ITabPageDecorator
    {

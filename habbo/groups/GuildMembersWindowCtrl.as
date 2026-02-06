@@ -21,22 +21,22 @@ package com.sulake.habbo.groups
    import flash.events.Event;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_3.class_1779;
-   import package_3.class_1811;
-   import package_3.class_1864;
-   import package_3.class_1876;
-   import package_3.class_1893;
-   import package_3.class_2049;
-   import package_3.class_2175;
-   import package_8.class_3658;
-   import package_9.class_1879;
-   import package_9.class_2308;
-   import package_9.class_2437;
-   import package_9.class_2570;
-   import package_9.class_2938;
-   import package_9.class_3387;
-   import package_9.class_3555;
-   import package_9.class_3633;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipRejectedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembersMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1864;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipUpdatedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1893;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMemberMgmtFailedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.GroupMembershipRequestedMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.users.GroupMembershipRequestedMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.AddAdminRightsToMemberMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.ApproveMembershipRequestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.ApproveAllMembershipRequestsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.RemoveAdminRightsFromMemberMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UnblockGroupMemberMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.RejectMembershipRequestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetGuildMembersMessageComposer;
    
    public class GuildMembersWindowCtrl implements class_13
    {
@@ -106,7 +106,7 @@ package com.sulake.habbo.groups
       
       public function onGuildMembers(param1:IMessageEvent) : void
       {
-         var_24 = class_1811(param1).data;
+         var_24 = GuildMembersMessageEvent(param1).data;
          show();
          populateSearchTypes();
          populateUserNameFilter();
@@ -114,7 +114,7 @@ package com.sulake.habbo.groups
       
       public function onGuildMembershipUpdated(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1876 = class_1876(param1);
+         var _loc2_:GuildMembershipUpdatedMessageEvent = GuildMembershipUpdatedMessageEvent(param1);
          if(var_24 != null && var_24.groupId == _loc2_.guildId)
          {
             var_24.update(_loc2_.data);
@@ -124,7 +124,7 @@ package com.sulake.habbo.groups
       
       public function onGuildMemberMgmtFailed(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2049 = class_2049(param1);
+         var _loc2_:GuildMemberMgmtFailedMessageEvent = GuildMemberMgmtFailedMessageEvent(param1);
          var _loc3_:int = _loc2_.reason;
          var _loc4_:String = "group.membermgmt.fail." + _loc3_;
          var _loc5_:String = var_52.localization.getLocalization(_loc4_,_loc4_);
@@ -137,7 +137,7 @@ package com.sulake.habbo.groups
       
       public function onGuildMembershipRejected(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1779 = class_1779(param1);
+         var _loc2_:GuildMembershipRejectedMessageEvent = GuildMembershipRejectedMessageEvent(param1);
          if(_window && _window.visible && var_24 != null && var_24.groupId == _loc2_.getParser().guildId)
          {
             doSearch(var_24.pageIndex);
@@ -146,7 +146,7 @@ package com.sulake.habbo.groups
       
       public function onMembershipRequested(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3658 = class_2175(param1).getParser();
+         var _loc2_:GroupMembershipRequestedMessageEventParser = GroupMembershipRequestedMessageEvent(param1).getParser();
          if(_window && _window.visible && var_24 != null && var_24.groupId == _loc2_.groupId)
          {
             doSearch(var_24.pageIndex);
@@ -170,7 +170,7 @@ package com.sulake.habbo.groups
                var_847.goBackToInitialState();
             }
             _groupId = param1;
-            var_52.send(new class_3633(param1,0,"",param2));
+            var_52.send(new GetGuildMembersMessageComposer(param1,0,"",param2));
          }
       }
       
@@ -410,7 +410,7 @@ package com.sulake.habbo.groups
          }
          else
          {
-            var_52.send(new class_3555(var_24.groupId,_loc2_.userId));
+            var_52.send(new RejectMembershipRequestMessageComposer(var_24.groupId,_loc2_.userId));
          }
       }
       
@@ -480,19 +480,19 @@ package com.sulake.habbo.groups
          }
          if(_loc2_.blocked)
          {
-            var_52.send(new class_3387(var_24.groupId,_loc2_.userId));
+            var_52.send(new UnblockGroupMemberMessageComposer(var_24.groupId,_loc2_.userId));
          }
          else if(_loc2_.admin)
          {
-            var_52.send(new class_2938(var_24.groupId,_loc2_.userId));
+            var_52.send(new RemoveAdminRightsFromMemberMessageComposer(var_24.groupId,_loc2_.userId));
          }
          else if(_loc2_.member)
          {
-            var_52.send(new class_2308(var_24.groupId,_loc2_.userId));
+            var_52.send(new AddAdminRightsToMemberMessageComposer(var_24.groupId,_loc2_.userId));
          }
          else
          {
-            var_52.send(new class_2437(var_24.groupId,_loc2_.userId));
+            var_52.send(new ApproveMembershipRequestMessageComposer(var_24.groupId,_loc2_.userId));
          }
       }
       
@@ -506,7 +506,7 @@ package com.sulake.habbo.groups
       {
          if(param1.type == "WME_CLICK")
          {
-            var_52.send(new class_1879(param2.id));
+            var_52.send(new GetExtendedProfileMessageComposer(param2.id));
          }
       }
       
@@ -536,7 +536,7 @@ package com.sulake.habbo.groups
          var _loc2_:class_1864 = var_24;
          var _loc3_:String = var_847.getText();
          var _loc4_:int = getTypeDropMenu().selection;
-         var_52.send(new class_3633(_loc2_.groupId,param1,_loc3_,_loc4_));
+         var_52.send(new GetGuildMembersMessageComposer(_loc2_.groupId,param1,_loc3_,_loc4_));
       }
       
       private function onAcceptAll(param1:class_1758, param2:class_1741) : void
@@ -545,7 +545,7 @@ package com.sulake.habbo.groups
          {
             return;
          }
-         var_52.send(new class_2570(var_24.groupId));
+         var_52.send(new ApproveAllMembershipRequestsMessageComposer(var_24.groupId));
       }
       
       private function getTypeDropMenu() : class_2261

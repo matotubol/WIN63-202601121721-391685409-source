@@ -18,7 +18,7 @@ package com.sulake.habbo.inventory.bots
    import com.sulake.habbo.window.class_38;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_182.class_3317;
+   import com.sulake.habbo.communication.messages.parser.inventory.bots.class_3317;
    
    public class BotsView implements IInventoryView, class_259
    {

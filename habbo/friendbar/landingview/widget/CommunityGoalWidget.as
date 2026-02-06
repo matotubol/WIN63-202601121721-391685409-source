@@ -8,15 +8,15 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3232;
-   import com.sulake.habbo.communication.messages.parser.quest.class_3694;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetCommunityGoalProgressMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.quest.CommunityGoalProgressMessageEventParser;
    import com.sulake.habbo.friendbar.landingview.*;
    import com.sulake.habbo.friendbar.landingview.interfaces.ILandingViewWidget;
    import com.sulake.habbo.friendbar.landingview.interfaces.ISettingsAwareWidget;
    import com.sulake.habbo.friendbar.landingview.layout.CommonWidgetSettings;
    import com.sulake.habbo.friendbar.landingview.layout.WidgetContainerLayout;
-   import package_62.class_2885;
-   import package_62.class_4083;
+   import com.sulake.habbo.communication.messages.incoming.quest.CommunityGoalProgressMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_4083;
    
    public class CommunityGoalWidget implements class_31, ILandingViewWidget, ISettingsAwareWidget
    {
@@ -77,7 +77,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       
       public function initialize() : void
       {
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_2885(onCommunityGoalProgress));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new CommunityGoalProgressMessageEvent(onCommunityGoalProgress));
          var_156 = class_1812(var_2469 ? _landingView.getXmlWindow("community_goal_voting") : _landingView.getXmlWindow("community_goal"));
          var_5000 = IStaticBitmapWrapperWindow(var_156.findChildByName("meter_needle"));
          if(!var_2469)
@@ -210,7 +210,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       {
          if(!var_3118)
          {
-            _landingView.send(new class_3232());
+            _landingView.send(new GetCommunityGoalProgressMessageComposer());
             var_3118 = true;
          }
       }
@@ -232,7 +232,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       
       private function onCommunityGoalProgress(param1:IMessageEvent) : void
       {
-         _communityProgress = class_3694(param1.parser).data;
+         _communityProgress = CommunityGoalProgressMessageEventParser(param1.parser).data;
          var_3118 = false;
          refreshContent();
          class_17(_landingView.windowManager).registerUpdateReceiver(this,10);

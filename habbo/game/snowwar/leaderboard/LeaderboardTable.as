@@ -2,8 +2,8 @@ package com.sulake.habbo.game.snowwar.leaderboard
 {
    import com.sulake.core.communication.messages.IMessageComposer;
    import com.sulake.habbo.game.snowwar.SnowWarEngine;
-   import package_108.Game2GetFriendsLeaderboardComposer;
-   import package_202.class_3963;
+   import com.sulake.habbo.communication.messages.outgoing.game.score.Game2GetFriendsLeaderboardComposer;
+   import com.sulake.habbo.communication.messages.parser.game.score.class_3963;
    
    public class LeaderboardTable
    {

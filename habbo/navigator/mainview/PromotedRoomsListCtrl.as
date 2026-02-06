@@ -8,8 +8,8 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.habbo.navigator.*;
    import com.sulake.habbo.navigator.domain.RoomSessionTags;
    import com.sulake.habbo.window.widgets.class_2478;
-   import package_42.class_4003;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_4003;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class PromotedRoomsListCtrl implements class_13
    {
@@ -151,7 +151,7 @@ package com.sulake.habbo.navigator.mainview
          {
             var _loc3_:class_4003 = findCategory(param2);
             _navigator.trackGoogle("extendedProfile","navigator_promotedRoom");
-            _navigator.send(new class_1879(null.bestRoom.ownerId));
+            _navigator.send(new GetExtendedProfileMessageComposer(null.bestRoom.ownerId));
          }
       }
       

@@ -5,10 +5,10 @@ package com.sulake.habbo.catalog.club
    import com.sulake.habbo.catalog.HabboCatalog;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.window.class_38;
-   import package_10.class_2099;
-   import package_10.class_2375;
-   import package_6.class_2791;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.incoming.catalog.HabboClubExtendOfferMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2375;
+   import com.sulake.habbo.communication.messages.parser.catalog.HabboClubExtendOfferMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class ClubExtendController
    {
@@ -39,24 +39,24 @@ package com.sulake.habbo.catalog.club
          _disposed = true;
       }
       
-      public function onOffer(param1:class_2099) : void
+      public function onOffer(param1:HabboClubExtendOfferMessageEvent) : void
       {
          if(_disposed)
          {
             return;
          }
-         var _loc2_:class_2791 = param1.getParser();
+         var _loc2_:HabboClubExtendOfferMessageEventParser = param1.getParser();
          _offer = _loc2_.offer();
          showConfirmation();
          if(_catalog.connection)
          {
             if(_offer.vip)
             {
-               _catalog.connection.send(new class_2196("Catalog","dialog_show","vip.membership.extension.purchase"));
+               _catalog.connection.send(new EventLogMessageComposer("Catalog","dialog_show","vip.membership.extension.purchase"));
             }
             else
             {
-               _catalog.connection.send(new class_2196("Catalog","dialog_show","basic.membership.extension.purchase"));
+               _catalog.connection.send(new EventLogMessageComposer("Catalog","dialog_show","basic.membership.extension.purchase"));
             }
          }
       }

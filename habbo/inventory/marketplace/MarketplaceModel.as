@@ -12,11 +12,11 @@ package com.sulake.habbo.inventory.marketplace
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.room.IRoomEngine;
    import com.sulake.habbo.window.class_38;
-   import package_7.class_1922;
-   import package_7.class_2462;
-   import package_7.class_2496;
-   import package_7.class_2844;
-   import package_7.class_3406;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.GetMarketplaceItemStatsComposer;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.GetMarketplaceConfigurationMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.BuyMarketplaceTokensMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.GetMarketplaceCanMakeOfferMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.marketplace.MakeOfferMessageComposer;
    
    public class MarketplaceModel implements IInventoryModel
    {
@@ -231,12 +231,12 @@ package com.sulake.habbo.inventory.marketplace
          }
          var_452 = param1;
          _loc2_.addLockTo(param1.id);
-         send(new class_2844());
+         send(new GetMarketplaceCanMakeOfferMessageComposer());
       }
       
       public function buyMarketplaceTokens() : void
       {
-         send(new class_2496());
+         send(new BuyMarketplaceTokensMessageComposer());
          var_2116 = true;
       }
       
@@ -247,7 +247,7 @@ package com.sulake.habbo.inventory.marketplace
             return;
          }
          var _loc2_:int = var_452.isWallItem ? 2 : 1;
-         send(new class_3406(param1,_loc2_,var_452.ref));
+         send(new MakeOfferMessageComposer(param1,_loc2_,var_452.ref));
          releaseItem();
       }
       
@@ -260,7 +260,7 @@ package com.sulake.habbo.inventory.marketplace
          var _loc1_:int = var_452.isWallItem ? 2 : 1;
          var_4150 = _loc1_;
          var_4180 = var_452.type;
-         send(new class_1922(_loc1_,var_452.type));
+         send(new GetMarketplaceItemStatsComposer(_loc1_,var_452.type));
       }
       
       public function proceedOfferMaking(param1:int, param2:int) : void
@@ -318,7 +318,7 @@ package com.sulake.habbo.inventory.marketplace
       
       public function requestInitialization() : void
       {
-         send(new class_2462());
+         send(new GetMarketplaceConfigurationMessageComposer());
       }
       
       public function getOfferItem() : class_1875

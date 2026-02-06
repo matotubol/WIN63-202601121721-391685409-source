@@ -18,9 +18,9 @@ package com.sulake.habbo.ui.handler
    import flash.events.Event;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_100.class_3299;
-   import package_9.class_2585;
-   import package_91.class_3748;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.GuildFurniContextMenuInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.JoinHabboGroupMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.GuildFurniContextMenuInfoMessageEventParser;
    
    public class FurnitureContextMenuWidgetHandler implements IRoomWidgetHandler
    {
@@ -124,7 +124,7 @@ package com.sulake.habbo.ui.handler
          var_37 = param1;
          if(!var_1647)
          {
-            var_1647 = new class_3299(onGuildFurniContextMenuInfo);
+            var_1647 = new GuildFurniContextMenuInfoMessageEvent(onGuildFurniContextMenuInfo);
             var_37.addMessageEvent(var_1647);
          }
       }
@@ -241,7 +241,7 @@ package com.sulake.habbo.ui.handler
       
       public function sendJoinToGroupMessage(param1:int) : void
       {
-         var_37.send(new class_2585(param1));
+         var_37.send(new JoinHabboGroupMessageComposer(param1));
       }
       
       private function getRoomObject(param1:int) : IRoomObject
@@ -253,9 +253,9 @@ package com.sulake.habbo.ui.handler
          return _container.roomEngine.getRoomObject(_container.roomSession.roomId,param1,10);
       }
       
-      private function onGuildFurniContextMenuInfo(param1:class_3299) : void
+      private function onGuildFurniContextMenuInfo(param1:GuildFurniContextMenuInfoMessageEvent) : void
       {
-         var _loc2_:class_3748 = null;
+         var _loc2_:GuildFurniContextMenuInfoMessageEventParser = null;
          var _loc3_:IRoomObject = null;
          if(var_16 != null)
          {

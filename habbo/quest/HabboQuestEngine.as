@@ -18,9 +18,9 @@ package com.sulake.habbo.quest
    import com.sulake.habbo.catalog.IHabboCatalog;
    import com.sulake.habbo.catalog.purse.class_2085;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_1942;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_1968;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2012;
+   import com.sulake.habbo.communication.messages.outgoing.quest.ActivateQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetSeasonalQuestsOnlyMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetQuestsMessageComposer;
    import com.sulake.habbo.help.IHabboHelp;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.navigator.IHabboNewNavigator;
@@ -45,7 +45,7 @@ package com.sulake.habbo.quest
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class HabboQuestEngine extends class_17 implements class_498, class_31, ILinkEventTracker
    {
@@ -706,17 +706,17 @@ package com.sulake.habbo.quest
       
       public function requestSeasonalQuests() : void
       {
-         send(new class_1968());
+         send(new GetSeasonalQuestsOnlyMessageComposer());
       }
       
       public function requestQuests() : void
       {
-         send(new class_2012());
+         send(new GetQuestsMessageComposer());
       }
       
       public function activateQuest(param1:int) : void
       {
-         send(new class_1942(param1));
+         send(new ActivateQuestMessageComposer(param1));
       }
       
       public function get linkPattern() : String

@@ -11,16 +11,16 @@ package com.sulake.habbo.help.namechange
    import com.sulake.habbo.help.INameChangeUI;
    import com.sulake.habbo.help.enum.HabboHelpTutorialEvent;
    import com.sulake.habbo.localization.class_27;
-   import package_128.class_2461;
-   import package_128.class_2470;
-   import package_22.class_1789;
-   import package_22.class_2414;
-   import package_24.class_1886;
-   import package_24.class_3130;
-   import package_3.class_1804;
-   import package_4.class_2005;
-   import package_44.class_1913;
-   import package_8.class_1953;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.CheckUserNameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.avatar.ChangeUserNameInRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.avatar.ChangeUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.avatar.CheckUserNameResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.avatar.ChangeUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.avatar.CheckUserNameResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.UserNameChangedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.UserObjectEventParser;
+   import com.sulake.habbo.communication.messages.parser.users.UserNameChangedMessageEventParser;
    
    public class NameChangeController implements INameChangeUI, class_13
    {
@@ -41,10 +41,10 @@ package com.sulake.habbo.help.namechange
       {
          super();
          _habboHelp = param1;
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_1804(onUserNameChange));
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_2005(onUserObject));
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_1886(onChangeUserNameResult));
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_3130(onCheckUserNameResult));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new UserNameChangedMessageEvent(onUserNameChange));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new UserObjectEvent(onUserObject));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new ChangeUserNameResultMessageEvent(onChangeUserNameResult));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new CheckUserNameResultMessageEvent(onCheckUserNameResult));
       }
       
       public function get help() : HabboHelp
@@ -164,13 +164,13 @@ package com.sulake.habbo.help.namechange
       public function changeName(param1:String) : void
       {
          disposeWindow();
-         _habboHelp.sendMessage(new class_2470(param1));
+         _habboHelp.sendMessage(new ChangeUserNameInRoomMessageComposer(param1));
       }
       
       public function checkName(param1:String) : void
       {
          disposeWindow();
-         _habboHelp.sendMessage(new class_2461(param1));
+         _habboHelp.sendMessage(new CheckUserNameMessageComposer(param1));
       }
       
       public function onUserNameChanged(param1:String) : void
@@ -187,18 +187,18 @@ package com.sulake.habbo.help.namechange
          });
       }
       
-      private function onChangeUserNameResult(param1:class_1886) : void
+      private function onChangeUserNameResult(param1:ChangeUserNameResultMessageEvent) : void
       {
          if(param1 == null)
          {
             return;
          }
-         var _loc2_:class_1789 = param1.getParser();
+         var _loc2_:ChangeUserNameResultMessageEventParser = param1.getParser();
          if(_loc2_ == null)
          {
             return;
          }
-         if(_loc2_.resultCode == class_1886.var_1851)
+         if(_loc2_.resultCode == ChangeUserNameResultMessageEvent.var_1851)
          {
             onUserNameChanged(_loc2_.name);
             hideView();
@@ -209,14 +209,14 @@ package com.sulake.habbo.help.namechange
          }
       }
       
-      private function onCheckUserNameResult(param1:class_3130) : void
+      private function onCheckUserNameResult(param1:CheckUserNameResultMessageEvent) : void
       {
          if(!param1 || !var_358)
          {
             return;
          }
-         var _loc2_:class_2414 = param1.getParser();
-         if(_loc2_.resultCode == class_1886.var_1851)
+         var _loc2_:CheckUserNameResultMessageEventParser = param1.getParser();
+         if(_loc2_.resultCode == ChangeUserNameResultMessageEvent.var_1851)
          {
             var_358.checkedName = _loc2_.name;
          }
@@ -228,14 +228,14 @@ package com.sulake.habbo.help.namechange
       
       private function onUserObject(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1913 = class_2005(param1).getParser();
+         var _loc2_:UserObjectEventParser = UserObjectEvent(param1).getParser();
          var_3487 = _loc2_.id;
          _ownUserName = _loc2_.name;
       }
       
       private function onUserNameChange(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1953 = class_1804(param1).getParser();
+         var _loc2_:UserNameChangedMessageEventParser = UserNameChangedMessageEvent(param1).getParser();
          if(var_3487 == _loc2_.webId)
          {
             _ownUserName = _loc2_.newName;

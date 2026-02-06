@@ -7,9 +7,9 @@ package com.sulake.habbo.navigator
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.utils.FriendlyTime;
    import com.sulake.habbo.utils.class_2323;
-   import package_42.class_1945;
-   import package_42.class_3364;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3364;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class RoomPopupCtrl extends PopupCtrl
    {
@@ -196,7 +196,7 @@ package com.sulake.habbo.navigator
          if(param1.type == "WME_CLICK")
          {
             _navigator.trackGoogle("extendedProfile","navigator_roomPopup");
-            _navigator.send(new class_1879(var_216.ownerId));
+            _navigator.send(new GetExtendedProfileMessageComposer(var_216.ownerId));
             this.hideInstantly();
          }
       }

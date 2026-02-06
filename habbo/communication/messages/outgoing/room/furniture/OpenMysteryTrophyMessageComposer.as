@@ -1,0 +1,30 @@
+package com.sulake.habbo.communication.messages.outgoing.room.furniture
+{
+   import com.sulake.core.communication.messages.IMessageComposer;
+   
+   [SecureSWF(rename="true")]
+   public class OpenMysteryTrophyMessageComposer implements IMessageComposer
+   {
+      
+      private var var_315:int;
+      
+      private var var_4875:String;
+      
+      public function OpenMysteryTrophyMessageComposer(param1:int, param2:String)
+      {
+         super();
+         var_315 = param1;
+         var_4875 = param2;
+      }
+      
+      public function getMessageArray() : Array
+      {
+         return [var_315,var_4875];
+      }
+      
+      public function dispose() : void
+      {
+      }
+   }
+}
+

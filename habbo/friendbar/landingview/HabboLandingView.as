@@ -46,11 +46,11 @@ package com.sulake.habbo.friendbar.landingview
    import com.sulake.iid.IIDHabboToolbar;
    import com.sulake.iid.IIDRoomEngine;
    import flash.events.Event;
-   import package_1.class_2848;
-   import package_190.class_3478;
-   import package_42.class_2826;
-   import package_43.class_3575;
-   import package_72.class_2589;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.ForwardToARandomPromotedRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.landingview.votes.CommunityGoalVoteMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.NavigatorSettingsEvent;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.badges.RequestABadgeComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.QuitMessageComposer;
    
    public class HabboLandingView extends AbstractView implements IHabboLandingView
    {
@@ -315,7 +315,7 @@ package com.sulake.habbo.friendbar.landingview
             case "HTIE_ICON_RECEPTION":
                if(_roomSessionManager.getSession(-1))
                {
-                  send(new class_2589());
+                  send(new QuitMessageComposer());
                   _roomSessionManager.disposeSession(-1);
                }
                break;
@@ -331,7 +331,7 @@ package com.sulake.habbo.friendbar.landingview
       {
          _toolbar.events.addEventListener("HTE_TOOLBAR_CLICK",onToolbarClick);
          _catalog.events.addEventListener("CATALOG_INVISIBLE_PAGE_VISITED",onExpiredLinkClick);
-         _communicationManager.addHabboConnectionMessageEvent(new class_2826(onNavigatorSettings));
+         _communicationManager.addHabboConnectionMessageEvent(new NavigatorSettingsEvent(onNavigatorSettings));
       }
       
       private function onExpiredLinkClick(param1:CatalogEvent) : void
@@ -342,7 +342,7 @@ package com.sulake.habbo.friendbar.landingview
          }
       }
       
-      private function onNavigatorSettings(param1:class_2826) : void
+      private function onNavigatorSettings(param1:NavigatorSettingsEvent) : void
       {
          if(param1.getParser().roomIdToEnter <= 0)
          {
@@ -414,7 +414,7 @@ package com.sulake.habbo.friendbar.landingview
          }
          if(param1 != null)
          {
-            send(new class_2848(param1));
+            send(new ForwardToARandomPromotedRoomMessageComposer(param1));
          }
       }
       
@@ -434,12 +434,12 @@ package com.sulake.habbo.friendbar.landingview
       
       public function requestBadge(param1:String) : void
       {
-         send(new class_3575(param1));
+         send(new RequestABadgeComposer(param1));
       }
       
       public function communityGoalVote(param1:int) : void
       {
-         send(new class_3478(param1));
+         send(new CommunityGoalVoteMessageComposer(param1));
       }
       
       public function get sessionDataManager() : ISessionDataManager

@@ -6,8 +6,8 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.HabboNavigator;
    import com.sulake.habbo.navigator.Util;
-   import package_1.class_3486;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.RoomAdEventTabAdClickedComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class RoomAdListCtrl extends GuestRoomListCtrl
    {
@@ -56,7 +56,7 @@ package com.sulake.habbo.navigator.mainview
          var _loc2_:class_1945 = getRoomAt(_loc3_);
          if(_navigator)
          {
-            _navigator.send(new class_3486(_loc2_.flatId,_loc2_.roomAdName,_loc2_.roomAdExpiresInMin));
+            _navigator.send(new RoomAdEventTabAdClickedComposer(_loc2_.flatId,_loc2_.roomAdName,_loc2_.roomAdExpiresInMin));
          }
          super.onMouseClick(param1);
       }

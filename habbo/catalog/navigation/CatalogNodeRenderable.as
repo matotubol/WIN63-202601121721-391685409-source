@@ -6,7 +6,7 @@ package com.sulake.habbo.catalog.navigation
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.WindowMouseEvent;
-   import package_10.class_2971;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2971;
    
    public class CatalogNodeRenderable extends CatalogNode
    {

@@ -12,7 +12,7 @@ package com.sulake.habbo.roomevents
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.class_2251;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.class_1817;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.WiredClickUserMessageComposer;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.notifications.class_536;
    import com.sulake.habbo.room.IRoomEngine;
@@ -209,7 +209,7 @@ package com.sulake.habbo.roomevents
       {
          if(hasClickUserWired())
          {
-            send(new class_1817(param1));
+            send(new WiredClickUserMessageComposer(param1));
          }
          var_491.userSelected(param1);
       }

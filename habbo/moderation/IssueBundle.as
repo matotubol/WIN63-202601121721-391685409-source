@@ -1,7 +1,7 @@
 package com.sulake.habbo.moderation
 {
    import com.sulake.core.utils.class_55;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class IssueBundle
    {

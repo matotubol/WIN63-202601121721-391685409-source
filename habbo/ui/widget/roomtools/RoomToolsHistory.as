@@ -6,7 +6,7 @@ package com.sulake.habbo.ui.widget.roomtools
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.ui.handler.RoomToolsWidgetHandler;
    import com.sulake.habbo.window.class_38;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class RoomToolsHistory
    {

@@ -5,7 +5,7 @@ package com.sulake.habbo.tracking
    import flash.system.Capabilities;
    import flash.system.System;
    import flash.utils.getTimer;
-   import package_71.class_2419;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.PerformanceLogMessageComposer;
    
    public class PerformanceTracker
    {
@@ -153,7 +153,7 @@ package com.sulake.habbo.tracking
       {
          var _loc4_:int = param1 / 1000;
          var _loc2_:int = System.totalMemory / 1024;
-         _habboTracking.send(new class_2419(_loc4_,var_2408,var_3416,var_3932,var_5354,var_4117,_loc2_,-1,var_2480,var_826,var_2555));
+         _habboTracking.send(new PerformanceLogMessageComposer(_loc4_,var_2408,var_3416,var_3932,var_5354,var_4117,_loc2_,-1,var_2480,var_826,var_2555));
          var_2480 = 0;
          var_826 = 0;
          var_493 = 0;

@@ -62,8 +62,8 @@ package com.sulake.habbo.ui
    import flash.events.TimerEvent;
    import flash.utils.Dictionary;
    import flash.utils.Timer;
-   import package_16.class_1774;
-   import package_64.class_2121;
+   import com.sulake.habbo.communication.messages.outgoing.advertisement.InterstitialShownMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.perk.PerkAllowancesMessageEvent;
    
    public class RoomUI extends class_17 implements IRoomUI, class_31
    {
@@ -537,7 +537,7 @@ package com.sulake.habbo.ui
       
       override protected function initComponent() : void
       {
-         _perkAllowancesMessageEvent = _communication.addHabboConnectionMessageEvent(new class_2121(onPerkAllowances));
+         _perkAllowancesMessageEvent = _communication.addHabboConnectionMessageEvent(new PerkAllowancesMessageEvent(onPerkAllowances));
       }
       
       override public function dispose() : void
@@ -775,7 +775,7 @@ package com.sulake.habbo.ui
          var_509 = false;
          if(param1.status == "complete")
          {
-            _communication.connection.send(new class_1774());
+            _communication.connection.send(new InterstitialShownMessageComposer());
          }
          if(var_22 != null)
          {
@@ -792,7 +792,7 @@ package com.sulake.habbo.ui
          }
       }
       
-      private function onPerkAllowances(param1:class_2121) : void
+      private function onPerkAllowances(param1:PerkAllowancesMessageEvent) : void
       {
          var _loc2_:Timer = null;
          if(_freeFlowChat && !_freeFlowChat.isDisabledInPreferences && _isInRoom && !var_3026)

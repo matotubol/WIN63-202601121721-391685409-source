@@ -18,15 +18,15 @@ package com.sulake.habbo.quest.dailytasks
    import com.sulake.iid.IIDHabboLocalizationManager;
    import com.sulake.iid.IIDHabboWindowManager;
    import flash.utils.getTimer;
-   import package_139.class_2530;
-   import package_139.class_2863;
-   import package_139.class_2904;
+   import package_139.DailyTasksActiveListMessageEventParser;
+   import package_139.DailyTasksTaskUpdateMessageEventParser;
+   import package_139.DailyTasksTasksAddedMessageEventParser;
    import package_139.class_3417;
-   import package_171.class_2919;
-   import package_171.class_3183;
-   import package_171.class_3418;
-   import package_78.class_2237;
-   import package_78.class_3158;
+   import package_171.DailyTasksTasksAddedMessageEvent;
+   import package_171.DailyTasksActiveListMessageEvent;
+   import package_171.DailyTasksTaskUpdateMessageEvent;
+   import package_78.GetDailyTasksComposer;
+   import package_78.ClaimDailyTaskComposer;
    
    public class DailyTasksController extends class_17 implements ILinkEventTracker, class_2179, class_13, class_31
    {
@@ -59,9 +59,9 @@ package com.sulake.habbo.quest.dailytasks
          _questEngine = param1;
          var_1705 = new Vector.<class_3417>();
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_3183(onActiveDailyTasks));
-         _messageEvents.push(new class_2919(onTasksAdded));
-         _messageEvents.push(new class_3418(onTaskUpdated));
+         _messageEvents.push(new DailyTasksActiveListMessageEvent(onActiveDailyTasks));
+         _messageEvents.push(new DailyTasksTasksAddedMessageEvent(onTasksAdded));
+         _messageEvents.push(new DailyTasksTaskUpdateMessageEvent(onTaskUpdated));
          for each(var _loc5_ in _messageEvents)
          {
             addMessageEvent(_loc5_);
@@ -206,10 +206,10 @@ package com.sulake.habbo.quest.dailytasks
          }
       }
       
-      private function onActiveDailyTasks(param1:class_3183) : void
+      private function onActiveDailyTasks(param1:DailyTasksActiveListMessageEvent) : void
       {
          var _loc2_:* = null;
-         var _loc3_:class_2530 = param1.getParser() as class_2530;
+         var _loc3_:DailyTasksActiveListMessageEventParser = param1.getParser() as DailyTasksActiveListMessageEventParser;
          clearTasks();
          for each(_loc2_ in _loc3_.tasks)
          {
@@ -229,9 +229,9 @@ package com.sulake.habbo.quest.dailytasks
          updateUnseenTasks();
       }
       
-      private function onTasksAdded(param1:class_2919) : void
+      private function onTasksAdded(param1:DailyTasksTasksAddedMessageEvent) : void
       {
-         var _loc3_:class_2904 = param1.getParser() as class_2904;
+         var _loc3_:DailyTasksTasksAddedMessageEventParser = param1.getParser() as DailyTasksTasksAddedMessageEventParser;
          for each(var _loc2_ in _loc3_.tasks)
          {
             addTask(_loc2_);
@@ -244,10 +244,10 @@ package com.sulake.habbo.quest.dailytasks
          updateUnseenTasks();
       }
       
-      private function onTaskUpdated(param1:class_3418) : void
+      private function onTaskUpdated(param1:DailyTasksTaskUpdateMessageEvent) : void
       {
          var _loc4_:int = 0;
-         var _loc3_:class_2863 = param1.getParser() as class_2863;
+         var _loc3_:DailyTasksTaskUpdateMessageEventParser = param1.getParser() as DailyTasksTaskUpdateMessageEventParser;
          var _loc2_:class_3417 = getTaskById(_loc3_.taskId);
          if(_loc2_ == null)
          {
@@ -301,12 +301,12 @@ package com.sulake.habbo.quest.dailytasks
             return;
          }
          _lastRequestTime = getTimer();
-         send(new class_2237());
+         send(new GetDailyTasksComposer());
       }
       
       public function claimTask(param1:Number) : void
       {
-         send(new class_3158(param1));
+         send(new ClaimDailyTaskComposer(param1));
       }
       
       public function update(param1:uint) : void

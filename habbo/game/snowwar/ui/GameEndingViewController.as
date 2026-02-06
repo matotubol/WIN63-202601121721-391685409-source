@@ -28,11 +28,11 @@ package com.sulake.habbo.game.snowwar.ui
    import flash.geom.Point;
    import flash.utils.Dictionary;
    import flash.utils.Timer;
-   import package_1.class_2003;
-   import package_115.Game2ExitGameMessageComposer;
-   import package_41.Game2GetAccountGameStatusMessageComposer;
-   import package_41.class_3027;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.GetGuestRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.arena.Game2ExitGameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2GetAccountGameStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.game.directory.Game2LeaveGameMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class GameEndingViewController implements class_13, class_259
    {
@@ -243,17 +243,17 @@ package com.sulake.habbo.game.snowwar.ui
             var_49.gameCancelled(true);
             if(var_61 == 3 || var_61 == 2)
             {
-               var_49.communication.connection.send(new class_3027());
+               var_49.communication.connection.send(new Game2LeaveGameMessageComposer());
                if(var_49.roomBeforeGame > -1)
                {
-                  var_49.communication.connection.send(new class_2003(var_49.roomBeforeGame,false,true));
+                  var_49.communication.connection.send(new GetGuestRoomMessageComposer(var_49.roomBeforeGame,false,true));
                }
             }
             else if(var_61 == 5)
             {
                if(var_49.roomBeforeGame > -1)
                {
-                  var_49.communication.connection.send(new class_2003(var_49.roomBeforeGame,false,true));
+                  var_49.communication.connection.send(new GetGuestRoomMessageComposer(var_49.roomBeforeGame,false,true));
                }
                else
                {
@@ -324,7 +324,7 @@ package com.sulake.habbo.game.snowwar.ui
          if(_loc3_)
          {
             var_49.friendList.askForAFriend(_loc2_,_loc3_.userName);
-            var_49.communication.connection.send(new class_2196("GameFramework","SnowStorm","gameFramework.sendFriendRequest.rematchView"));
+            var_49.communication.connection.send(new EventLogMessageComposer("GameFramework","SnowStorm","gameFramework.sendFriendRequest.rematchView"));
             var_49.addChatMessage(_loc2_,"${snowwar.friend_request.sent}",true);
          }
          param1.window.visible = false;

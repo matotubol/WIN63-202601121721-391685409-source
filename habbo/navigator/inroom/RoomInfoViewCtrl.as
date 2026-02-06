@@ -17,13 +17,13 @@ package com.sulake.habbo.navigator.inroom
    import com.sulake.habbo.session.IRoomSession;
    import com.sulake.habbo.utils.class_2323;
    import flash.events.Event;
-   import package_1.class_2657;
-   import package_1.class_3200;
-   import package_1.class_3485;
-   import package_1.class_3574;
-   import package_125.class_3419;
-   import package_42.class_1945;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.ToggleStaffPickMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.AddFavouriteRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.UpdateHomeRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.DeleteFavouriteRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.action.MuteAllInRoomComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class RoomInfoViewCtrl
    {
@@ -377,7 +377,7 @@ package com.sulake.habbo.navigator.inroom
          else
          {
             _navigator.trackGoogle("roomInfo","addFavourite");
-            _navigator.send(new class_3200(_navigator.data.enteredGuestRoom.flatId));
+            _navigator.send(new AddFavouriteRoomMessageComposer(_navigator.data.enteredGuestRoom.flatId));
          }
       }
       
@@ -388,7 +388,7 @@ package com.sulake.habbo.navigator.inroom
             return;
          }
          _navigator.trackGoogle("roomInfo","removeFavourite");
-         _navigator.send(new class_3574(_navigator.data.enteredGuestRoom.flatId));
+         _navigator.send(new DeleteFavouriteRoomMessageComposer(_navigator.data.enteredGuestRoom.flatId));
       }
       
       private function onRoomSettingsClick(param1:class_1758) : void
@@ -426,7 +426,7 @@ package com.sulake.habbo.navigator.inroom
       
       private function onMuteAllClick(param1:class_1758) : void
       {
-         _navigator.send(new class_3419());
+         _navigator.send(new MuteAllInRoomComposer());
       }
       
       private function onMakeHomeClick(param1:class_1758) : void
@@ -439,7 +439,7 @@ package com.sulake.habbo.navigator.inroom
          }
          class_21.log("SETTING HOME ROOM TO: " + _loc2_.flatId);
          _navigator.trackGoogle("roomInfo","makeHome");
-         _navigator.send(new class_3485(_loc2_.flatId));
+         _navigator.send(new UpdateHomeRoomMessageComposer(_loc2_.flatId));
       }
       
       private function onCloseButtonClick(param1:class_1758) : void
@@ -456,7 +456,7 @@ package com.sulake.habbo.navigator.inroom
       private function onStaffPick(param1:class_1758) : void
       {
          refreshStaffPick(true);
-         _navigator.send(new class_2657(_navigator.data.enteredGuestRoom.flatId,_navigator.data.currentRoomIsStaffPick));
+         _navigator.send(new ToggleStaffPickMessageComposer(_navigator.data.enteredGuestRoom.flatId,_navigator.data.currentRoomIsStaffPick));
       }
       
       private function onRoomReport(param1:class_1758) : void
@@ -526,7 +526,7 @@ package com.sulake.habbo.navigator.inroom
          {
             _navigator.trackGoogle("roomInfo","extendedProfile");
             _navigator.trackGoogle("extendedProfile","navigator_roomInfo");
-            _navigator.send(new class_1879(_navigator.data.enteredGuestRoom.ownerId));
+            _navigator.send(new GetExtendedProfileMessageComposer(_navigator.data.enteredGuestRoom.ownerId));
          }
       }
    }

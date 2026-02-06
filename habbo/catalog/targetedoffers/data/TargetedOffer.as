@@ -9,7 +9,7 @@ package com.sulake.habbo.catalog.targetedoffers.data
    import com.sulake.habbo.catalog.viewer.class_2557;
    import com.sulake.habbo.session.product.class_1949;
    import flash.utils.getTimer;
-   import package_10.class_2869;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2869;
    
    public class TargetedOffer extends class_2869 implements class_1793
    {

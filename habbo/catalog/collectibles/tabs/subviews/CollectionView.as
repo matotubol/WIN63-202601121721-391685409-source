@@ -20,8 +20,8 @@ package com.sulake.habbo.catalog.collectibles.tabs.subviews
    import com.sulake.habbo.communication.messages.parser.collectibles.class_4130;
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.utils.FriendlyTime;
-   import package_70.class_3277;
-   import package_70.class_3345;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.NftCollectiblesClaimBonusItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.NftCollectiblesClaimRewardItemMessageComposer;
    
    public class CollectionView implements class_13
    {
@@ -168,7 +168,7 @@ package com.sulake.habbo.catalog.collectibles.tabs.subviews
          if(_previewStatus == PREVIEW_STATUS_BONUS)
          {
             var_159.claimBonusAwaiting();
-            var_364.controller.send(new class_3277(nftCollection.collectionId,var_364.activeWallet));
+            var_364.controller.send(new NftCollectiblesClaimBonusItemMessageComposer(nftCollection.collectionId,var_364.activeWallet));
             var_364.sendClaimWaitNotification();
          }
          else
@@ -178,7 +178,7 @@ package com.sulake.habbo.catalog.collectibles.tabs.subviews
                return;
             }
             var_159.claimRewardAwaiting();
-            var_364.controller.send(new class_3345(nftCollection.collectionId,var_364.activeWallet));
+            var_364.controller.send(new NftCollectiblesClaimRewardItemMessageComposer(nftCollection.collectionId,var_364.activeWallet));
             var_364.sendClaimWaitNotification();
          }
          claimButton.disable();

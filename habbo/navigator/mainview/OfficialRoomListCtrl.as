@@ -3,7 +3,7 @@ package com.sulake.habbo.navigator.mainview
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.*;
    import com.sulake.habbo.navigator.*;
-   import package_42.class_2460;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_2460;
    
    public class OfficialRoomListCtrl implements IViewCtrl
    {

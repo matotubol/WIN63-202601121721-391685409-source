@@ -1,0 +1,47 @@
+package com.sulake.habbo.communication.messages.parser.room.action
+{
+   import com.sulake.core.communication.messages.IMessageDataWrapper;
+   import com.sulake.core.communication.messages.IMessageParser;
+   
+   [SecureSWF(rename="true")]
+   public class SleepMessageEventParser implements IMessageParser
+   {
+      
+      private var var_1270:int = 0;
+      
+      private var var_4780:Boolean = false;
+      
+      public function SleepMessageEventParser()
+      {
+         super();
+      }
+      
+      public function get userId() : int
+      {
+         return var_1270;
+      }
+      
+      public function get sleeping() : Boolean
+      {
+         return var_4780;
+      }
+      
+      public function flush() : Boolean
+      {
+         var_1270 = 0;
+         return true;
+      }
+      
+      public function parse(param1:IMessageDataWrapper) : Boolean
+      {
+         if(param1 == null)
+         {
+            return false;
+         }
+         var_1270 = param1.readInteger();
+         var_4780 = param1.readBoolean();
+         return true;
+      }
+   }
+}
+

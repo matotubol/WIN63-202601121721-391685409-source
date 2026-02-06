@@ -22,13 +22,13 @@ package com.sulake.habbo.campaign
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDRoomEngine;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_151.class_2658;
-   import package_151.class_3010;
-   import package_181.class_3107;
-   import package_181.class_3443;
-   import package_80.class_2299;
-   import package_80.class_2349;
-   import package_80.class_3328;
+   import com.sulake.habbo.communication.messages.outgoing.campaign.OpenCampaignCalendarDoorAsStaffComposer;
+   import com.sulake.habbo.communication.messages.outgoing.campaign.OpenCampaignCalendarDoorComposer;
+   import com.sulake.habbo.communication.messages.incoming.campaign.CampaignCalendarDataMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.campaign.CampaignCalendarDoorOpenedMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.campaign.CampaignCalendarDoorOpenedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.campaign.class_2349;
+   import com.sulake.habbo.communication.messages.parser.campaign.CampaignCalendarDataMessageEventParser;
    
    public class HabboCampaigns extends class_17 implements ILinkEventTracker
    {
@@ -83,20 +83,20 @@ package com.sulake.habbo.campaign
       
       override protected function initComponent() : void
       {
-         _communicationManager.addHabboConnectionMessageEvent(new class_3107(onCampaignCalendarDataMessageEvent));
-         _communicationManager.addHabboConnectionMessageEvent(new class_3443(onCampaignCalendarDoorOpenedMessageEvent));
+         _communicationManager.addHabboConnectionMessageEvent(new CampaignCalendarDataMessageEvent(onCampaignCalendarDataMessageEvent));
+         _communicationManager.addHabboConnectionMessageEvent(new CampaignCalendarDoorOpenedMessageEvent(onCampaignCalendarDoorOpenedMessageEvent));
          context.addLinkEventTracker(this);
       }
       
-      private function onCampaignCalendarDataMessageEvent(param1:class_3107) : void
+      private function onCampaignCalendarDataMessageEvent(param1:CampaignCalendarDataMessageEvent) : void
       {
-         var _loc2_:class_3328 = param1.getParser();
+         var _loc2_:CampaignCalendarDataMessageEventParser = param1.getParser();
          var_551 = _loc2_.cloneData();
       }
       
-      private function onCampaignCalendarDoorOpenedMessageEvent(param1:class_3443) : void
+      private function onCampaignCalendarDoorOpenedMessageEvent(param1:CampaignCalendarDoorOpenedMessageEvent) : void
       {
-         var _loc2_:class_2299 = param1.getParser();
+         var _loc2_:CampaignCalendarDoorOpenedMessageEventParser = param1.getParser();
          if(_loc2_.doorOpened)
          {
             showProductNotification(_loc2_.productName,_loc2_.customImage,_loc2_.furnitureClassName);
@@ -106,13 +106,13 @@ package com.sulake.habbo.campaign
       public function openPackage(param1:int) : void
       {
          var_2110 = param1;
-         _communicationManager.connection.send(new class_3010(var_551.campaignName,param1));
+         _communicationManager.connection.send(new OpenCampaignCalendarDoorComposer(var_551.campaignName,param1));
       }
       
       public function openPackageAsStaff(param1:int) : void
       {
          var_2110 = param1;
-         _communicationManager.connection.send(new class_2658(var_551.campaignName,param1));
+         _communicationManager.connection.send(new OpenCampaignCalendarDoorAsStaffComposer(var_551.campaignName,param1));
       }
       
       private function showProductNotification(param1:String, param2:String, param3:String) : void

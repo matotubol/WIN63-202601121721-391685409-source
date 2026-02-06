@@ -10,7 +10,7 @@ package com.sulake.habbo.catalog.clubcenter
    import flash.events.TimerEvent;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_3.class_3429;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3429;
    
    public class ClubSpecialInfoBubbleView
    {

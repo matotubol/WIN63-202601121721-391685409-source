@@ -40,28 +40,28 @@ package com.sulake.habbo.navigator
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDSessionDataManager;
    import flash.geom.Point;
-   import package_1.class_1914;
-   import package_1.class_2003;
-   import package_12.class_1946;
-   import package_15.class_1773;
-   import package_15.class_1910;
-   import package_15.class_1974;
-   import package_15.class_2192;
-   import package_19.class_1783;
-   import package_19.class_1810;
-   import package_19.class_2061;
-   import package_19.class_2171;
-   import package_19.class_2210;
-   import package_19.class_2229;
-   import package_19.class_2230;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.ForwardToSomeRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.GetGuestRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetNewNavigatorWindowPreferencesMessageComposer;
+   import package_15.NavigatorMetaDataEventParser;
+   import package_15.NavigatorSavedSearchesEventParser;
+   import package_15.NewNavigatorPreferencesEventParser;
+   import package_15.NavigatorLiftedRoomsEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NavigatorAddSavedSearchComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NavigatorDeleteSavedSearchComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NavigatorAddCollapsedCategoryMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NewNavigatorSearchComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NewNavigatorInitComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NavigatorRemoveCollapsedCategoryMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.newnavigator.NavigatorSetSearchCodeViewModeMessageComposer;
    import package_25.class_1798;
    import package_25.class_1895;
    import package_25.class_1995;
    import package_25.class_2073;
-   import package_3.class_1846;
-   import package_42.class_1945;
-   import package_9.class_1796;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class HabboNewNavigator extends class_17 implements IHabboNewNavigator, ILinkEventTracker
    {
@@ -218,7 +218,7 @@ package com.sulake.habbo.navigator
          var_2373 = new SearchContextHistoryManager(this);
          var_3509 = new LiftDataContainer(this);
          _navigatorCache = new NavigatorCache();
-         _communication.connection.send(new class_2210());
+         _communication.connection.send(new NewNavigatorInitComposer());
          var_704 = true;
       }
       
@@ -234,7 +234,7 @@ package com.sulake.habbo.navigator
          }
       }
       
-      public function initialize(param1:class_1773) : void
+      public function initialize(param1:NavigatorMetaDataEventParser) : void
       {
          var_1733.initialize(param1);
       }
@@ -278,18 +278,18 @@ package com.sulake.habbo.navigator
          var_3065 = param1;
       }
       
-      public function onLiftedRooms(param1:class_2192) : void
+      public function onLiftedRooms(param1:NavigatorLiftedRoomsEventParser) : void
       {
          var_3509.setLiftedRooms(param1.liftedRooms);
          var_212.refreshLiftedRooms();
       }
       
-      public function onPreferences(param1:class_1974) : void
+      public function onPreferences(param1:NewNavigatorPreferencesEventParser) : void
       {
          var_212.setInitialWindowDimensions(param1.windowX,param1.windowY,param1.windowHeight,param1.leftPaneHidden,param1.resultsMode);
       }
       
-      public function onSavedSearches(param1:class_1910) : void
+      public function onSavedSearches(param1:NavigatorSavedSearchesEventParser) : void
       {
          var_1733.savedSearches = param1.savedSearches.concat(new Vector.<class_2073>(0));
          var_212.onSavedSearches(var_1733.savedSearches);
@@ -352,7 +352,7 @@ package com.sulake.habbo.navigator
          {
             var_2913 = param1;
             var_3028 = param2;
-            _communication.connection.send(new class_2171(param1,param2));
+            _communication.connection.send(new NewNavigatorSearchComposer(param1,param2));
             trackEventLog("search","Search",getEventLogExtraStringFromSearch(param1,param2));
          }
          open();
@@ -367,7 +367,7 @@ package com.sulake.habbo.navigator
       {
          if(_currentResults != null)
          {
-            _communication.connection.send(new class_1783(param1,param2));
+            _communication.connection.send(new NavigatorAddSavedSearchComposer(param1,param2));
          }
          trackEventLog("savedsearch.add","SavedSearch",getEventLogExtraStringFromSearch(param1,param2));
          var_212.setLeftPaneVisibility(true);
@@ -375,7 +375,7 @@ package com.sulake.habbo.navigator
       
       public function deleteSavedSearch(param1:int) : void
       {
-         _communication.connection.send(new class_1810(param1));
+         _communication.connection.send(new NavigatorDeleteSavedSearchComposer(param1));
          trackEventLog("savedsearch.delete","SavedSearch");
       }
       
@@ -428,7 +428,7 @@ package com.sulake.habbo.navigator
                         var_928.goToPrivateRoom(_loc3_);
                         break;
                      }
-                     communication.connection.send(new class_1914(_loc2_[2]));
+                     communication.connection.send(new ForwardToSomeRoomMessageComposer(_loc2_[2]));
                      break;
                   }
                   var_928.goToHomeRoom();
@@ -502,7 +502,7 @@ package com.sulake.habbo.navigator
       
       public function goToRoom(param1:int, param2:String = "mainview") : void
       {
-         communication.connection.send(new class_2003(param1,false,true));
+         communication.connection.send(new GetGuestRoomMessageComposer(param1,false,true));
          var_212.visible = false;
          var _loc3_:String = var_2633.getValue(param1);
          trackEventLog("go",param2,!_loc3_ ? "" : _loc3_,param1);
@@ -510,7 +510,7 @@ package com.sulake.habbo.navigator
       
       public function getExtendedProfile(param1:int) : void
       {
-         communication.connection.send(new class_1879(param1));
+         communication.connection.send(new GetExtendedProfileMessageComposer(param1));
       }
       
       public function get imageLibraryBaseUrl() : String
@@ -586,22 +586,22 @@ package com.sulake.habbo.navigator
       
       public function sendWindowPreferences(param1:int, param2:int, param3:int, param4:int, param5:Boolean, param6:int) : void
       {
-         _communication.connection.send(new class_1946(param1,param2,param3,param4,param5,param6));
+         _communication.connection.send(new SetNewNavigatorWindowPreferencesMessageComposer(param1,param2,param3,param4,param5,param6));
       }
       
       public function getGuildInfo(param1:int, param2:Boolean = true) : void
       {
-         _communication.connection.send(new class_1796(param1,param2));
+         _communication.connection.send(new GetHabboGroupDetailsMessageComposer(param1,param2));
       }
       
       public function sendAddCollapsedCategory(param1:String) : void
       {
-         _communication.connection.send(new class_2061(param1));
+         _communication.connection.send(new NavigatorAddCollapsedCategoryMessageComposer(param1));
       }
       
       public function sendRemoveCollapsedCategory(param1:String) : void
       {
-         _communication.connection.send(new class_2229(param1));
+         _communication.connection.send(new NavigatorRemoveCollapsedCategoryMessageComposer(param1));
       }
       
       public function goToHomeRoom() : void
@@ -624,7 +624,7 @@ package com.sulake.habbo.navigator
       
       public function toggleSearchCodeViewMode(param1:String, param2:int) : void
       {
-         _communication.connection.send(new class_2230(param1,param2));
+         _communication.connection.send(new NavigatorSetSearchCodeViewModeMessageComposer(param1,param2));
          trackEventLog("browse.toggleviewmode","ViewMode","",param2);
       }
       

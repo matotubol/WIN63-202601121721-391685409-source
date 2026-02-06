@@ -7,14 +7,14 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2713;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_2739;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3150;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.class_3756;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetRoomSettingsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredUpdateRoomComposer;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredSetRoomSettingsMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.WiredRoomSettingsEventParser;
    import com.sulake.habbo.roomevents.Util;
    import com.sulake.habbo.roomevents.wired_menu.WiredMenuController;
    import com.sulake.habbo.roomevents.wired_menu.tabs.WiredMenuDefaultTab;
-   import package_97.class_2591;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredRoomSettingsEvent;
    
    public class WiredMenuSettingsTab extends WiredMenuDefaultTab
    {
@@ -36,7 +36,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
       public function WiredMenuSettingsTab(param1:WiredMenuController, param2:class_1812)
       {
          super(param1,param2);
-         addMessageEvent(new class_2591(onWiredSettings));
+         addMessageEvent(new WiredRoomSettingsEvent(onWiredSettings));
          updateLoadingState();
          requestData();
          for each(var _loc4_ in MODIFY_PERMISSION_OPTIONS)
@@ -73,19 +73,19 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
       {
          if(param2.type == "WE_OK")
          {
-            controller.send(new class_2739(true));
+            controller.send(new WiredUpdateRoomComposer(true));
          }
          param1.dispose();
       }
       
       private function onClickReload(param1:WindowMouseEvent) : void
       {
-         controller.send(new class_2739(false));
+         controller.send(new WiredUpdateRoomComposer(false));
       }
       
-      private function onWiredSettings(param1:class_2591) : void
+      private function onWiredSettings(param1:WiredRoomSettingsEvent) : void
       {
-         var _loc2_:class_3756 = param1.getParser();
+         var _loc2_:WiredRoomSettingsEventParser = param1.getParser();
          var_858 = _loc2_.modifyPermissionMask;
          var_766 = _loc2_.readPermissionMask;
          var_846 = _loc2_.timezone;
@@ -99,7 +99,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
       
       private function requestData() : void
       {
-         controller.send(new class_2713());
+         controller.send(new WiredGetRoomSettingsMessageComposer());
       }
       
       override public function permissionsUpdated() : void
@@ -146,7 +146,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
          }
          updatePermissionsUI();
          updateTimezoneUI();
-         controller.send(new class_3150(var_858,var_766,var_846));
+         controller.send(new WiredSetRoomSettingsMessageComposer(var_858,var_766,var_846));
       }
       
       private function onSelectTimezone(param1:class_1758) : void
@@ -164,7 +164,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_settings
          {
             var_846 = timezoneDropdown.enumerateSelection()[_loc2_];
          }
-         controller.send(new class_3150(var_858,var_766,var_846));
+         controller.send(new WiredSetRoomSettingsMessageComposer(var_858,var_766,var_846));
       }
       
       private function updateButtonsUI() : void

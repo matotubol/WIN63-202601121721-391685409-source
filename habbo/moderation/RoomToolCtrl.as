@@ -12,12 +12,12 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.components.class_2261;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
-   import package_122.class_3058;
-   import package_122.class_3143;
-   import package_122.class_3274;
-   import package_122.class_3379;
-   import package_74.class_2004;
-   import package_74.class_4039;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetModeratorRoomInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetRoomChatlogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModeratorActionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModerateRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_2004;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_4039;
    
    public class RoomToolCtrl implements class_13, ITrackedWindow
    {
@@ -102,7 +102,7 @@ package com.sulake.habbo.moderation
          var_3799 = _loc2_.findChildByName("room_data") as class_1812;
          _loc2_.removeChild(var_3799);
          _main.messageHandler.addRoomInfoListener(this);
-         _main.connection.send(new class_3058(_flatId));
+         _main.connection.send(new GetModeratorRoomInfoMessageComposer(_flatId));
          class_21.log("BEGINNING TO SHOW: " + _flatId);
       }
       
@@ -319,7 +319,7 @@ package com.sulake.habbo.moderation
          {
             return;
          }
-         _main.windowTracker.show(new ChatlogCtrl(new class_3143(0,var_24.flatId),_main,4,var_24.flatId),_frame,false,false,true);
+         _main.windowTracker.show(new ChatlogCtrl(new GetRoomChatlogMessageComposer(0,var_24.flatId),_main,4,var_24.flatId),_frame,false,false,true);
       }
       
       private function onEditInHk(param1:class_1758, param2:class_1741) : void
@@ -360,10 +360,10 @@ package com.sulake.habbo.moderation
             return;
          }
          var _loc2_:int = determineAction(param1,var_1582.isSelected);
-         _main.connection.send(new class_3274(_loc2_,var_878.text,""));
+         _main.connection.send(new ModeratorActionMessageComposer(_loc2_,var_878.text,""));
          if(var_2345.isSelected || Boolean(var_2449.isSelected) || Boolean(var_1582.isSelected))
          {
-            _main.connection.send(new class_3379(var_24.flatId,var_2345.isSelected,var_2449.isSelected,var_1582.isSelected));
+            _main.connection.send(new ModerateRoomMessageComposer(var_24.flatId,var_2345.isSelected,var_2449.isSelected,var_1582.isSelected));
          }
          this.dispose();
       }

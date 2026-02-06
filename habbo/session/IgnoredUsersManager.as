@@ -2,11 +2,11 @@ package com.sulake.habbo.session
 {
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.core.runtime.class_13;
-   import package_3.class_2892;
-   import package_3.class_3054;
-   import package_9.class_1891;
-   import package_9.class_2607;
-   import package_9.class_3115;
+   import com.sulake.habbo.communication.messages.incoming.users.IgnoreResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.IgnoredUsersMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.IgnoreUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UnignoreUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetIgnoredUsersMessageComposer;
    
    public class IgnoredUsersManager implements class_13
    {
@@ -25,8 +25,8 @@ package com.sulake.habbo.session
          _sessionDataManager = param1;
          if(_sessionDataManager.communication)
          {
-            var_2689 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_2892(onIgnoreResult));
-            var_2824 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_3054(onIgnoreList));
+            var_2689 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new IgnoreResultMessageEvent(onIgnoreResult));
+            var_2824 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new IgnoredUsersMessageEvent(onIgnoreList));
          }
       }
       
@@ -48,15 +48,15 @@ package com.sulake.habbo.session
       
       public function initIgnoreList() : void
       {
-         _sessionDataManager.send(new class_3115());
+         _sessionDataManager.send(new GetIgnoredUsersMessageComposer());
       }
       
-      private function onIgnoreList(param1:class_3054) : void
+      private function onIgnoreList(param1:IgnoredUsersMessageEvent) : void
       {
          var_1047 = param1.ignoredUserIds;
       }
       
-      private function onIgnoreResult(param1:class_2892) : void
+      private function onIgnoreResult(param1:IgnoreResultMessageEvent) : void
       {
          var _loc2_:int = param1.userId;
          switch(param1.result)
@@ -92,12 +92,12 @@ package com.sulake.habbo.session
       
       public function ignoreUser(param1:int) : void
       {
-         _sessionDataManager.send(new class_1891(param1));
+         _sessionDataManager.send(new IgnoreUserMessageComposer(param1));
       }
       
       public function unignoreUser(param1:int) : void
       {
-         _sessionDataManager.send(new class_2607(param1));
+         _sessionDataManager.send(new UnignoreUserMessageComposer(param1));
       }
       
       public function isIgnored(param1:int) : Boolean

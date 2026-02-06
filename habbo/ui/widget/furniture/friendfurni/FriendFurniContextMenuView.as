@@ -6,7 +6,7 @@ package com.sulake.habbo.ui.widget.furniture.friendfurni
    import com.sulake.habbo.ui.widget.contextmenu.class_1853;
    import com.sulake.habbo.ui.widget.furniture.contextmenu.FurnitureContextInfoView;
    import com.sulake.habbo.ui.widget.furniture.contextmenu.FurnitureContextMenuWidget;
-   import package_55.class_2945;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
    
    public class FriendFurniContextMenuView extends FurnitureContextInfoView
    {
@@ -66,7 +66,7 @@ package com.sulake.habbo.ui.widget.furniture.friendfurni
                   _loc4_ = var_16 as FurnitureContextMenuWidget;
                   if(_loc4_ != null)
                   {
-                     _loc4_.handler.container.connection.send(new class_2945(var_612.getId()));
+                     _loc4_.handler.container.connection.send(new UseFurnitureMessageComposer(var_612.getId()));
                   }
                }
             }

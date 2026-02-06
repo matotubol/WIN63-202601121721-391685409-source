@@ -5,7 +5,7 @@ package com.sulake.habbo.groups
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_3.class_1846;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1846;
    
    public class DetailsWindowCtrl implements class_13
    {

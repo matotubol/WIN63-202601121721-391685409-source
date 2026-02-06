@@ -6,9 +6,9 @@ package com.sulake.habbo.toolbar.extensions.settings
    import com.sulake.core.window.components.class_1885;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.toolbar.HabboToolbar;
-   import package_113.class_3100;
-   import package_12.class_2891;
-   import package_12.class_3307;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.ResetPhoneNumberStateMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetRoomCameraPreferencesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetIgnoreRoomInvitesMessageComposer;
    
    public class OtherSettingsView
    {
@@ -86,7 +86,7 @@ package com.sulake.habbo.toolbar.extensions.settings
                break;
             case "ignore_room_invites_checkbox":
                _toolbar.messenger.setRoomInvitesIgnored(class_1885(_window.findChildByName("ignore_room_invites_checkbox")).isSelected);
-               _toolbar.connection.send(new class_3307(_toolbar.messenger.getRoomInvitesIgnored()));
+               _toolbar.connection.send(new SetIgnoreRoomInvitesMessageComposer(_toolbar.messenger.getRoomInvitesIgnored()));
                break;
             case "disable_wired_whisper_checkbox":
                var _loc5_:Boolean = Boolean(class_1885(_window.findChildByName("disable_wired_whisper_checkbox")).isSelected);
@@ -94,12 +94,12 @@ package com.sulake.habbo.toolbar.extensions.settings
                break;
             case "disable_room_camera_follow_checkbox":
                var _loc4_:Boolean = Boolean(class_1885(_window.findChildByName("disable_room_camera_follow_checkbox")).isSelected);
-               _toolbar.connection.send(new class_2891(false));
+               _toolbar.connection.send(new SetRoomCameraPreferencesMessageComposer(false));
                _toolbar.sessionDataManager.setRoomCameraFollowDisabled(false);
                break;
             case "btn_reset_phone_number_collection":
                _window.findChildByName("btn_reset_phone_number_collection").visible = false;
-               _toolbar.connection.send(new class_3100());
+               _toolbar.connection.send(new ResetPhoneNumberStateMessageComposer());
          }
       }
       

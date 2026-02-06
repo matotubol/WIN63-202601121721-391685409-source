@@ -18,8 +18,8 @@ package com.sulake.habbo.inventory.pets
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_105.class_2486;
-   import package_105.class_2838;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.class_2486;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.class_2838;
    
    public class PetsView implements IInventoryView, class_1829
    {

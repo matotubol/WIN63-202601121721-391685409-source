@@ -4,14 +4,14 @@ package com.sulake.habbo.moderation
    import com.sulake.habbo.utils.StringUtil;
    import flash.events.Event;
    import flash.utils.Timer;
-   import package_122.class_2610;
-   import package_122.class_2839;
-   import package_122.class_3214;
-   import package_122.class_3283;
-   import package_122.class_3576;
-   import package_18.class_2218;
-   import package_18.class_3472;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ReleaseIssuesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.CloseIssuesMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModToolSanctionComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.CloseIssueDefaultActionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.PickIssuesMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_2218;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_3472;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class IssueManager
    {
@@ -171,7 +171,7 @@ package com.sulake.habbo.moderation
          {
             return;
          }
-         _moderationManager.connection.send(new class_2610(param1));
+         _moderationManager.connection.send(new ReleaseIssuesMessageComposer(param1));
          var_2046 = var_2046.concat(param1);
       }
       
@@ -456,13 +456,13 @@ package com.sulake.habbo.moderation
          }
          if(_loc3_.getHighestPriorityIssue() != null)
          {
-            _moderationManager.connection.send(new class_3214(_loc3_.getHighestPriorityIssue().issueId,-1,param2));
+            _moderationManager.connection.send(new ModToolSanctionComposer(_loc3_.getHighestPriorityIssue().issueId,-1,param2));
          }
       }
       
       public function requestSanctionDataForAccount(param1:int, param2:int) : void
       {
-         _moderationManager.connection.send(new class_3214(-1,param1,param2));
+         _moderationManager.connection.send(new ModToolSanctionComposer(-1,param1,param2));
       }
       
       public function updateSanctionData(param1:int, param2:int, param3:class_3472) : void
@@ -516,7 +516,7 @@ package com.sulake.habbo.moderation
          {
             return;
          }
-         _moderationManager.connection.send(new class_2839(param1,param2));
+         _moderationManager.connection.send(new CloseIssuesMessageComposer(param1,param2));
       }
       
       private function sendPick(param1:Array, param2:Boolean, param3:int, param4:String) : void
@@ -525,12 +525,12 @@ package com.sulake.habbo.moderation
          {
             return;
          }
-         _moderationManager.connection.send(new class_3576(param1,param2,param3,param4));
+         _moderationManager.connection.send(new PickIssuesMessageComposer(param1,param2,param3,param4));
       }
       
       private function sendCloseDefaultAction(param1:int, param2:Array, param3:int) : void
       {
-         _moderationManager.connection.send(new class_3283(param1,param2,param3));
+         _moderationManager.connection.send(new CloseIssueDefaultActionMessageComposer(param1,param2,param3));
       }
       
       public function autoHandle(param1:int) : void

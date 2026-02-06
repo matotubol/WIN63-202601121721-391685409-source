@@ -22,8 +22,8 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
    import com.sulake.iid.IIDSessionDataManager;
    import package_189.WiredVariable;
    import package_201.WiredUserVariablesPage;
-   import package_201.class_4065;
-   import package_89.class_3108;
+   import package_201.WiredUserVariablesListEventParser;
+   import package_89.WiredUserVariablesListEvent;
    
    public class VariableManagementOverviewController extends class_17 implements IVariableManagementOverviewController
    {
@@ -55,17 +55,17 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.overview
          super(param2,param3,param4);
          _roomEvents = param1;
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_3108(onGetPage));
+         _messageEvents.push(new WiredUserVariablesListEvent(onGetPage));
          for each(var _loc5_ in _messageEvents)
          {
             addMessageEvent(_loc5_);
          }
       }
       
-      private function onGetPage(param1:class_3108) : void
+      private function onGetPage(param1:WiredUserVariablesListEvent) : void
       {
-         var event:class_3108 = param1;
-         var parser:class_4065 = event.getParser();
+         var event:WiredUserVariablesListEvent = param1;
+         var parser:WiredUserVariablesListEventParser = event.getParser();
          if(parser.page.amount != VariableManagementConfig.PAGE_SIZE)
          {
             return;

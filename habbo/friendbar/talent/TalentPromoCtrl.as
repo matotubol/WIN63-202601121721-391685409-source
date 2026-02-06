@@ -5,13 +5,13 @@ package com.sulake.habbo.friendbar.talent
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.core.window.events.class_1758;
-   import package_153.class_2665;
-   import package_153.class_3659;
-   import package_187.class_3707;
-   import package_187.class_3807;
-   import package_4.class_2005;
-   import package_53.class_2595;
-   import package_53.class_3520;
+   import com.sulake.habbo.communication.messages.incoming.talent.TalentLevelUpMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.talent.TalentTrackLevelMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.talent.TalentLevelUpMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.talent.TalentTrackLevelMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackLevelMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
    
    public class TalentPromoCtrl implements class_13
    {
@@ -61,19 +61,19 @@ package com.sulake.habbo.friendbar.talent
          {
             return;
          }
-         var_52.communicationManager.addHabboConnectionMessageEvent(new class_2005(onUserObject));
-         var_52.communicationManager.addHabboConnectionMessageEvent(new class_3659(onTalentTrackLevel));
-         var_52.communicationManager.addHabboConnectionMessageEvent(new class_2665(onTalentLevelUp));
+         var_52.communicationManager.addHabboConnectionMessageEvent(new UserObjectEvent(onUserObject));
+         var_52.communicationManager.addHabboConnectionMessageEvent(new TalentTrackLevelMessageEvent(onTalentTrackLevel));
+         var_52.communicationManager.addHabboConnectionMessageEvent(new TalentLevelUpMessageEvent(onTalentLevelUp));
       }
       
-      private function onUserObject(param1:class_2005) : void
+      private function onUserObject(param1:UserObjectEvent) : void
       {
-         var_52.send(new class_2595(promotedTalentTrack));
+         var_52.send(new GetTalentTrackLevelMessageComposer(promotedTalentTrack));
       }
       
-      private function onTalentTrackLevel(param1:class_3659) : void
+      private function onTalentTrackLevel(param1:TalentTrackLevelMessageEvent) : void
       {
-         var _loc2_:class_3807 = param1.getParser();
+         var _loc2_:TalentTrackLevelMessageEventParser = param1.getParser();
          if(_loc2_.talentTrackName == promotedTalentTrack)
          {
             var_4315 = _loc2_.maxLevel;
@@ -82,9 +82,9 @@ package com.sulake.habbo.friendbar.talent
          }
       }
       
-      private function onTalentLevelUp(param1:class_2665) : void
+      private function onTalentLevelUp(param1:TalentLevelUpMessageEvent) : void
       {
-         var _loc2_:class_3707 = param1.getParser();
+         var _loc2_:TalentLevelUpMessageEventParser = param1.getParser();
          if(_loc2_.talentTrackName == promotedTalentTrack)
          {
             var_2493 = _loc2_.level;
@@ -143,7 +143,7 @@ package com.sulake.habbo.friendbar.talent
          if(param1.type == "WME_CLICK" && enabled)
          {
             var_52.tracking.trackTalentTrackOpen(promotedTalentTrack,"talentpromo");
-            var_52.send(new class_3520(promotedTalentTrack));
+            var_52.send(new GetTalentTrackMessageComposer(promotedTalentTrack));
          }
       }
       

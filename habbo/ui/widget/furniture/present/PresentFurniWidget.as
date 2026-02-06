@@ -39,7 +39,7 @@ package com.sulake.habbo.ui.widget.furniture.present
    import flash.display.BitmapData;
    import flash.events.IEventDispatcher;
    import flash.geom.Point;
-   import package_9.class_3556;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileByNameMessageComposer;
    
    public class PresentFurniWidget extends RoomWidgetBase implements class_259
    {
@@ -743,7 +743,7 @@ package com.sulake.habbo.ui.widget.furniture.present
       {
          if(!isUnknownSender())
          {
-            send(new class_3556(_senderName));
+            send(new GetExtendedProfileByNameMessageComposer(_senderName));
          }
       }
       

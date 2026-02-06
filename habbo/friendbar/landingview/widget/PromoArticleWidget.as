@@ -7,15 +7,15 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.core.window.components.IRegionWindow;
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.landingview.class_3261;
+   import com.sulake.habbo.communication.messages.outgoing.landingview.GetPromoArticlesMessageComposer;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.ILandingViewWidget;
    import com.sulake.habbo.friendbar.landingview.interfaces.ISettingsAwareWidget;
    import com.sulake.habbo.friendbar.landingview.layout.CommonWidgetSettings;
    import com.sulake.habbo.friendbar.landingview.layout.WidgetContainerLayout;
    import com.sulake.habbo.utils.HabboWebTools;
-   import package_101.class_2356;
-   import package_101.class_4098;
+   import com.sulake.habbo.communication.messages.incoming.landingview.PromoArticlesMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.landingview.class_4098;
    
    public class PromoArticleWidget implements ILandingViewWidget, ISettingsAwareWidget, class_31
    {
@@ -50,7 +50,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       {
          _container = class_1812(_landingView.getXmlWindow("promo_article"));
          _container.procedure = onMouse;
-         var_1637 = new class_2356(onPromoArticles);
+         var_1637 = new PromoArticlesMessageEvent(onPromoArticles);
          _landingView.communicationManager.addHabboConnectionMessageEvent(var_1637);
       }
       
@@ -58,7 +58,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       {
          if(_lastRequestTime == null || _lastRequestTime.time + 600000 < new Date().time)
          {
-            _landingView.send(new class_3261());
+            _landingView.send(new GetPromoArticlesMessageComposer());
             _lastRequestTime = new Date();
          }
          else
@@ -240,7 +240,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          _loc3_.assetUri = "progress_disk_flat_" + (param2 ? "on" : "off");
       }
       
-      private function onPromoArticles(param1:class_2356) : void
+      private function onPromoArticles(param1:PromoArticlesMessageEvent) : void
       {
          var_993 = [];
          for each(var _loc2_ in param1.getParser().articles)

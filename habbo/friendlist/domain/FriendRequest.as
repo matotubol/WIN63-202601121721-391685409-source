@@ -2,7 +2,7 @@ package com.sulake.habbo.friendlist.domain
 {
    import com.sulake.core.runtime.class_13;
    import com.sulake.core.window.class_1812;
-   import package_14.class_2254;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_2254;
    
    public class FriendRequest implements class_13
    {

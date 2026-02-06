@@ -24,9 +24,9 @@ package com.sulake.habbo.ui.widget.memenu
    import flash.display.BitmapData;
    import flash.geom.Point;
    import flash.utils.Dictionary;
-   import package_173.class_3213;
-   import package_53.class_3520;
-   import package_64.class_2121;
+   import com.sulake.habbo.communication.messages.parser.perk.PerkAllowancesMessageEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.perk.PerkAllowancesMessageEvent;
    
    public class MeMenuMainView implements IMeMenuView
    {
@@ -39,7 +39,7 @@ package com.sulake.habbo.ui.widget.memenu
       
       private var _icons:Dictionary;
       
-      private var _perkAllowancesMessageEvent:class_2121;
+      private var _perkAllowancesMessageEvent:PerkAllowancesMessageEvent;
       
       private var _config:class_16;
       
@@ -67,7 +67,7 @@ package com.sulake.habbo.ui.widget.memenu
          _icons["talents_icon"] = ["compass_white","compass_color"];
          _icons["guide_icon"] = ["lighthouse_white","lighthouse_color"];
          var_16 = param1;
-         _perkAllowancesMessageEvent = new class_2121(onPerkAllowances);
+         _perkAllowancesMessageEvent = new PerkAllowancesMessageEvent(onPerkAllowances);
          var_16.handler.container.connection.addMessageEvent(_perkAllowancesMessageEvent);
          createWindow(param2);
       }
@@ -364,7 +364,7 @@ package com.sulake.habbo.ui.widget.memenu
             case "talents":
                var _loc5_:String = var_16.handler.container.sessionDataManager.currentTalentTrack;
                var_16.handler.container.habboTracking.trackTalentTrackOpen(null,"memenu");
-               var_16.handler.container.connection.send(new class_3520(null));
+               var_16.handler.container.connection.send(new GetTalentTrackMessageComposer(null));
                break;
             default:
                class_21.log("Me Menu Main View: unknown button: " + _loc3_);
@@ -422,9 +422,9 @@ package com.sulake.habbo.ui.widget.memenu
          }
       }
       
-      private function onPerkAllowances(param1:class_2121) : void
+      private function onPerkAllowances(param1:PerkAllowancesMessageEvent) : void
       {
-         var _loc2_:class_3213 = param1.getParser();
+         var _loc2_:PerkAllowancesMessageEventParser = param1.getParser();
          setGuideToolVisibility(_loc2_.isPerkAllowed("USE_GUIDE_TOOL"));
       }
       

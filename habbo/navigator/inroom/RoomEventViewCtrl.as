@@ -7,11 +7,11 @@ package com.sulake.habbo.navigator.inroom
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.TextFieldManager;
    import com.sulake.habbo.navigator.class_42;
-   import package_1.class_2326;
-   import package_1.class_3416;
-   import package_42.class_2842;
-   import package_65.class_2301;
-   import package_76.class_2619;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.EditEventMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.CancelEventMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_2842;
+   import com.sulake.habbo.communication.messages.parser.advertisement.RoomAdErrorEventParser;
+   import com.sulake.habbo.communication.messages.incoming.advertisement.RoomAdErrorEvent;
    
    public class RoomEventViewCtrl implements class_13
    {
@@ -102,12 +102,12 @@ package com.sulake.habbo.navigator.inroom
          {
             return;
          }
-         _navigator.send(new class_2326(_loc1_,_loc3_,_loc2_));
+         _navigator.send(new EditEventMessageComposer(_loc1_,_loc3_,_loc2_));
       }
       
       private function onEndButtonClick(param1:class_1758) : void
       {
-         _navigator.send(new class_3416(_navigator.data.roomEventData.adId));
+         _navigator.send(new CancelEventMessageComposer(_navigator.data.roomEventData.adId));
          close();
       }
       
@@ -124,10 +124,10 @@ package com.sulake.habbo.navigator.inroom
          }
       }
       
-      private function onRoomAdError(param1:class_2619) : void
+      private function onRoomAdError(param1:RoomAdErrorEvent) : void
       {
          this.clearErrors();
-         var _loc2_:class_2301 = param1.getParser();
+         var _loc2_:RoomAdErrorEventParser = param1.getParser();
          var _loc3_:int = _loc2_.errorCode;
          if(_loc3_ == 0)
          {
@@ -169,7 +169,7 @@ package com.sulake.habbo.navigator.inroom
          var_891 = new TextFieldManager(_navigator,getInput("event_desc"),100);
          var_796.input.addEventListener("WE_UNFOCUSED",onUnfocus);
          var_891.input.addEventListener("WE_UNFOCUSED",onUnfocus);
-         _navigator.communication.addHabboConnectionMessageEvent(new class_2619(onRoomAdError));
+         _navigator.communication.addHabboConnectionMessageEvent(new RoomAdErrorEvent(onRoomAdError));
          _window.center();
       }
       

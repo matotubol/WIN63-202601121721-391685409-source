@@ -2,8 +2,8 @@ package com.sulake.habbo.catalog.guilds
 {
    import com.sulake.habbo.catalog.HabboCatalog;
    import com.sulake.habbo.catalog.viewer.widgets.GuildSelectorCatalogWidget;
-   import package_3.class_2022;
-   import package_9.class_3210;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipsMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetGuildMembershipsMessageComposer;
    
    public class GuildMembershipsController
    {
@@ -32,7 +32,7 @@ package com.sulake.habbo.catalog.guilds
       public function registerGuildSelectorWidget(param1:GuildSelectorCatalogWidget) : void
       {
          var_769 = param1;
-         _catalog.connection.send(new class_3210());
+         _catalog.connection.send(new GetGuildMembershipsMessageComposer());
       }
       
       public function unregisterGuildSelectorWidget(param1:GuildSelectorCatalogWidget) : void
@@ -47,7 +47,7 @@ package com.sulake.habbo.catalog.guilds
          }
       }
       
-      public function onGuildMembershipsMessageEvent(param1:class_2022) : void
+      public function onGuildMembershipsMessageEvent(param1:GuildMembershipsMessageEvent) : void
       {
          var _loc2_:Array = param1.guilds.slice(0,param1.guilds.length);
          if(var_769 && !var_769.disposed)
@@ -61,7 +61,7 @@ package com.sulake.habbo.catalog.guilds
       {
          if(var_769 != null)
          {
-            _catalog.connection.send(new class_3210());
+            _catalog.connection.send(new GetGuildMembershipsMessageComposer());
          }
       }
    }

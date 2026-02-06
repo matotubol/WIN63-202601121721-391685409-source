@@ -5,7 +5,7 @@ package com.sulake.habbo.avatar.wardrobe
    import com.sulake.core.window.class_1812;
    import com.sulake.habbo.avatar.HabboAvatarEditor;
    import com.sulake.habbo.avatar.common.ISideContentModel;
-   import package_24.class_3930;
+   import com.sulake.habbo.communication.messages.incoming.avatar.class_3930;
    
    public class WardrobeModel implements ISideContentModel
    {

@@ -5,14 +5,14 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_2424;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3534;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetConcurrentUsersRewardMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetConcurrentUsersGoalProgressMessageComposer;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.elements.IElementHandler;
    import com.sulake.habbo.friendbar.landingview.widget.GenericWidget;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_62.class_3284;
+   import com.sulake.habbo.communication.messages.incoming.quest.ConcurrentUsersGoalProgressMessageEvent;
    
    public class ConcurrentUsersInfoElementHandler implements IElementHandler, class_13
    {
@@ -89,13 +89,13 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          _loc5_.assetUri = _loc7_;
          updateLocalization();
          param2.procedure = onButton;
-         param1.communicationManager.addHabboConnectionMessageEvent(new class_3284(onConcurrentUsersGoalProgress));
+         param1.communicationManager.addHabboConnectionMessageEvent(new ConcurrentUsersGoalProgressMessageEvent(onConcurrentUsersGoalProgress));
          var_251.start();
       }
       
       public function refresh() : void
       {
-         _landingView.send(new class_3534());
+         _landingView.send(new GetConcurrentUsersGoalProgressMessageComposer());
       }
       
       private function updateLocalization() : void
@@ -152,7 +152,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          }
       }
       
-      private function onConcurrentUsersGoalProgress(param1:class_3284) : void
+      private function onConcurrentUsersGoalProgress(param1:ConcurrentUsersGoalProgressMessageEvent) : void
       {
          var_61 = param1.getParser().state;
          var_3244 = param1.getParser().userCount;
@@ -170,8 +170,8 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       
       protected function onClick() : void
       {
-         _landingView.send(new class_2424());
-         _landingView.send(new class_3534());
+         _landingView.send(new GetConcurrentUsersRewardMessageComposer());
+         _landingView.send(new GetConcurrentUsersGoalProgressMessageComposer());
          _window.findChildByName("state.active").disable();
       }
    }

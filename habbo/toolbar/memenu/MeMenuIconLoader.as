@@ -6,8 +6,8 @@ package com.sulake.habbo.toolbar.memenu
    import flash.display.BitmapData;
    import flash.geom.Point;
    import flash.geom.Rectangle;
-   import package_39.class_1884;
-   import package_4.class_2005;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.UserChangeMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
    
    public class MeMenuIconLoader implements class_259
    {
@@ -24,16 +24,16 @@ package com.sulake.habbo.toolbar.memenu
       
       private var var_3345:BitmapData;
       
-      private var var_1875:class_2005;
+      private var var_1875:UserObjectEvent;
       
-      private var var_2100:class_1884;
+      private var var_2100:UserChangeMessageEvent;
       
       public function MeMenuIconLoader(param1:HabboToolbar)
       {
          super();
          _toolbar = param1;
-         var_1875 = new class_2005(onUserObject);
-         var_2100 = new class_1884(onUserChange);
+         var_1875 = new UserObjectEvent(onUserObject);
+         var_2100 = new UserChangeMessageEvent(onUserChange);
          _toolbar.communicationManager.addHabboConnectionMessageEvent(var_1875);
          _toolbar.communicationManager.addHabboConnectionMessageEvent(var_2100);
          setMeMenuToolbarIcon();
@@ -111,12 +111,12 @@ package com.sulake.habbo.toolbar.memenu
          setMeMenuToolbarIcon();
       }
       
-      private function onUserObject(param1:class_2005) : void
+      private function onUserObject(param1:UserObjectEvent) : void
       {
          setMeMenuToolbarIcon(param1.getParser().figure);
       }
       
-      private function onUserChange(param1:class_1884) : void
+      private function onUserChange(param1:UserChangeMessageEvent) : void
       {
          if(param1.id == -1)
          {

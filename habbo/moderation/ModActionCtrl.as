@@ -10,16 +10,16 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_1750;
    import com.sulake.habbo.utils.StringUtil;
-   import package_122.class_2446;
-   import package_122.class_2484;
-   import package_122.class_2535;
-   import package_122.class_2645;
-   import package_122.class_2678;
-   import package_122.class_3402;
-   import package_122.class_3616;
-   import package_18.class_2218;
-   import package_18.class_3499;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModMessageMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModBanMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModMuteMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.DefaultSanctionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModTradingLockMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModAlertMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.ModKickMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_2218;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.class_3499;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class ModActionCtrl implements class_13, ITrackedWindow
    {
@@ -227,7 +227,7 @@ package com.sulake.habbo.moderation
          trackAction("defaultAction");
          logEvent("action.default");
          var _loc3_:int = int(var_2668[_topicDropdown.selection]);
-         _main.connection.send(new class_2645(var_696,_loc3_,var_878.text,getIssueId()));
+         _main.connection.send(new DefaultSanctionMessageComposer(var_696,_loc3_,var_878.text,getIssueId()));
          dispose();
       }
       
@@ -260,11 +260,11 @@ package com.sulake.habbo.moderation
                   return;
                }
                trackAction("sendCaution");
-               _main.connection.send(new class_3402(var_696,var_878.text,_loc4_,getIssueId()));
+               _main.connection.send(new ModAlertMessageComposer(var_696,var_878.text,_loc4_,getIssueId()));
                break;
             case 1:
                trackAction("mute");
-               _main.connection.send(new class_2535(var_696,var_878.text,_loc4_,getIssueId()));
+               _main.connection.send(new ModMuteMessageComposer(var_696,var_878.text,_loc4_,getIssueId()));
                break;
             case 2:
                if(!_main.initMsg.banPermission)
@@ -274,7 +274,7 @@ package com.sulake.habbo.moderation
                }
                trackAction("ban");
                _loc6_ = _loc5_.actionId == 106;
-               _main.connection.send(new class_2484(var_696,var_878.text,_loc4_,_loc5_.sanctionTypeId,_loc6_,getIssueId()));
+               _main.connection.send(new ModBanMessageComposer(var_696,var_878.text,_loc4_,_loc5_.sanctionTypeId,_loc6_,getIssueId()));
                break;
             case 3:
                if(!_main.initMsg.kickPermission)
@@ -283,12 +283,12 @@ package com.sulake.habbo.moderation
                   return;
                }
                trackAction("kick");
-               _main.connection.send(new class_3616(var_696,var_878.text,_loc4_,getIssueId()));
+               _main.connection.send(new ModKickMessageComposer(var_696,var_878.text,_loc4_,getIssueId()));
                break;
             case 4:
                trackAction("trading_lock");
                _loc3_ = _loc5_.actionLengthHours * 60;
-               _main.connection.send(new class_2678(var_696,var_878.text,_loc3_,_loc4_,getIssueId()));
+               _main.connection.send(new ModTradingLockMessageComposer(var_696,var_878.text,_loc3_,_loc4_,getIssueId()));
                break;
             case 5:
                if(StringUtil.isEmpty(var_878.text))
@@ -297,7 +297,7 @@ package com.sulake.habbo.moderation
                   return;
                }
                trackAction("sendCaution");
-               _main.connection.send(new class_2446(var_696,var_878.text,_loc4_,getIssueId()));
+               _main.connection.send(new ModMessageMessageComposer(var_696,var_878.text,_loc4_,getIssueId()));
          }
          logEvent("action.custom","unknown");
          dispose();

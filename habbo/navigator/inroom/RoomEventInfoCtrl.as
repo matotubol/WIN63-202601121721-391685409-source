@@ -6,7 +6,7 @@ package com.sulake.habbo.navigator.inroom
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.navigator.class_42;
    import com.sulake.habbo.session.IRoomSession;
-   import package_42.class_2842;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_2842;
    
    public class RoomEventInfoCtrl implements class_13
    {

@@ -6,9 +6,9 @@ package com.sulake.habbo.avatar.hotlooks
    import com.sulake.habbo.avatar.common.class_2582;
    import com.sulake.habbo.avatar.wardrobe.*;
    import flash.utils.Dictionary;
-   import package_174.class_3011;
-   import package_195.class_3651;
-   import package_195.class_3684;
+   import com.sulake.habbo.communication.messages.outgoing.hotlooks.GetHotLooksMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.hotlooks.HotLooksMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.hotlooks.class_3684;
    
    public class HotLooksModel extends CategoryBaseModel implements class_2582
    {
@@ -21,7 +21,7 @@ package com.sulake.habbo.avatar.hotlooks
       
       private var var_880:Dictionary;
       
-      private var var_1808:class_3651;
+      private var var_1808:HotLooksMessageEvent;
       
       public function HotLooksModel(param1:HabboAvatarEditor)
       {
@@ -38,13 +38,13 @@ package com.sulake.habbo.avatar.hotlooks
       {
          if(param1.manager.communication)
          {
-            var_1808 = new class_3651(onHotLooksMessage);
+            var_1808 = new HotLooksMessageEvent(onHotLooksMessage);
             param1.manager.communication.addHabboConnectionMessageEvent(var_1808);
-            param1.manager.communication.connection.send(new class_3011(20));
+            param1.manager.communication.connection.send(new GetHotLooksMessageComposer(20));
          }
       }
       
-      private function onHotLooksMessage(param1:class_3651) : void
+      private function onHotLooksMessage(param1:HotLooksMessageEvent) : void
       {
          for each(var _loc2_ in param1.getParser().hotLooks)
          {

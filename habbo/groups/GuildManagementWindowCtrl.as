@@ -17,16 +17,16 @@ package com.sulake.habbo.groups
    import com.sulake.habbo.groups.events.GuildSettingsChangedInManageEvent;
    import com.sulake.habbo.window.widgets.class_3087;
    import flash.display.BitmapData;
-   import package_3.class_1818;
-   import package_3.class_1819;
-   import package_3.class_1843;
-   import package_3.class_2794;
-   import package_3.class_2927;
-   import package_9.class_2472;
-   import package_9.class_3281;
-   import package_9.class_3374;
-   import package_9.class_3413;
-   import package_9.class_3510;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1818;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1819;
+   import com.sulake.habbo.communication.messages.incoming.users.class_1843;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2794;
+   import com.sulake.habbo.communication.messages.incoming.users.class_2927;
+   import com.sulake.habbo.communication.messages.outgoing.users.CreateGuildMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UpdateGuildBadgeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UpdateGuildSettingsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UpdateGuildIdentityMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.UpdateGuildColorsMessageComposer;
    
    public class GuildManagementWindowCtrl implements class_13
    {
@@ -619,7 +619,7 @@ package com.sulake.habbo.groups
                _loc5_ = ITextFieldWindow(_window.findChildByName("desc_txt")).text;
                if(var_24.isOwner)
                {
-                  var_52.send(new class_3413(var_24.groupId,_loc3_,_loc5_));
+                  var_52.send(new UpdateGuildIdentityMessageComposer(var_24.groupId,_loc3_,_loc5_));
                }
                var_52.events.dispatchEvent(new GuildSettingsChangedInManageEvent("GSCIME_GUILD_VISUAL_SETTINGS_CHANGED",var_24.groupId));
                return;
@@ -627,7 +627,7 @@ package com.sulake.habbo.groups
                _loc1_ = var_217.isIntialized ? var_217.getBadgeSettings() : var_24.badgeSettings;
                if(var_24.isOwner)
                {
-                  var_52.send(new class_3281(var_24.groupId,_loc1_));
+                  var_52.send(new UpdateGuildBadgeMessageComposer(var_24.groupId,_loc1_));
                }
                var_52.events.dispatchEvent(new GuildSettingsChangedInManageEvent("GSCIME_GUILD_VISUAL_SETTINGS_CHANGED",var_24.groupId));
                break;
@@ -636,14 +636,14 @@ package com.sulake.habbo.groups
                _loc4_ = var_267.isInitialized ? var_267.getSelectedColorId() : var_24.secondaryColorId;
                if(var_24.isOwner)
                {
-                  var_52.send(new class_3510(var_24.groupId,_loc2_,_loc4_));
+                  var_52.send(new UpdateGuildColorsMessageComposer(var_24.groupId,_loc2_,_loc4_));
                }
                var_52.events.dispatchEvent(new GuildSettingsChangedInManageEvent("GSCIME_GUILD_VISUAL_SETTINGS_CHANGED",var_24.groupId));
                break;
             case 4:
                if(var_24.isOwner)
                {
-                  var_52.send(new class_3374(var_24.groupId,var_1386.guildType,var_1386.rightsLevel));
+                  var_52.send(new UpdateGuildSettingsMessageComposer(var_24.groupId,var_1386.guildType,var_1386.rightsLevel));
                }
                var_1386.resetModified();
          }
@@ -658,7 +658,7 @@ package com.sulake.habbo.groups
          var _loc2_:int = var_258.isInitialized ? var_258.getSelectedColorId() : var_24.primaryColorId;
          var _loc4_:int = var_267.isInitialized ? var_267.getSelectedColorId() : var_24.secondaryColorId;
          var_1481 = 0;
-         var_52.send(new class_2472(_loc3_,_loc5_,_loc6_.roomId,_loc2_,_loc4_,_loc1_));
+         var_52.send(new CreateGuildMessageComposer(_loc3_,_loc5_,_loc6_.roomId,_loc2_,_loc4_,_loc1_));
       }
       
       private function hasPreviousStep() : Boolean

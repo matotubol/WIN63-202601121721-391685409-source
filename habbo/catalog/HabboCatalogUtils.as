@@ -27,7 +27,7 @@ package com.sulake.habbo.catalog
    import flash.geom.Point;
    import flash.geom.Rectangle;
    import flash.utils.Dictionary;
-   import package_10.class_1766;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_1766;
    
    public class HabboCatalogUtils implements class_13, class_1829
    {

@@ -8,8 +8,8 @@ package com.sulake.habbo.friendbar.groupforums
    import com.sulake.core.window.components.IStaticBitmapWrapperWindow;
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.WindowMouseEvent;
-   import package_155.class_3434;
-   import package_155.class_3591;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3434;
+   import com.sulake.habbo.communication.messages.parser.groupforums.class_3591;
    
    public class ThreadListView
    {

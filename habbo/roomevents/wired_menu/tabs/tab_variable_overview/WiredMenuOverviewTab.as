@@ -5,8 +5,8 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.class_1775;
    import com.sulake.core.window.events.WindowMouseEvent;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.class_3545;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.class_3711;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.wiredmenu.WiredGetAllVariableHoldersMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.wiredmenu.WiredAllVariableHoldersEventParser;
    import com.sulake.habbo.roomevents.Util;
    import com.sulake.habbo.roomevents.wired_menu.WiredMenuController;
    import com.sulake.habbo.roomevents.wired_menu.tabs.WiredMenuDefaultTab;
@@ -19,11 +19,11 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
    import com.sulake.habbo.window.utils.tableview.TableView;
    import flash.utils.Dictionary;
    import flash.utils.getTimer;
-   import package_117.class_3366;
+   import package_117.WiredGetVariableOwnersPageComposer;
    import package_189.ObjectIdAndValuePair;
    import package_189.WiredVariable;
    import package_189.class_4013;
-   import package_97.class_3377;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.wiredmenu.WiredAllVariableHoldersEvent;
    
    public class WiredMenuOverviewTab extends WiredMenuDefaultTab implements class_31
    {
@@ -79,7 +79,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
          createVariableList();
          createPropertiesTable();
          createTextTable();
-         addMessageEvent(new class_3377(onAllVariableHolders));
+         addMessageEvent(new WiredAllVariableHoldersEvent(onAllVariableHolders));
          highlightHoldersButton.addEventListener("WME_CLICK",onHighlightClick);
          manageButton.addEventListener("WME_CLICK",onManageClick);
       }
@@ -130,7 +130,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
       private function requestHolders() : void
       {
          var_3894 = getTimer();
-         controller.send(new class_3545(selectedVariableId));
+         controller.send(new WiredGetAllVariableHoldersMessageComposer(selectedVariableId));
       }
       
       private function onAllVariables(param1:Vector.<WiredVariable>) : void
@@ -146,7 +146,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
          }
       }
       
-      private function onAllVariableHolders(param1:class_3377) : void
+      private function onAllVariableHolders(param1:WiredAllVariableHoldersEvent) : void
       {
          var _loc9_:int = 0;
          var _loc8_:Number = NaN;
@@ -154,7 +154,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
          {
             return;
          }
-         var _loc2_:class_3711 = param1.getParser();
+         var _loc2_:WiredAllVariableHoldersEventParser = param1.getParser();
          var _loc4_:Vector.<ObjectIdAndValuePair> = _loc2_.variableInfoAndHolders.holders;
          var _loc6_:WiredVariable = _loc2_.variableInfoAndHolders.variable;
          if(_loc6_.variableId != selectedVariableId)
@@ -308,7 +308,7 @@ package com.sulake.habbo.roomevents.wired_menu.tabs.tab_variable_overview
          {
             return;
          }
-         controller.send(new class_3366(_loc2_.variableId,1,VariableManagementConfig.PAGE_SIZE,0,-1));
+         controller.send(new WiredGetVariableOwnersPageComposer(_loc2_.variableId,1,VariableManagementConfig.PAGE_SIZE,0,-1));
       }
       
       private function startHighlight() : void

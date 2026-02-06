@@ -17,13 +17,13 @@ package com.sulake.habbo.messenger
    import com.sulake.habbo.window.widgets.class_3087;
    import flash.utils.Dictionary;
    import flash.utils.getTimer;
-   import package_14.class_3449;
-   import package_28.class_2578;
-   import package_28.class_2765;
-   import package_28.class_3000;
-   import package_71.class_2196;
-   import package_9.class_1796;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_3449;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.SendMsgMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.FollowFriendMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.friendlist.GetMessengerHistoryComposer;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetHabboGroupDetailsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class MainView implements class_13, IIlluminaInputHandler
    {
@@ -712,7 +712,7 @@ package com.sulake.habbo.messenger
             "messageId":_loc5_,
             "time":_loc3_
          };
-         _messenger.send(new class_3000(param1,_loc5_));
+         _messenger.send(new GetMessengerHistoryComposer(param1,_loc5_));
       }
       
       private function refreshConversationList() : void
@@ -909,21 +909,21 @@ package com.sulake.habbo.messenger
                   case "follow_button":
                      if(var_117 > 0)
                      {
-                        _messenger.send(new class_2765(var_117));
-                        _messenger.send(new class_2196("Navigation","IM","go.im"));
+                        _messenger.send(new FollowFriendMessageComposer(var_117));
+                        _messenger.send(new EventLogMessageComposer("Navigation","IM","go.im"));
                         break;
                      }
                      _messenger.followingToGroupRoom = true;
-                     _messenger.send(new class_1796(Math.abs(var_117),false));
+                     _messenger.send(new GetHabboGroupDetailsMessageComposer(Math.abs(var_117),false));
                      break;
                   case "profile_button":
                      if(var_117 > 0)
                      {
-                        _messenger.send(new class_1879(var_117));
+                        _messenger.send(new GetExtendedProfileMessageComposer(var_117));
                         _messenger.trackGoogle("extendedProfile","messenger_conversation");
                         break;
                      }
-                     _messenger.send(new class_1796(Math.abs(var_117),true));
+                     _messenger.send(new GetHabboGroupDetailsMessageComposer(Math.abs(var_117),true));
                      _messenger.trackGoogle("extendedProfile","messenger_conversation");
                      break;
                   case "report_button":
@@ -943,7 +943,7 @@ package com.sulake.habbo.messenger
          }
          var _loc5_:int = var_3617;
          var_3617 += 1;
-         _messenger.send(new class_2578(var_117,param2,_loc5_));
+         _messenger.send(new SendMsgMessageComposer(var_117,param2,_loc5_));
          IIlluminaInputWidget(param1.widget).message = "";
          var _loc3_:Array = var_445[var_117];
          if(_loc3_.length == 0 || _loc3_.length == 1 && ChatEntry(_loc3_[0]).type == 3)

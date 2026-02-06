@@ -7,7 +7,7 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.furniture.requirementsmissing.CustomUserNotificationWidget;
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import flash.events.Event;
-   import package_100.class_2515;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.CustomUserNotificationMessageEvent;
    
    public class CustomUserNotificationWidgetHandler implements IRoomWidgetHandler
    {
@@ -40,7 +40,7 @@ package com.sulake.habbo.ui.handler
          _container = param1;
          if(!var_1591)
          {
-            var_1591 = new class_2515(onFurnitureUsageRequirementMissingMessage);
+            var_1591 = new CustomUserNotificationMessageEvent(onFurnitureUsageRequirementMissingMessage);
             _container.connection.addMessageEvent(var_1591);
          }
       }
@@ -93,7 +93,7 @@ package com.sulake.habbo.ui.handler
          return var_1134;
       }
       
-      public function onFurnitureUsageRequirementMissingMessage(param1:class_2515) : void
+      public function onFurnitureUsageRequirementMissingMessage(param1:CustomUserNotificationMessageEvent) : void
       {
          var _loc2_:int = param1.getParser().code;
          if(var_16)

@@ -15,7 +15,7 @@ package com.sulake.habbo.campaign.calendar
    import flash.display.BitmapData;
    import flash.display.Stage;
    import flash.events.Event;
-   import package_80.class_2349;
+   import com.sulake.habbo.communication.messages.parser.campaign.class_2349;
    
    public class CalendarView implements class_1829
    {

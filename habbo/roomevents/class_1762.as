@@ -4,33 +4,33 @@ package com.sulake.habbo.roomevents
    import com.sulake.core.runtime.class_13;
    import com.sulake.core.utils.class_55;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2594;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2644;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2813;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2832;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_2940;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3163;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3216;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3309;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3540;
-   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3547;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.OpenEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniTriggerEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredRewardResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniSelectorEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniActionEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniAddonEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredValidationErrorEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniVariableEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredFurniConditionEvent;
+   import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.WiredSaveSuccessEvent;
    import com.sulake.habbo.communication.messages.incoming.userdefinedroomevents.class_3569;
-   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.class_3282;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2367;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2371;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2488;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2532;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_2805;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_3056;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_3201;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_3573;
-   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.class_3654;
-   import package_3.class_2022;
-   import package_39.class_2407;
-   import package_4.class_2005;
-   import package_44.class_1913;
-   import package_50.class_2719;
-   import package_54.class_2039;
+   import com.sulake.habbo.communication.messages.outgoing.userdefinedroomevents.OpenMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniActionEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.OpenEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniAddonEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniSelectorEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniConditionEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredRewardResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniVariableEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredFurniTriggerEventParser;
+   import com.sulake.habbo.communication.messages.parser.userdefinedroomevents.WiredValidationErrorEventParser;
+   import com.sulake.habbo.communication.messages.incoming.users.GuildMembershipsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.ObjectRemoveMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.UserObjectEventParser;
+   import com.sulake.habbo.communication.messages.parser.room.engine.ObjectRemoveMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.room.session.CloseConnectionMessageEvent;
    
    [SecureSWF(rename="true")]
    public class class_1762 implements class_13
@@ -46,20 +46,20 @@ package com.sulake.habbo.roomevents
          _roomEvents = param1;
          _messageEvents = new Vector.<IMessageEvent>(0);
          var _loc2_:class_57 = _roomEvents.communication;
-         addMessageEvent(new class_2832(onSelector));
-         addMessageEvent(new class_2813(onRewardFailed));
-         addMessageEvent(new class_2594(onOpen));
-         addMessageEvent(new class_3163(onAddon));
-         addMessageEvent(new class_2039(onRoomExit));
-         addMessageEvent(new class_3547(onSaveSuccess));
-         addMessageEvent(new class_3309(onVariable));
-         addMessageEvent(new class_3540(onCondition));
-         addMessageEvent(new class_2022(onGuildMemberships));
-         addMessageEvent(new class_2644(onTrigger));
-         addMessageEvent(new class_2005(onUserObject));
-         addMessageEvent(new class_2940(onAction));
-         addMessageEvent(new class_2407(onObjectRemove));
-         addMessageEvent(new class_3216(onValidationError));
+         addMessageEvent(new WiredFurniSelectorEvent(onSelector));
+         addMessageEvent(new WiredRewardResultMessageEvent(onRewardFailed));
+         addMessageEvent(new OpenEvent(onOpen));
+         addMessageEvent(new WiredFurniAddonEvent(onAddon));
+         addMessageEvent(new CloseConnectionMessageEvent(onRoomExit));
+         addMessageEvent(new WiredSaveSuccessEvent(onSaveSuccess));
+         addMessageEvent(new WiredFurniVariableEvent(onVariable));
+         addMessageEvent(new WiredFurniConditionEvent(onCondition));
+         addMessageEvent(new GuildMembershipsMessageEvent(onGuildMemberships));
+         addMessageEvent(new WiredFurniTriggerEvent(onTrigger));
+         addMessageEvent(new UserObjectEvent(onUserObject));
+         addMessageEvent(new WiredFurniActionEvent(onAction));
+         addMessageEvent(new ObjectRemoveMessageEvent(onObjectRemove));
+         addMessageEvent(new WiredValidationErrorEvent(onValidationError));
       }
       
       private function addMessageEvent(param1:IMessageEvent) : void
@@ -69,49 +69,49 @@ package com.sulake.habbo.roomevents
       
       private function onOpen(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2371 = (param1 as class_2594).getParser();
-         _roomEvents.send(new class_3282(_loc2_.stuffId));
+         var _loc2_:OpenEventParser = (param1 as OpenEvent).getParser();
+         _roomEvents.send(new OpenMessageComposer(_loc2_.stuffId));
       }
       
       private function onTrigger(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3573 = (param1 as class_2644).getParser();
+         var _loc2_:WiredFurniTriggerEventParser = (param1 as WiredFurniTriggerEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onAction(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2367 = (param1 as class_2940).getParser();
+         var _loc2_:WiredFurniActionEventParser = (param1 as WiredFurniActionEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onCondition(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2805 = (param1 as class_3540).getParser();
+         var _loc2_:WiredFurniConditionEventParser = (param1 as WiredFurniConditionEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onAddon(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2488 = (param1 as class_3163).getParser();
+         var _loc2_:WiredFurniAddonEventParser = (param1 as WiredFurniAddonEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onVariable(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3201 = (param1 as class_3309).getParser();
+         var _loc2_:WiredFurniVariableEventParser = (param1 as WiredFurniVariableEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onSelector(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2532 = (param1 as class_2832).getParser();
+         var _loc2_:WiredFurniSelectorEventParser = (param1 as WiredFurniSelectorEvent).getParser();
          _roomEvents.wiredCtrl.prepareForUpdate(_loc2_.def);
       }
       
       private function onUserObject(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1913 = (param1 as class_2005).getParser();
+         var _loc2_:UserObjectEventParser = (param1 as UserObjectEvent).getParser();
          _roomEvents.userName = _loc2_.name;
       }
       
@@ -122,14 +122,14 @@ package com.sulake.habbo.roomevents
       
       private function onObjectRemove(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2719 = (param1 as class_2407).getParser();
+         var _loc2_:ObjectRemoveMessageEventParser = (param1 as ObjectRemoveMessageEvent).getParser();
          class_21.log("Received object remove event: " + _loc2_.id + ", " + _loc2_.isExpired);
          _roomEvents.wiredCtrl.stuffRemoved(_loc2_.id);
       }
       
       private function onRewardFailed(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3056 = class_2813(param1).getParser();
+         var _loc2_:WiredRewardResultMessageEventParser = WiredRewardResultMessageEvent(param1).getParser();
          if(_loc2_.reason == 6)
          {
             _roomEvents.windowManager.alert(_roomEvents.localization.getLocalization("wiredfurni.rewardsuccess.title"),_roomEvents.localization.getLocalization("wiredfurni.rewardsuccess.body"),0,null);
@@ -146,7 +146,7 @@ package com.sulake.habbo.roomevents
       
       private function onValidationError(param1:IMessageEvent) : void
       {
-         var _loc3_:class_3654 = class_3216(param1).getParser();
+         var _loc3_:WiredValidationErrorEventParser = WiredValidationErrorEvent(param1).getParser();
          var _loc6_:class_55 = new class_55();
          for each(var _loc5_ in _loc3_.parameters)
          {
@@ -163,7 +163,7 @@ package com.sulake.habbo.roomevents
          _roomEvents.wiredCtrl.onSaveSuccess();
       }
       
-      private function onGuildMemberships(param1:class_2022) : void
+      private function onGuildMemberships(param1:GuildMembershipsMessageEvent) : void
       {
          _roomEvents.wiredCtrl.onGuildMemberships(param1);
       }

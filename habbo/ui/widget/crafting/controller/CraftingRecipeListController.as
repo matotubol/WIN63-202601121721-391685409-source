@@ -6,7 +6,7 @@ package com.sulake.habbo.ui.widget.crafting.controller
    import com.sulake.habbo.ui.widget.crafting.CraftingWidget;
    import com.sulake.habbo.ui.widget.crafting.renderer.CraftingRecipeItemRenderer;
    import com.sulake.habbo.ui.widget.crafting.utils.CraftingFurnitureItem;
-   import package_96.class_2347;
+   import com.sulake.habbo.communication.messages.parser.crafting.class_2347;
    
    public class CraftingRecipeListController extends CraftingGridControllerBase
    {

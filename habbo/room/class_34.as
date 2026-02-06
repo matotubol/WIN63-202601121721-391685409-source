@@ -18,8 +18,8 @@ package com.sulake.habbo.room
    import com.sulake.habbo.avatar.pets.PetFigureData;
    import com.sulake.habbo.catalog.IHabboCatalog;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2076;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2077;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomThumbnailMessageComposer;
    import com.sulake.habbo.game.class_45;
    import com.sulake.habbo.room.events.RoomEngineAreaHideStateWidgetEvent;
    import com.sulake.habbo.room.events.RoomEngineDragWithMouseEvent;
@@ -130,7 +130,7 @@ package com.sulake.habbo.room
    import flash.ui.Mouse;
    import flash.utils.ByteArray;
    import flash.utils.getTimer;
-   import package_50.AreaHideMessageData;
+   import com.sulake.habbo.communication.messages.parser.room.engine.AreaHideMessageData;
    
    [SecureSWF(rename="true")]
    public class class_34 extends class_17 implements IRoomEngine, IRoomManagerListener, class_30, class_32, class_31, class_33
@@ -4518,9 +4518,9 @@ package com.sulake.habbo.room
          }
          if(param3)
          {
-            return new class_2077(_loc7_,_loc10_,_loc9_,var_71,_sessionDataManager.topSecurityLevel);
+            return new RenderRoomThumbnailMessageComposer(_loc7_,_loc10_,_loc9_,var_71,_sessionDataManager.topSecurityLevel);
          }
-         return new class_2076(_loc7_,_loc10_,_loc9_,var_71,_sessionDataManager.topSecurityLevel);
+         return new RenderRoomMessageComposer(_loc7_,_loc10_,_loc9_,var_71,_sessionDataManager.topSecurityLevel);
       }
       
       public function get roomContentLoader() : class_1835

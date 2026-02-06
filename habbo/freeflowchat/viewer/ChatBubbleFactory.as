@@ -25,7 +25,7 @@ package com.sulake.habbo.freeflowchat.viewer
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
    import flash.utils.getTimer;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class ChatBubbleFactory implements class_1829, class_259
    {

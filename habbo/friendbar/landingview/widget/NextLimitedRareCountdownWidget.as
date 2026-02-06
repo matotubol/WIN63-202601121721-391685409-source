@@ -13,8 +13,8 @@ package com.sulake.habbo.friendbar.landingview.widget
    import com.sulake.habbo.window.widgets.class_2728;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_10.class_3141;
-   import package_13.class_2727;
+   import com.sulake.habbo.communication.messages.incoming.catalog.LimitedOfferAppearingNextMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.catalog.GetLimitedOfferAppearingNextComposer;
    
    public class NextLimitedRareCountdownWidget implements ILandingViewWidget, class_59, ISettingsAwareWidget
    {
@@ -68,7 +68,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          _container.findChildByName("get").procedure = onOpenCatalogButton;
          _container.findChildByName("catalogue_button").procedure = onOpenCatalogButton;
          _container.visible = false;
-         _landingView.communicationManager.addHabboConnectionMessageEvent(new class_3141(onLimitedOfferAppearingNextMessage));
+         _landingView.communicationManager.addHabboConnectionMessageEvent(new LimitedOfferAppearingNextMessageEvent(onLimitedOfferAppearingNextMessage));
          requestLimitedOfferAppearingNextMessage(null);
       }
       
@@ -76,7 +76,7 @@ package com.sulake.habbo.friendbar.landingview.widget
       {
          if(!_landingView.getBoolean("next.limited.rare.countdown.widget.disabled"))
          {
-            _landingView.communicationManager.connection.send(new class_2727());
+            _landingView.communicationManager.connection.send(new GetLimitedOfferAppearingNextComposer());
          }
       }
       
@@ -152,7 +152,7 @@ package com.sulake.habbo.friendbar.landingview.widget
          var_842.start();
       }
       
-      private function onLimitedOfferAppearingNextMessage(param1:class_3141) : void
+      private function onLimitedOfferAppearingNextMessage(param1:LimitedOfferAppearingNextMessageEvent) : void
       {
          var_3006 = param1.getParser().appearsInSeconds;
          var_2228 = param1.getParser().pageId;

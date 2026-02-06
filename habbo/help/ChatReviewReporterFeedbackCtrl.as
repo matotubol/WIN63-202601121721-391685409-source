@@ -5,8 +5,8 @@ package com.sulake.habbo.help
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_2.class_2391;
-   import package_2.class_3031;
+   import com.sulake.habbo.communication.messages.incoming.help.GuideTicketCreationResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.help.GuideTicketResolutionMessageEvent;
    
    public class ChatReviewReporterFeedbackCtrl implements class_13
    {
@@ -19,8 +19,8 @@ package com.sulake.habbo.help
       {
          super();
          _habboHelp = param1;
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_3031(onTicketResolved));
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_2391(onCreateResult));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new GuideTicketResolutionMessageEvent(onTicketResolved));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new GuideTicketCreationResultMessageEvent(onCreateResult));
       }
       
       public function dispose() : void
@@ -38,12 +38,12 @@ package com.sulake.habbo.help
          return _habboHelp == null;
       }
       
-      private function onTicketResolved(param1:class_3031) : void
+      private function onTicketResolved(param1:GuideTicketResolutionMessageEvent) : void
       {
          show(param1.getParser().localizationCode);
       }
       
-      private function onCreateResult(param1:class_2391) : void
+      private function onCreateResult(param1:GuideTicketCreationResultMessageEvent) : void
       {
          show(param1.getParser().localizationCode);
       }

@@ -4,7 +4,7 @@ package com.sulake.habbo.help.reportstatus
    import com.sulake.habbo.window.utils.tableview.ITableObject;
    import com.sulake.habbo.window.utils.tableview.TableCell;
    import flash.globalization.DateTimeFormatter;
-   import package_40.class_2748;
+   import com.sulake.habbo.communication.messages.parser.callforhelp.class_2748;
    
    public class ReportStatusTableObject implements ITableObject
    {

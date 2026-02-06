@@ -7,7 +7,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.catalog.HabboCatalog;
-   import package_10.class_1933;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_1933;
    
    public class FeaturedItemsCatalogWidget extends CatalogWidget implements class_2612
    {

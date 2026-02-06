@@ -9,9 +9,9 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.events.class_1758;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_122.class_3492;
-   import package_74.class_3766;
-   import package_74.class_3840;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetRoomVisitsMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_3766;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_3840;
    
    public class RoomVisitsCtrl implements class_13, ITrackedWindow
    {
@@ -65,7 +65,7 @@ package com.sulake.habbo.moderation
          var_908 = new Timer(300,1);
          var_908.addEventListener("timer",onResizeTimer);
          _main.messageHandler.addRoomVisitsListener(this);
-         _main.connection.send(new class_3492(var_1270));
+         _main.connection.send(new GetRoomVisitsMessageComposer(var_1270));
          _frame = class_2250(_main.getXmlWindow("roomvisits_frame"));
          var_121 = IItemListWindow(_frame.findChildByName("visits_list"));
          var_1339 = var_121.getListItemAt(0) as class_1812;

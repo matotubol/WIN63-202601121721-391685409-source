@@ -11,17 +11,17 @@ package com.sulake.habbo.catalog.collectibles.tabs
    import com.sulake.habbo.catalog.collectibles.CollectiblesController;
    import com.sulake.habbo.catalog.collectibles.CollectiblesView;
    import com.sulake.habbo.catalog.collectibles.renderer.RewardCollectibleItemRenderer;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_3850;
-   import com.sulake.habbo.communication.messages.parser.collectibles.class_4046;
+   import com.sulake.habbo.communication.messages.parser.collectibles.NftClaimResultMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.collectibles.NftClaimsMessageEventParser;
    import com.sulake.habbo.communication.messages.parser.collectibles.class_4085;
    import com.sulake.habbo.localization.class_27;
    import flash.events.TimerEvent;
    import flash.globalization.DateTimeFormatter;
    import flash.utils.Timer;
-   import package_36.class_2533;
-   import package_36.class_3371;
-   import package_70.class_2953;
-   import package_70.class_3602;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftClaimsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.collectibles.NftClaimResultMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.ClaimNftClaimsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.GetNftClaimsMessageComposer;
    
    public class RewardClaimsTab implements class_31
    {
@@ -84,8 +84,8 @@ package com.sulake.habbo.catalog.collectibles.tabs
             return;
          }
          _messageEvents = new Vector.<IMessageEvent>(0);
-         _messageEvents.push(new class_2533(onNftClaimsMessage));
-         _messageEvents.push(new class_3371(onNftClaimResultMessage));
+         _messageEvents.push(new NftClaimsMessageEvent(onNftClaimsMessage));
+         _messageEvents.push(new NftClaimResultMessageEvent(onNftClaimResultMessage));
          for each(var _loc1_ in _messageEvents)
          {
             var_196.addMessageEvent(_loc1_);
@@ -124,7 +124,7 @@ package com.sulake.habbo.catalog.collectibles.tabs
             return;
          }
          var _loc2_:String = var_2425.shift();
-         var_196.send(new class_3602(_loc2_));
+         var_196.send(new GetNftClaimsMessageComposer(_loc2_));
          _isRequestInProgress = true;
       }
       
@@ -146,13 +146,13 @@ package com.sulake.habbo.catalog.collectibles.tabs
       {
          claimButton.disable();
          var_3150 = true;
-         var_196.send(new class_2953());
+         var_196.send(new ClaimNftClaimsMessageComposer());
          setReady(false);
       }
       
-      private function onNftClaimsMessage(param1:class_2533) : void
+      private function onNftClaimsMessage(param1:NftClaimsMessageEvent) : void
       {
-         var _loc3_:class_4046 = param1.getParser();
+         var _loc3_:NftClaimsMessageEventParser = param1.getParser();
          for each(var _loc2_ in _loc3_.nftClaims)
          {
             if(_loc2_.claimedAmount < _loc2_.claimLimit)
@@ -169,9 +169,9 @@ package com.sulake.habbo.catalog.collectibles.tabs
          }
       }
       
-      private function onNftClaimResultMessage(param1:class_3371) : void
+      private function onNftClaimResultMessage(param1:NftClaimResultMessageEvent) : void
       {
-         var _loc2_:class_3850 = param1.getParser();
+         var _loc2_:NftClaimResultMessageEventParser = param1.getParser();
          var_196.notifications.addItem(_loc2_.success ? localization.getLocalization("collectibles.claiming.success") : localization.getLocalizationWithParams("collectibles.claiming.failed","","id",_loc2_.resultCode),"info","icon_curator_stamp_large_png");
          if(_loc2_.success)
          {

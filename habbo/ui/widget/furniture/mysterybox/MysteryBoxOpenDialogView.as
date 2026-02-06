@@ -15,12 +15,12 @@ package com.sulake.habbo.ui.widget.furniture.mysterybox
    import com.sulake.room.object.IRoomObject;
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
-   import package_180.class_3105;
-   import package_52.class_2962;
-   import package_52.class_3084;
-   import package_52.class_3296;
-   import package_55.class_2945;
-   import package_63.class_3888;
+   import com.sulake.habbo.communication.messages.outgoing.mysterybox.MysteryBoxWaitingCanceledMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.mysterybox.ShowMysteryBoxWaitMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.mysterybox.CancelMysteryBoxWaitMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.mysterybox.GotMysteryBoxPrizeMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.mysterybox.GotMysteryBoxPrizeMessageEventParser;
    
    public class MysteryBoxOpenDialogView implements class_13, class_1829
    {
@@ -35,11 +35,11 @@ package com.sulake.habbo.ui.widget.furniture.mysterybox
       
       private var var_612:IRoomObject;
       
-      private var var_2650:class_2962;
+      private var var_2650:ShowMysteryBoxWaitMessageEvent;
       
-      private var var_2412:class_3084;
+      private var var_2412:CancelMysteryBoxWaitMessageEvent;
       
-      private var var_2453:class_3296;
+      private var var_2453:GotMysteryBoxPrizeMessageEvent;
       
       private var var_1854:int = -1;
       
@@ -47,27 +47,27 @@ package com.sulake.habbo.ui.widget.furniture.mysterybox
       {
          super();
          var_16 = param1;
-         var_2650 = new class_2962(onShowMysteryBoxWait);
-         var_2412 = new class_3084(onCancelMysteryBoxWait);
-         var_2453 = new class_3296(onGotMysteryBoxPrize);
+         var_2650 = new ShowMysteryBoxWaitMessageEvent(onShowMysteryBoxWait);
+         var_2412 = new CancelMysteryBoxWaitMessageEvent(onCancelMysteryBoxWait);
+         var_2453 = new GotMysteryBoxPrizeMessageEvent(onGotMysteryBoxPrize);
          connection.addMessageEvent(var_2650);
          connection.addMessageEvent(var_2412);
          connection.addMessageEvent(var_2453);
       }
       
-      private function onShowMysteryBoxWait(param1:class_2962) : void
+      private function onShowMysteryBoxWait(param1:ShowMysteryBoxWaitMessageEvent) : void
       {
          showWaitWindow();
       }
       
-      private function onCancelMysteryBoxWait(param1:class_3084) : void
+      private function onCancelMysteryBoxWait(param1:CancelMysteryBoxWaitMessageEvent) : void
       {
          closeWindow();
       }
       
-      private function onGotMysteryBoxPrize(param1:class_3296) : void
+      private function onGotMysteryBoxPrize(param1:GotMysteryBoxPrizeMessageEvent) : void
       {
-         var _loc2_:class_3888 = param1.getParser();
+         var _loc2_:GotMysteryBoxPrizeMessageEventParser = param1.getParser();
          showRewardWindow(_loc2_.contentType,_loc2_.classId);
       }
       
@@ -110,7 +110,7 @@ package com.sulake.habbo.ui.widget.furniture.mysterybox
             case "header_button_close":
             case "cancel_button":
                closeWindow();
-               connection.send(new class_3105(var_16.handler.container.getFurnitureOwnerId(var_612)));
+               connection.send(new MysteryBoxWaitingCanceledMessageComposer(var_16.handler.container.getFurnitureOwnerId(var_612)));
          }
       }
       
@@ -214,7 +214,7 @@ package com.sulake.habbo.ui.widget.furniture.mysterybox
       public function startOpenFlow(param1:IRoomObject) : void
       {
          var_612 = param1;
-         connection.send(new class_2945(param1.getId()));
+         connection.send(new UseFurnitureMessageComposer(param1.getId()));
       }
       
       private function get connection() : IConnection

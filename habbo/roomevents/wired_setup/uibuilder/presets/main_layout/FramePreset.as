@@ -12,7 +12,7 @@ package com.sulake.habbo.roomevents.wired_setup.uibuilder.presets.main_layout
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.presets.menu.MenuPreset;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.presets.menu.elements.MenuItem;
    import com.sulake.habbo.roomevents.wired_setup.uibuilder.styles.WiredStyle;
-   import package_99.class_2353;
+   import package_99.ProgressTreasureHuntMessageComposer;
    
    public class FramePreset extends WiredUIPreset
    {
@@ -265,7 +265,7 @@ package com.sulake.habbo.roomevents.wired_setup.uibuilder.presets.main_layout
       
       public function onEraseClick() : void
       {
-         _roomEvents.send(new class_2353("wf15",_holderKey + var_3602));
+         _roomEvents.send(new ProgressTreasureHuntMessageComposer("wf15",_holderKey + var_3602));
          _roomEvents.wiredCtrl.close();
       }
    }

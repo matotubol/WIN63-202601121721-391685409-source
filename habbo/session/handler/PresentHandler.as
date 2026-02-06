@@ -5,8 +5,8 @@ package com.sulake.habbo.session.handler
    import com.sulake.habbo.session.IRoomHandlerListener;
    import com.sulake.habbo.session.IRoomSession;
    import com.sulake.habbo.session.events.RoomSessionPresentEvent;
-   import package_100.class_2354;
-   import package_91.class_2934;
+   import com.sulake.habbo.communication.messages.incoming.room.furniture.PresentOpenedMessageEvent;
+   import com.sulake.habbo.communication.messages.parser.room.furniture.PresentOpenedMessageEventParser;
    
    public class PresentHandler extends BaseHandler
    {
@@ -18,12 +18,12 @@ package com.sulake.habbo.session.handler
          {
             return;
          }
-         param1.addMessageEvent(new class_2354(onPresentOpened));
+         param1.addMessageEvent(new PresentOpenedMessageEvent(onPresentOpened));
       }
       
       private function onPresentOpened(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2934 = (param1 as class_2354).getParser();
+         var _loc2_:PresentOpenedMessageEventParser = (param1 as PresentOpenedMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;

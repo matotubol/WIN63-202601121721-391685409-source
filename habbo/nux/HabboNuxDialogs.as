@@ -26,14 +26,14 @@ package com.sulake.habbo.nux
    import com.sulake.iid.IIDSessionDataManager;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_112.class_2400;
-   import package_112.class_2597;
-   import package_113.class_2772;
-   import package_141.class_2542;
-   import package_141.class_3083;
-   import package_141.class_3217;
-   import package_142.class_2548;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.outgoing.nux.NewUserExperienceGetGiftsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nux.class_2597;
+   import com.sulake.habbo.communication.messages.outgoing.gifts.SetPhoneNumberVerificationStatusMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.nux.NewUserExperienceNotCompleteEvent;
+   import com.sulake.habbo.communication.messages.incoming.nux.NewUserExperienceGiftOfferEvent;
+   import com.sulake.habbo.communication.messages.incoming.nux.class_3217;
+   import com.sulake.habbo.communication.messages.parser.nux.NewUserExperienceGiftOfferEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class HabboNuxDialogs extends class_17 implements ILinkEventTracker
    {
@@ -117,8 +117,8 @@ package com.sulake.habbo.nux
          var_37 = _communicationManager.connection;
          if(var_37)
          {
-            var_37.addMessageEvent(new class_2542(onNewUserExperienceNotCompleteMessage));
-            var_37.addMessageEvent(new class_3083(onNewUserExperienceGiftOfferMessage));
+            var_37.addMessageEvent(new NewUserExperienceNotCompleteEvent(onNewUserExperienceNotCompleteMessage));
+            var_37.addMessageEvent(new NewUserExperienceGiftOfferEvent(onNewUserExperienceGiftOfferMessage));
          }
          context.addLinkEventTracker(this);
       }
@@ -152,7 +152,7 @@ package com.sulake.habbo.nux
       
       public function onVerify() : void
       {
-         var_37.send(new class_2772(0));
+         var_37.send(new SetPhoneNumberVerificationStatusMessageComposer(0));
       }
       
       public function onReject() : void
@@ -166,24 +166,24 @@ package com.sulake.habbo.nux
          if(param2.type == "WE_OK" && var_37)
          {
             destroyNuxOfferView();
-            var_37.send(new class_2772(2));
+            var_37.send(new SetPhoneNumberVerificationStatusMessageComposer(2));
          }
       }
       
       public function onSendGetGifts(param1:Vector.<class_2597>) : void
       {
          destroyGiftSelectionView();
-         var_37.send(new class_2400(param1));
+         var_37.send(new NewUserExperienceGetGiftsMessageComposer(param1));
       }
       
-      private function onNewUserExperienceNotCompleteMessage(param1:class_2542) : void
+      private function onNewUserExperienceNotCompleteMessage(param1:NewUserExperienceNotCompleteEvent) : void
       {
          createNuxOfferView();
       }
       
-      private function onNewUserExperienceGiftOfferMessage(param1:class_3083) : void
+      private function onNewUserExperienceGiftOfferMessage(param1:NewUserExperienceGiftOfferEvent) : void
       {
-         var _loc2_:class_2548 = param1.getParser();
+         var _loc2_:NewUserExperienceGiftOfferEventParser = param1.getParser();
          createGiftSelectionView(_loc2_.giftOptions);
       }
       
@@ -274,7 +274,7 @@ package com.sulake.habbo.nux
          }
          destroyNoobRoomOfferView();
          var_2553 = new NuxNoobRoomOfferView(this);
-         var_37.send(new class_2196("NewNavigator","nux.offer.lobby","nux.offer.lobby"));
+         var_37.send(new EventLogMessageComposer("NewNavigator","nux.offer.lobby","nux.offer.lobby"));
       }
       
       public function destroyNoobRoomOfferView() : void

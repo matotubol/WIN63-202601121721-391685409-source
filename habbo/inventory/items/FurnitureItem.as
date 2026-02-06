@@ -2,7 +2,7 @@ package com.sulake.habbo.inventory.items
 {
    import com.sulake.habbo.room.IStuffData;
    import flash.utils.getTimer;
-   import package_119.class_3065;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.class_3065;
    
    public class FurnitureItem implements class_1875
    {

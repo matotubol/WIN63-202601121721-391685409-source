@@ -1,7 +1,7 @@
 package com.sulake.habbo.ui.widget.avatarinfo
 {
    import com.sulake.habbo.ui.widget.events.RoomWidgetRentableBotInfoUpdateEvent;
-   import package_184.class_3969;
+   import com.sulake.habbo.communication.messages.parser.room.bots.class_3969;
    
    public class class_3025
    {

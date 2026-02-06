@@ -27,10 +27,10 @@ package com.sulake.habbo.avatar
    import com.sulake.habbo.avatar.wardrobe.WardrobeModel;
    import flash.display.BitmapData;
    import flash.utils.Dictionary;
-   import package_127.class_3439;
-   import package_177.class_3061;
-   import package_45.SaveUserNftWardrobeMessageComposer;
-   import package_45.class_3186;
+   import com.sulake.habbo.communication.messages.incoming.nft.UserNftWardrobeSelectionMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.register.UpdateFigureDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nft.SaveUserNftWardrobeMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.nft.GetSelectedNftWardrobeOutfitMessageComposer;
    
    public class HabboAvatarEditor
    {
@@ -73,7 +73,7 @@ package com.sulake.habbo.avatar
       
       private var var_4187:Boolean = false;
       
-      private var var_1956:class_3439;
+      private var var_1956:UserNftWardrobeSelectionMessageEvent;
       
       private var var_2045:String;
       
@@ -137,7 +137,7 @@ package com.sulake.habbo.avatar
          }
          if(var_52.communication)
          {
-            var_1956 = new class_3439(onUserNftWardrobeMessage);
+            var_1956 = new UserNftWardrobeSelectionMessageEvent(onUserNftWardrobeMessage);
             var_52.communication.addHabboConnectionMessageEvent(var_1956);
             sendGetSelectedNftWardrobeOutfitMessage();
          }
@@ -169,11 +169,11 @@ package com.sulake.habbo.avatar
       {
          if(var_52.communication)
          {
-            var_52.communication.connection.send(new class_3186());
+            var_52.communication.connection.send(new GetSelectedNftWardrobeOutfitMessageComposer());
          }
       }
       
-      private function onUserNftWardrobeMessage(param1:class_3439) : void
+      private function onUserNftWardrobeMessage(param1:UserNftWardrobeSelectionMessageEvent) : void
       {
          var_2045 = param1.getParser().currentTokenId;
          var_3608 = param1.getParser().fallbackFigureString;
@@ -375,7 +375,7 @@ package com.sulake.habbo.avatar
                }
                else
                {
-                  var_52.communication.connection.send(new class_3061(_loc1_,_loc2_));
+                  var_52.communication.connection.send(new UpdateFigureDataMessageComposer(_loc1_,_loc2_));
                }
             }
             if(hasNftOutfit())

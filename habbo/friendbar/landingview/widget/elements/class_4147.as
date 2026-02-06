@@ -6,16 +6,16 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
    import com.sulake.core.window.class_1812;
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.class_1758;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_1942;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3273;
-   import com.sulake.habbo.communication.messages.outgoing.quest.class_3559;
-   import com.sulake.habbo.communication.messages.parser.quest.class_3857;
+   import com.sulake.habbo.communication.messages.outgoing.quest.ActivateQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.CancelQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.quest.GetDailyQuestMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.quest.QuestDailyMessageEventParser;
    import com.sulake.habbo.friendbar.landingview.HabboLandingView;
    import com.sulake.habbo.friendbar.landingview.interfaces.elements.IElementHandler;
    import com.sulake.habbo.friendbar.landingview.interfaces.elements.class_4118;
    import com.sulake.habbo.friendbar.landingview.widget.GenericWidget;
-   import package_62.class_2098;
-   import package_62.class_3467;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.QuestDailyMessageEvent;
    
    public class class_4147 implements IElementHandler, class_4118, class_13
    {
@@ -89,7 +89,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
          {
             var_3552 = param3[6];
          }
-         param1.communicationManager.addHabboConnectionMessageEvent(new class_3467(onDailyQuest));
+         param1.communicationManager.addHabboConnectionMessageEvent(new QuestDailyMessageEvent(onDailyQuest));
          _container = param2 as class_1812;
          _container.findChildByName("accept_button").procedure = onAcceptButton;
          _container.findChildByName("go_button").procedure = onGoButton;
@@ -113,7 +113,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       public function refresh() : void
       {
          _index = 0;
-         _landingView.send(new class_3559(true,0));
+         _landingView.send(new GetDailyQuestMessageComposer(true,0));
       }
       
       public function get disposed() : Boolean
@@ -123,7 +123,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       
       private function onDailyQuest(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3857 = class_3857(param1.parser);
+         var _loc2_:QuestDailyMessageEventParser = QuestDailyMessageEventParser(param1.parser);
          var_24 = _loc2_.quest;
          var_3670 = _loc2_.easyQuestCount;
          var_3475 = _loc2_.hardQuestCount;
@@ -211,7 +211,7 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       {
          if(param1.type == "WME_CLICK")
          {
-            _landingView.send(new class_1942(var_24.id));
+            _landingView.send(new ActivateQuestMessageComposer(var_24.id));
          }
       }
       
@@ -228,13 +228,13 @@ package com.sulake.habbo.friendbar.landingview.widget.elements
       {
          if(param1.type == "WME_CLICK")
          {
-            _landingView.send(new class_3273());
+            _landingView.send(new CancelQuestMessageComposer());
          }
       }
       
       private function sendGetDailyQuest(param1:Boolean) : void
       {
-         _landingView.send(new class_3559(param1,_index));
+         _landingView.send(new GetDailyQuestMessageComposer(param1,_index));
       }
    }
 }

@@ -2,7 +2,7 @@ package com.sulake.habbo.catalog.navigation
 {
    import com.sulake.core.window.class_1741;
    import com.sulake.habbo.catalog.IHabboCatalog;
-   import package_10.class_2971;
+   import com.sulake.habbo.communication.messages.incoming.catalog.class_2971;
    
    public interface class_1737
    {

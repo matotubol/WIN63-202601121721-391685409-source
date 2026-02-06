@@ -13,8 +13,8 @@ package com.sulake.habbo.toolbar.memenu
    import com.sulake.habbo.toolbar.ToolbarView;
    import com.sulake.habbo.toolbar.events.HabboToolbarEvent;
    import com.sulake.habbo.utils.HabboWebTools;
-   import package_53.class_3520;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.talent.GetTalentTrackMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class MeMenuController implements class_13
    {
@@ -79,7 +79,7 @@ package com.sulake.habbo.toolbar.memenu
                   switch(param2.name)
                   {
                      case "profile":
-                        _toolbar.connection.send(new class_1879(_toolbar.sessionDataManager.userId));
+                        _toolbar.connection.send(new GetExtendedProfileMessageComposer(_toolbar.sessionDataManager.userId));
                         break;
                      case "minimail":
                         HabboWebTools.openMinimail("#mail/inbox/");
@@ -93,7 +93,7 @@ package com.sulake.habbo.toolbar.memenu
                         break;
                      case "talents":
                         _loc6_ = _toolbar.sessionDataManager.currentTalentTrack;
-                        _toolbar.connection.send(new class_3520(_loc6_));
+                        _toolbar.connection.send(new GetTalentTrackMessageComposer(_loc6_));
                         break;
                      case "settings":
                         var_482 = new MeMenuSettingsMenuView();

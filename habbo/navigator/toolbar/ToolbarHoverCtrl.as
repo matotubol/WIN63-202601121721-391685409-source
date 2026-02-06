@@ -11,7 +11,7 @@ package com.sulake.habbo.navigator.toolbar
    import flash.events.Event;
    import flash.geom.Point;
    import flash.utils.Timer;
-   import package_1.class_2902;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.CanCreateRoomMessageComposer;
    
    public class ToolbarHoverCtrl
    {
@@ -100,7 +100,7 @@ package com.sulake.habbo.navigator.toolbar
       
       private function onCreateRoomClick(param1:WindowMouseEvent) : void
       {
-         _navigator.send(new class_2902());
+         _navigator.send(new CanCreateRoomMessageComposer());
          hideForced();
       }
       

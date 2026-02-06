@@ -4,7 +4,7 @@ package com.sulake.habbo.room
    import com.sulake.core.utils.class_55;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.core.window.utils.class_2001;
-   import com.sulake.habbo.communication.messages.outgoing.room.class_3165;
+   import com.sulake.habbo.communication.messages.outgoing.room.ClickCharacterComposer;
    import com.sulake.habbo.room.events.RoomEngineDimmerStateEvent;
    import com.sulake.habbo.room.events.RoomEngineHSLColorEnableEvent;
    import com.sulake.habbo.room.events.RoomEngineObjectEvent;
@@ -52,32 +52,32 @@ package com.sulake.habbo.room
    import com.sulake.room.utils.RoomEnterEffect;
    import com.sulake.room.utils.Vector3d;
    import flash.events.IEventDispatcher;
-   import package_103.class_3070;
-   import package_107.class_3037;
-   import package_55.ClickFurniMessageComposer;
-   import package_55.class_2048;
-   import package_55.class_2364;
-   import package_55.class_2426;
-   import package_55.class_2430;
-   import package_55.class_2449;
-   import package_55.class_2536;
-   import package_55.class_2766;
-   import package_55.class_2945;
-   import package_55.class_2986;
-   import package_55.class_3044;
-   import package_55.class_3179;
-   import package_55.class_3221;
-   import package_55.class_3295;
-   import package_55.class_3530;
-   import package_55.class_3639;
-   import package_70.class_2618;
-   import package_94.class_2415;
-   import package_94.class_2698;
-   import package_94.class_2726;
-   import package_94.class_3097;
-   import package_94.class_3139;
-   import package_94.class_3454;
-   import package_94.class_3588;
+   import com.sulake.habbo.communication.messages.outgoing.game.lobby.GetResolutionAchievementsMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.avatar.LookToMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.ClickFurniMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.PlaceObjectMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.SetItemDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.PickupObjectMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.MoveAvatarMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.GetItemDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.RemoveBotFromFlatMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.MovePetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.MoveObjectMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.SetObjectDataMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.PlacePetMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.MoveWallItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseWallItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.RemoveItemMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.PlaceBotMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.collectibles.class_2618;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.EnterOneWayDoorMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.DiceOffMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SpinWheelOfFortuneMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetRandomStateMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.PlacePostItMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.GetGuildFurniContextMenuInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.ThrowDiceMessageComposer;
    
    [SecureSWF(rename="true")]
    public class class_1947 implements IRoomRenderingCanvasMouseListener
@@ -512,7 +512,7 @@ package com.sulake.habbo.room
             }
             else if(_loc3_ == 100)
             {
-               _roomEngine.connection.send(new class_3165(_loc4_));
+               _roomEngine.connection.send(new ClickCharacterComposer(_loc4_));
             }
          }
       }
@@ -1348,7 +1348,7 @@ package com.sulake.habbo.room
                   break;
                case "ROWRE_GUILD_FURNI_CONTEXT_MENU":
                   _loc6_ = param1.object.getModel().getNumber("furniture_guild_customized_guild_id");
-                  _roomEngine.connection.send(new class_3454(param1.objectId,_loc6_));
+                  _roomEngine.connection.send(new GetGuildFurniContextMenuInfoMessageComposer(param1.objectId,_loc6_));
                   break;
                case "ROWRE_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG":
                   _loc8_.dispatchEvent(new RoomEngineToWidgetEvent("ROWRE_REQUEST_MONSTERPLANT_SEED_PLANT_CONFIRMATION_DIALOG",param2,_loc7_,_loc5_));
@@ -1372,7 +1372,7 @@ package com.sulake.habbo.room
                   _loc8_.dispatchEvent(new RoomEngineToWidgetEvent("RETWE_REQUEST_MYSTERYTROPHY_OPEN_DIALOG",param2,_loc7_,_loc5_));
                   break;
                case "ROWRE_ACHIEVEMENT_RESOLUTION_OPEN":
-                  _roomEngine.connection.send(new class_3070(param1.objectId,0));
+                  _roomEngine.connection.send(new GetResolutionAchievementsMessageComposer(param1.objectId,0));
                   break;
                case "ROWRE_ACHIEVEMENT_RESOLUTION_ENGRAVING":
                   _loc8_.dispatchEvent(new RoomEngineToWidgetEvent("RETWE_REQUEST_ACHIEVEMENT_RESOLUTION_ENGRAVING",param2,_loc7_,_loc5_));
@@ -1970,7 +1970,7 @@ package com.sulake.habbo.room
                {
                   try
                   {
-                     _roomEngine.connection.send(new class_3037(_loc7_.getLocation().x,_loc7_.getLocation().y));
+                     _roomEngine.connection.send(new LookToMessageComposer(_loc7_.getLocation().x,_loc7_.getLocation().y));
                   }
                   catch(e:Error)
                   {
@@ -2068,7 +2068,7 @@ package com.sulake.habbo.room
          }
          else if(_roomEngine.connection)
          {
-            _roomEngine.connection.send(new class_3044(param2,param5));
+            _roomEngine.connection.send(new SetObjectDataMessageComposer(param2,param5));
          }
          return true;
       }
@@ -2115,12 +2115,12 @@ package com.sulake.habbo.room
                            var _loc5_:class_2146 = _loc15_.userDataManager.getUserDataByIndex(param2);
                            if(_loc5_ != null)
                            {
-                              _roomEngine.connection.send(new class_2766(null.webID,0,0,0));
+                              _roomEngine.connection.send(new MovePetMessageComposer(null.webID,0,0,0));
                            }
                         }
                         break;
                      }
-                     _roomEngine.connection.send(new class_2986(param2,0,0,0));
+                     _roomEngine.connection.send(new MoveObjectMessageComposer(param2,0,0,0));
                   }
                }
                break;
@@ -2128,7 +2128,7 @@ package com.sulake.habbo.room
             case "OBJECT_PICKUP":
                if(_roomEngine.connection)
                {
-                  _roomEngine.connection.send(new class_2426(param2,param3));
+                  _roomEngine.connection.send(new PickupObjectMessageComposer(param2,param3));
                }
                break;
             case "OBJECT_PICKUP_PET":
@@ -2149,7 +2149,7 @@ package com.sulake.habbo.room
                      _loc5_ = _loc15_.userDataManager.getUserDataByIndex(param2);
                      if(_loc5_ != null)
                      {
-                        _roomEngine.connection.send(new class_2536(null.webID));
+                        _roomEngine.connection.send(new RemoveBotFromFlatMessageComposer(null.webID));
                      }
                   }
                }
@@ -2178,7 +2178,7 @@ package com.sulake.habbo.room
                      {
                         _loc15_.trackEventLogOncePerSession("Tutorial","interaction","furniture.move");
                      }
-                     _roomEngine.connection.send(new class_2986(param2,0,0,0));
+                     _roomEngine.connection.send(new MoveObjectMessageComposer(param2,0,0,0));
                      break;
                   }
                   if(param3 == 100)
@@ -2193,7 +2193,7 @@ package com.sulake.habbo.room
                         _loc5_ = _loc15_.userDataManager.getUserDataByIndex(param2);
                         if(_loc5_ != null)
                         {
-                           _roomEngine.connection.send(new class_2766(null.webID,0,0,0));
+                           _roomEngine.connection.send(new MovePetMessageComposer(null.webID,0,0,0));
                         }
                      }
                      break;
@@ -2211,7 +2211,7 @@ package com.sulake.habbo.room
                            {
                               _loc15_.trackEventLogOncePerSession("Tutorial","interaction","furniture.move");
                            }
-                           _roomEngine.connection.send(new class_3221(param2,20,null));
+                           _roomEngine.connection.send(new MoveWallItemMessageComposer(param2,20,null));
                         }
                      }
                   }
@@ -2295,19 +2295,19 @@ package com.sulake.habbo.room
                {
                   if(_loc15_ == 100 && _loc5_.typeId == 2)
                   {
-                     _roomEngine.connection.send(new class_3179(_loc14_,int(_loc10_),int(_loc12_)));
+                     _roomEngine.connection.send(new PlacePetMessageComposer(_loc14_,int(_loc10_),int(_loc12_)));
                   }
                   else if(_loc15_ == 100 && _loc5_.typeId == 4)
                   {
-                     _roomEngine.connection.send(new class_3639(_loc14_,int(_loc10_),int(_loc12_)));
+                     _roomEngine.connection.send(new PlaceBotMessageComposer(_loc14_,int(_loc10_),int(_loc12_)));
                   }
                   else if(_loc6_.getModelController().getString("furniture_is_stickie") != null)
                   {
-                     _roomEngine.connection.send(new class_3139(_loc14_,_loc11_));
+                     _roomEngine.connection.send(new PlacePostItMessageComposer(_loc14_,_loc11_));
                   }
                   else
                   {
-                     _roomEngine.connection.send(new class_2048(_loc14_,_loc15_,_loc11_,int(_loc10_),int(_loc12_),_loc7_));
+                     _roomEngine.connection.send(new PlaceObjectMessageComposer(_loc14_,_loc15_,_loc11_,int(_loc10_),int(_loc12_),_loc7_));
                   }
                }
             }
@@ -2351,16 +2351,16 @@ package com.sulake.habbo.room
                {
                   if(!param5)
                   {
-                     _roomEngine.connection.send(new class_2945(param2,param4));
+                     _roomEngine.connection.send(new UseFurnitureMessageComposer(param2,param4));
                   }
                   else
                   {
-                     _roomEngine.connection.send(new class_3097(param2,param4));
+                     _roomEngine.connection.send(new SetRandomStateMessageComposer(param2,param4));
                   }
                }
                else if(param3 == 20)
                {
-                  _roomEngine.connection.send(new class_3295(param2,param4));
+                  _roomEngine.connection.send(new UseWallItemMessageComposer(param2,param4));
                }
             }
             if(_loc8_ != null)
@@ -2383,19 +2383,19 @@ package com.sulake.habbo.room
             switch(useType)
             {
                case "ROFCAE_DICE_ACTIVATE":
-                  _roomEngine.connection.send(new class_3588(objectId));
+                  _roomEngine.connection.send(new ThrowDiceMessageComposer(objectId));
                   break;
                case "ROFCAE_DICE_OFF":
-                  _roomEngine.connection.send(new class_2698(objectId));
+                  _roomEngine.connection.send(new DiceOffMessageComposer(objectId));
                   break;
                case "ROFCAE_USE_HABBOWHEEL":
-                  _roomEngine.connection.send(new class_2726(objectId));
+                  _roomEngine.connection.send(new SpinWheelOfFortuneMessageComposer(objectId));
                   break;
                case "ROFCAE_STICKIE":
-                  _roomEngine.connection.send(new class_2449(objectId));
+                  _roomEngine.connection.send(new GetItemDataMessageComposer(objectId));
                   break;
                case "ROFCAE_ENTER_ONEWAYDOOR":
-                  _roomEngine.connection.send(new class_2415(objectId));
+                  _roomEngine.connection.send(new EnterOneWayDoorMessageComposer(objectId));
                   break;
                case "ROFCAE_NFT_REWARD_BOX":
                   confirm = function(param1:class_2001, param2:class_1758):void
@@ -2417,7 +2417,7 @@ package com.sulake.habbo.room
          {
             return false;
          }
-         _roomEngine.connection.send(new class_2364(param2,param3,param4));
+         _roomEngine.connection.send(new SetItemDataMessageComposer(param2,param3,param4));
          return true;
       }
       
@@ -2427,7 +2427,7 @@ package com.sulake.habbo.room
          {
             return false;
          }
-         _roomEngine.connection.send(new class_3530(param2));
+         _roomEngine.connection.send(new RemoveItemMessageComposer(param2));
          return true;
       }
       
@@ -2478,7 +2478,7 @@ package com.sulake.habbo.room
       {
          if(_roomEngine.connection)
          {
-            _roomEngine.connection.send(new class_2430(param1,param2));
+            _roomEngine.connection.send(new MoveAvatarMessageComposer(param1,param2));
          }
       }
       

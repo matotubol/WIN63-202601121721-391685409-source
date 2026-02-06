@@ -1,7 +1,7 @@
 package com.sulake.habbo.session.events
 {
    import com.sulake.habbo.session.IRoomSession;
-   import package_37.class_3828;
+   import com.sulake.habbo.communication.messages.incoming.room.pets.class_3828;
    
    public class RoomSessionConfirmPetBreedingEvent extends RoomSessionEvent
    {

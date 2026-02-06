@@ -5,47 +5,47 @@ package com.sulake.habbo.quest
    import com.sulake.core.window.utils.class_1750;
    import com.sulake.habbo.catalog.purse.class_2085;
    import com.sulake.habbo.communication.class_57;
-   import com.sulake.habbo.communication.messages.parser.quest.class_2590;
-   import com.sulake.habbo.communication.messages.parser.quest.class_2669;
-   import com.sulake.habbo.communication.messages.parser.quest.class_3086;
-   import com.sulake.habbo.communication.messages.parser.quest.class_3444;
-   import com.sulake.habbo.communication.messages.parser.quest.class_3566;
+   import com.sulake.habbo.communication.messages.parser.quest.QuestMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.quest.QuestsMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.quest.QuestCompletedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.quest.QuestCancelledMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.quest.SeasonalQuestsMessageEventParser;
    import com.sulake.habbo.quest.events.QuestCompletedEvent;
    import com.sulake.habbo.quest.events.QuestsListEvent;
    import flash.utils.Dictionary;
-   import package_130.class_2829;
-   import package_130.class_3358;
-   import package_130.class_3514;
-   import package_140.class_2687;
-   import package_140.class_3081;
-   import package_163.class_2796;
-   import package_163.class_3305;
-   import package_163.class_3661;
-   import package_183.class_3147;
-   import package_183.class_3152;
-   import package_183.class_3401;
-   import package_186.class_3340;
-   import package_186.class_3511;
-   import package_186.class_3635;
-   import package_26.class_1799;
-   import package_26.class_1861;
-   import package_26.class_1961;
-   import package_3.class_2238;
-   import package_32.class_2887;
-   import package_39.class_1980;
-   import package_39.class_2407;
-   import package_39.class_2600;
-   import package_39.class_3192;
-   import package_4.class_2803;
-   import package_44.class_2355;
-   import package_46.class_1918;
-   import package_54.class_2039;
-   import package_62.class_2611;
-   import package_62.class_3375;
-   import package_62.class_3476;
-   import package_62.class_3496;
-   import package_62.class_3517;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.incoming.game.lobby.AchievementResolutionProgressMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.lobby.AchievementResolutionsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.game.lobby.AchievementResolutionCompletedMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.competition.CompetitionVotingInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.competition.CompetitionEntrySubmitResultMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.AchievementsEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.AchievementEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.achievements.AchievementsScoreEvent;
+   import com.sulake.habbo.communication.messages.parser.inventory.achievements.AchievementsScoreEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.achievements.AchievementEventParser;
+   import com.sulake.habbo.communication.messages.parser.inventory.achievements.AchievementsEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.lobby.AchievementResolutionsMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.lobby.AchievementResolutionCompletedMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.game.lobby.AchievementResolutionProgressMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.notifications.HabboAchievementNotificationMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.notifications.ActivityPointsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.notifications.HabboActivityPointNotificationMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.ScrSendUserInfoEvent;
+   import com.sulake.habbo.communication.messages.incoming.roomsettings.RoomSettingsSavedEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.ObjectRemoveMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.ObjectAddMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.ObjectRemoveMultipleMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.IsFirstLoginOfDayEvent;
+   import com.sulake.habbo.communication.messages.parser.handshake.IsFirstLoginOfDayEventParser;
+   import com.sulake.habbo.communication.messages.parser.notifications.HabboAchievementNotificationMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.room.session.CloseConnectionMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.SeasonalQuestsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.QuestsMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.QuestMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.QuestCancelledMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.quest.QuestCompletedMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    [SecureSWF(rename="true")]
    public class class_1762 implements class_13
@@ -62,30 +62,30 @@ package com.sulake.habbo.quest
          super();
          _questEngine = param1;
          var _loc2_:class_57 = _questEngine.communication;
-         _loc2_.addHabboConnectionMessageEvent(new class_3375(onQuests));
-         _loc2_.addHabboConnectionMessageEvent(new class_2887(onRoomSettingsSaved));
-         _loc2_.addHabboConnectionMessageEvent(new class_2687(onCompetitionVotingInfo));
-         _loc2_.addHabboConnectionMessageEvent(new class_1861(onActivityPoints));
-         _loc2_.addHabboConnectionMessageEvent(new class_3192(onFurnisChanged));
-         _loc2_.addHabboConnectionMessageEvent(new class_3517(onQuestCompleted));
-         _loc2_.addHabboConnectionMessageEvent(new class_3358(onAchievementResolutions));
-         _loc2_.addHabboConnectionMessageEvent(new class_1799(onLevelUp));
-         _loc2_.addHabboConnectionMessageEvent(new class_2407(onFurnisChanged));
-         _loc2_.addHabboConnectionMessageEvent(new class_1961(onActivityPointsNotification));
-         _loc2_.addHabboConnectionMessageEvent(new class_2829(onAchievementResolutionProgress));
-         _loc2_.addHabboConnectionMessageEvent(new class_1980(onRoomEnter));
-         _loc2_.addHabboConnectionMessageEvent(new class_2600(onFurnisChanged));
-         _loc2_.addHabboConnectionMessageEvent(new class_2611(onSeasonalQuests));
-         _loc2_.addHabboConnectionMessageEvent(new class_2796(onAchievements));
-         _loc2_.addHabboConnectionMessageEvent(new class_3305(onAchievement));
-         _loc2_.addHabboConnectionMessageEvent(new class_2238(onSubscriptionUserInfoEvent));
-         _loc2_.addHabboConnectionMessageEvent(new class_3081(onCompetitionEntrySubmitResult));
-         _loc2_.addHabboConnectionMessageEvent(new class_3514(onAchievementResolutionCompleted));
-         _loc2_.addHabboConnectionMessageEvent(new class_3476(onQuest));
-         _loc2_.addHabboConnectionMessageEvent(new class_3496(onQuestCancelled));
-         _loc2_.addHabboConnectionMessageEvent(new class_3661(onAchievementsScore));
-         _loc2_.addHabboConnectionMessageEvent(new class_2039(onRoomExit));
-         _loc2_.addHabboConnectionMessageEvent(new class_2803(onIsFirstLoginOfDay));
+         _loc2_.addHabboConnectionMessageEvent(new QuestsMessageEvent(onQuests));
+         _loc2_.addHabboConnectionMessageEvent(new RoomSettingsSavedEvent(onRoomSettingsSaved));
+         _loc2_.addHabboConnectionMessageEvent(new CompetitionVotingInfoMessageEvent(onCompetitionVotingInfo));
+         _loc2_.addHabboConnectionMessageEvent(new ActivityPointsMessageEvent(onActivityPoints));
+         _loc2_.addHabboConnectionMessageEvent(new ObjectRemoveMultipleMessageEvent(onFurnisChanged));
+         _loc2_.addHabboConnectionMessageEvent(new QuestCompletedMessageEvent(onQuestCompleted));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementResolutionsMessageEvent(onAchievementResolutions));
+         _loc2_.addHabboConnectionMessageEvent(new HabboAchievementNotificationMessageEvent(onLevelUp));
+         _loc2_.addHabboConnectionMessageEvent(new ObjectRemoveMessageEvent(onFurnisChanged));
+         _loc2_.addHabboConnectionMessageEvent(new HabboActivityPointNotificationMessageEvent(onActivityPointsNotification));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementResolutionProgressMessageEvent(onAchievementResolutionProgress));
+         _loc2_.addHabboConnectionMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
+         _loc2_.addHabboConnectionMessageEvent(new ObjectAddMessageEvent(onFurnisChanged));
+         _loc2_.addHabboConnectionMessageEvent(new SeasonalQuestsMessageEvent(onSeasonalQuests));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementsEvent(onAchievements));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementEvent(onAchievement));
+         _loc2_.addHabboConnectionMessageEvent(new ScrSendUserInfoEvent(onSubscriptionUserInfoEvent));
+         _loc2_.addHabboConnectionMessageEvent(new CompetitionEntrySubmitResultMessageEvent(onCompetitionEntrySubmitResult));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementResolutionCompletedMessageEvent(onAchievementResolutionCompleted));
+         _loc2_.addHabboConnectionMessageEvent(new QuestMessageEvent(onQuest));
+         _loc2_.addHabboConnectionMessageEvent(new QuestCancelledMessageEvent(onQuestCancelled));
+         _loc2_.addHabboConnectionMessageEvent(new AchievementsScoreEvent(onAchievementsScore));
+         _loc2_.addHabboConnectionMessageEvent(new CloseConnectionMessageEvent(onRoomExit));
+         _loc2_.addHabboConnectionMessageEvent(new IsFirstLoginOfDayEvent(onIsFirstLoginOfDay));
       }
       
       public function get disposed() : Boolean
@@ -95,7 +95,7 @@ package com.sulake.habbo.quest
       
       private function onQuestCompleted(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3086 = (param1 as class_3517).getParser();
+         var _loc2_:QuestCompletedMessageEventParser = (param1 as QuestCompletedMessageEvent).getParser();
          class_21.log("Quest Completed: " + _loc2_.questData.campaignCode + " quest: " + _loc2_.questData.id);
          _questEngine.questController.onQuestCompleted(_loc2_.questData,_loc2_.showDialog);
          if(_questEngine.isSeasonalQuest(_loc2_.questData))
@@ -106,7 +106,7 @@ package com.sulake.habbo.quest
       
       private function onQuestCancelled(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3444 = class_3496(param1).getParser();
+         var _loc2_:QuestCancelledMessageEventParser = QuestCancelledMessageEvent(param1).getParser();
          class_21.log("Quest Cancelled: " + _loc2_.quest.id);
          _questEngine.questController.onQuestCancelled(_loc2_.quest.campaignChainCode);
          if(_loc2_.expired)
@@ -117,21 +117,21 @@ package com.sulake.habbo.quest
       
       private function onQuests(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2669 = (param1 as class_3375).getParser();
+         var _loc2_:QuestsMessageEventParser = (param1 as QuestsMessageEvent).getParser();
          class_21.log("Got Quests: " + _loc2_.quests + ", " + _loc2_.openWindow);
          _questEngine.events.dispatchEvent(new QuestsListEvent("qu_quests",_loc2_.quests,_loc2_.openWindow));
       }
       
       private function onSeasonalQuests(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3566 = (param1 as class_2611).getParser();
+         var _loc2_:SeasonalQuestsMessageEventParser = (param1 as SeasonalQuestsMessageEvent).getParser();
          class_21.log("Got seasonal Quests: " + _loc2_.quests);
          _questEngine.events.dispatchEvent(new QuestsListEvent("qe_quests_seasonal",_loc2_.quests,true));
       }
       
       private function onQuest(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2590 = (param1 as class_3476).getParser();
+         var _loc2_:QuestMessageEventParser = (param1 as QuestMessageEvent).getParser();
          class_21.log("Got Quest: " + _loc2_.quest);
          _questEngine.questController.onQuest(_loc2_.quest);
       }
@@ -146,7 +146,7 @@ package com.sulake.habbo.quest
          var_1134 = true;
       }
       
-      private function onRoomEnter(param1:class_1980) : void
+      private function onRoomEnter(param1:RoomEntryInfoMessageEvent) : void
       {
          _questEngine.roomCompetitionController.onRoomEnter(param1);
          _questEngine.currentlyInRoom = true;
@@ -172,70 +172,70 @@ package com.sulake.habbo.quest
       
       private function onAchievements(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2796 = param1 as class_2796;
-         var _loc3_:class_3401 = _loc2_.getParser() as class_3401;
+         var _loc2_:AchievementsEvent = param1 as AchievementsEvent;
+         var _loc3_:AchievementsEventParser = _loc2_.getParser() as AchievementsEventParser;
          _questEngine.achievementController.onAchievements(_loc3_.achievements,_loc3_.defaultCategory);
       }
       
-      private function onAchievementResolutions(param1:class_3358) : void
+      private function onAchievementResolutions(param1:AchievementResolutionsMessageEvent) : void
       {
-         var _loc2_:class_3340 = param1.getParser();
+         var _loc2_:AchievementResolutionsMessageEventParser = param1.getParser();
          _questEngine.achievementsResolutionController.onResolutionAchievements(_loc2_.stuffId,_loc2_.achievements,_loc2_.endTime);
       }
       
-      private function onAchievementResolutionProgress(param1:class_2829) : void
+      private function onAchievementResolutionProgress(param1:AchievementResolutionProgressMessageEvent) : void
       {
-         var _loc2_:class_3635 = param1.getParser();
+         var _loc2_:AchievementResolutionProgressMessageEventParser = param1.getParser();
          _questEngine.achievementsResolutionController.onResolutionProgress(_loc2_.stuffId,_loc2_.achievementId,_loc2_.requiredLevelBadgeCode,_loc2_.userProgress,_loc2_.totalProgress,_loc2_.endTime);
       }
       
-      private function onAchievementResolutionCompleted(param1:class_3514) : void
+      private function onAchievementResolutionCompleted(param1:AchievementResolutionCompletedMessageEvent) : void
       {
-         var _loc2_:class_3511 = param1.getParser();
+         var _loc2_:AchievementResolutionCompletedMessageEventParser = param1.getParser();
          _questEngine.achievementsResolutionController.onResolutionCompleted(_loc2_.badgeCode,_loc2_.stuffCode);
       }
       
       private function onAchievement(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3305 = param1 as class_3305;
-         var _loc3_:class_3152 = _loc2_.getParser() as class_3152;
+         var _loc2_:AchievementEvent = param1 as AchievementEvent;
+         var _loc3_:AchievementEventParser = _loc2_.getParser() as AchievementEventParser;
          _questEngine.achievementController.onAchievement(_loc3_.achievement);
          _questEngine.achievementsResolutionController.onAchievement(_loc3_.achievement);
       }
       
       private function onAchievementsScore(param1:IMessageEvent) : void
       {
-         var _loc2_:class_3661 = param1 as class_3661;
-         var _loc3_:class_3147 = _loc2_.getParser() as class_3147;
+         var _loc2_:AchievementsScoreEvent = param1 as AchievementsScoreEvent;
+         var _loc3_:AchievementsScoreEventParser = _loc2_.getParser() as AchievementsScoreEventParser;
          _questEngine.localization.registerParameter("achievements.categories.score","score",_loc3_.score.toString());
       }
       
       private function onLevelUp(param1:IMessageEvent) : void
       {
-         var _loc2_:class_1799 = param1 as class_1799;
-         var _loc3_:class_1918 = _loc2_.getParser();
+         var _loc2_:HabboAchievementNotificationMessageEvent = param1 as HabboAchievementNotificationMessageEvent;
+         var _loc3_:HabboAchievementNotificationMessageEventParser = _loc2_.getParser();
          var _loc4_:String = _questEngine.localization.getBadgeBaseName(_loc3_.data.badgeCode);
-         _questEngine.send(new class_2196("Achievements",_loc4_,"Leveled","",_loc3_.data.level));
+         _questEngine.send(new EventLogMessageComposer("Achievements",_loc4_,"Leveled","",_loc3_.data.level));
          _questEngine.achievementsResolutionController.onLevelUp(_loc3_.data);
       }
       
       private function onIsFirstLoginOfDay(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2355 = (param1 as class_2803).getParser();
+         var _loc2_:IsFirstLoginOfDayEventParser = (param1 as IsFirstLoginOfDayEvent).getParser();
          _questEngine.setIsFirstLoginOfDay(_loc2_.isFirstLoginOfDay);
       }
       
-      private function onCompetitionEntrySubmitResult(param1:class_3081) : void
+      private function onCompetitionEntrySubmitResult(param1:CompetitionEntrySubmitResultMessageEvent) : void
       {
          _questEngine.roomCompetitionController.onCompetitionEntrySubmitResult(param1);
       }
       
-      private function onCompetitionVotingInfo(param1:class_2687) : void
+      private function onCompetitionVotingInfo(param1:CompetitionVotingInfoMessageEvent) : void
       {
          _questEngine.roomCompetitionController.onCompetitionVotingInfo(param1);
       }
       
-      private function onSubscriptionUserInfoEvent(param1:class_2238) : void
+      private function onSubscriptionUserInfoEvent(param1:ScrSendUserInfoEvent) : void
       {
          if(param1.getParser().isVIP && param1.getParser().responseType == 2)
          {
@@ -245,7 +245,7 @@ package com.sulake.habbo.quest
       
       private function onActivityPoints(param1:IMessageEvent) : void
       {
-         var _loc3_:Dictionary = class_1861(param1).points;
+         var _loc3_:Dictionary = ActivityPointsMessageEvent(param1).points;
          for each(var _loc4_ in class_2085.values())
          {
             _questEngine.questController.onActivityPoints(_loc4_,0);
@@ -256,7 +256,7 @@ package com.sulake.habbo.quest
          }
       }
       
-      private function onActivityPointsNotification(param1:class_1961) : void
+      private function onActivityPointsNotification(param1:HabboActivityPointNotificationMessageEvent) : void
       {
          _questEngine.questController.onActivityPoints(param1.type,param1.amount);
       }

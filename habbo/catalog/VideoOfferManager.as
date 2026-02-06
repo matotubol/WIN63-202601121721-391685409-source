@@ -3,8 +3,8 @@ package com.sulake.habbo.catalog
    import com.sulake.core.runtime.class_13;
    import com.sulake.habbo.catalog.enum.VideoOfferTypeEnum;
    import flash.external.ExternalInterface;
-   import package_4.class_1757;
-   import package_71.class_2196;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserRightsMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.tracking.EventLogMessageComposer;
    
    public class VideoOfferManager implements IVideoOfferManager, class_13
    {
@@ -45,7 +45,7 @@ package com.sulake.habbo.catalog
          _catalog = param1;
          _launchers = new Vector.<IVideoOfferLauncher>();
          var_1191 = false;
-         _catalog.connection.addMessageEvent(new class_1757(onUserRights));
+         _catalog.connection.addMessageEvent(new UserRightsMessageEvent(onUserRights));
          addCallbacks();
       }
       
@@ -91,7 +91,7 @@ package com.sulake.habbo.catalog
          }
       }
       
-      private function onUserRights(param1:class_1757) : void
+      private function onUserRights(param1:UserRightsMessageEvent) : void
       {
          if(param1.securityLevel >= 1)
          {
@@ -134,7 +134,7 @@ package com.sulake.habbo.catalog
             turnVolumeDown();
             if(_catalog.connection)
             {
-               _catalog.connection.send(new class_2196("SuperSaverAds","client_action","supersaverads.video.promo.launched"));
+               _catalog.connection.send(new EventLogMessageComposer("SuperSaverAds","client_action","supersaverads.video.promo.launched"));
             }
             return _offersAvailable > _offersViewed;
          }
@@ -164,7 +164,7 @@ package com.sulake.habbo.catalog
          turnVolumeUp();
          if(_catalog.connection)
          {
-            _catalog.connection.send(new class_2196("SuperSaverAds","client_action","supersaverads.video.promo.close"));
+            _catalog.connection.send(new EventLogMessageComposer("SuperSaverAds","client_action","supersaverads.video.promo.close"));
          }
       }
       
@@ -173,7 +173,7 @@ package com.sulake.habbo.catalog
          turnVolumeUp();
          if(_catalog.connection)
          {
-            _catalog.connection.send(new class_2196("SuperSaverAds","client_action","supersaverads.video.promo.complete"));
+            _catalog.connection.send(new EventLogMessageComposer("SuperSaverAds","client_action","supersaverads.video.promo.complete"));
          }
       }
       

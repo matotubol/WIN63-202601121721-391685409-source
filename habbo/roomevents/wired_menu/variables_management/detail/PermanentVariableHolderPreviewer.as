@@ -11,7 +11,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
    import com.sulake.habbo.window.widgets.class_2478;
    import com.sulake.habbo.window.widgets.class_3567;
    import flash.display.BitmapData;
-   import package_9.class_1879;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetExtendedProfileMessageComposer;
    
    public class PermanentVariableHolderPreviewer implements class_1829, class_13
    {
@@ -41,7 +41,7 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
       
       private function onPreviewAvatarClicked(param1:WindowMouseEvent) : void
       {
-         var_55.send(new class_1879(var_1270,true));
+         var_55.send(new GetExtendedProfileMessageComposer(var_1270,true));
       }
       
       public function clearPreviewer() : void

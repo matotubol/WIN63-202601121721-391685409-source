@@ -22,9 +22,9 @@ package com.sulake.habbo.ui.widget.furniture.mannequin
    import com.sulake.habbo.window.class_38;
    import flash.display.BitmapData;
    import flash.geom.Point;
-   import package_55.class_2945;
-   import package_94.class_3268;
-   import package_94.class_3456;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetMannequinFigureComposer;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetMannequinNameComposer;
    
    public class MannequinWidget extends RoomWidgetBase
    {
@@ -391,13 +391,13 @@ package com.sulake.habbo.ui.widget.furniture.mannequin
       
       private function saveOutfit() : void
       {
-         handler.container.connection.send(new class_3268(var_2536));
+         handler.container.connection.send(new SetMannequinFigureComposer(var_2536));
       }
       
       private function saveOutfitName() : void
       {
          var _loc1_:String = getNameFromView();
-         handler.container.connection.send(new class_3456(var_2536,_loc1_));
+         handler.container.connection.send(new SetMannequinNameComposer(var_2536,_loc1_));
          _savedOutfitName = _loc1_;
          setOutfitNameState(2);
       }
@@ -456,7 +456,7 @@ package com.sulake.habbo.ui.widget.furniture.mannequin
                   setWindowContent(4);
                   break;
                }
-               handler.container.connection.send(new class_2945(var_2536));
+               handler.container.connection.send(new UseFurnitureMessageComposer(var_2536));
                close();
                break;
             case "configure_button":

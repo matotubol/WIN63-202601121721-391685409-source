@@ -8,8 +8,8 @@ package com.sulake.habbo.friendlist.domain
    import com.sulake.habbo.utils.HabboFaceFocuser;
    import flash.display.BitmapData;
    import flash.utils.Dictionary;
-   import package_11.*;
-   import package_14.*;
+   import com.sulake.habbo.communication.messages.parser.friendlist.*;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.*;
    
    public class FriendCategories
    {
@@ -114,7 +114,7 @@ package com.sulake.habbo.friendlist.domain
       public function onFriendListUpdate(param1:IMessageEvent) : void
       {
          var _loc5_:Friend = null;
-         var _loc2_:class_2429 = (param1 as class_1937).getParser();
+         var _loc2_:FriendListUpdateEventParser = (param1 as FriendListUpdateEvent).getParser();
          updateCategories(_loc2_.cats);
          for each(var _loc4_ in _loc2_.removedFriendIds)
          {

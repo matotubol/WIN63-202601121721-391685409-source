@@ -7,8 +7,8 @@ package com.sulake.habbo.help
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.events.class_1758;
    import com.sulake.habbo.utils.StringUtil;
-   import package_18.class_2041;
-   import package_40.class_3598;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.SanctionStatusEvent;
+   import com.sulake.habbo.communication.messages.parser.callforhelp.SanctionStatusEventParser;
    
    public class SanctionInfo implements class_13
    {
@@ -44,14 +44,14 @@ package com.sulake.habbo.help
          return _disposed;
       }
       
-      public function openWindow(param1:class_2041) : void
+      public function openWindow(param1:SanctionStatusEvent) : void
       {
          dispose();
          _disposed = false;
          _window = _habboHelp.getXmlWindow("sanction_info") as class_1812;
          _window.center();
          _window.procedure = windowEventHandler;
-         var _loc2_:class_3598 = param1.getParser();
+         var _loc2_:SanctionStatusEventParser = param1.getParser();
          if(_loc2_.sanctionReason == "cfh.reason.EMPTY")
          {
             _window.findChildByName("no_sanction_info").visible = true;

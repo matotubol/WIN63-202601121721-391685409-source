@@ -12,9 +12,9 @@ package com.sulake.habbo.navigator.view.search.results
    import com.sulake.habbo.window.utils.class_4053;
    import com.sulake.habbo.window.widgets.class_3087;
    import flash.geom.Rectangle;
-   import package_1.class_3200;
-   import package_1.class_3574;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.AddFavouriteRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.DeleteFavouriteRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class RoomEntryElementFactory
    {
@@ -182,11 +182,11 @@ package com.sulake.habbo.navigator.view.search.results
          var _loc2_:Boolean = _navigator.legacyNavigator.isRoomFavorite(param1.window.id);
          if(_loc2_)
          {
-            _navigator.communication.connection.send(new class_3574(param1.window.id));
+            _navigator.communication.connection.send(new DeleteFavouriteRoomMessageComposer(param1.window.id));
          }
          else
          {
-            _navigator.communication.connection.send(new class_3200(param1.window.id));
+            _navigator.communication.connection.send(new AddFavouriteRoomMessageComposer(param1.window.id));
          }
          IStaticBitmapWrapperWindow(IRegionWindow(param1.window).findChildByName("favourite_icon")).assetUri = RoomEntryUtils.getFavoriteIcon(!_loc2_);
       }

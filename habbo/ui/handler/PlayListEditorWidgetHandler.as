@@ -15,12 +15,12 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.messages.RoomWidgetPlayListPlayStateMessage;
    import com.sulake.room.object.IRoomObject;
    import flash.events.Event;
-   import package_119.class_2432;
-   import package_119.class_2662;
-   import package_119.class_2760;
-   import package_55.class_2945;
-   import package_60.class_2329;
-   import package_60.class_3412;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListAddOrUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.inventory.furni.FurniListRemoveEvent;
+   import com.sulake.habbo.communication.messages.outgoing.room.engine.UseFurnitureMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.sound.AddJukeboxDiskComposer;
+   import com.sulake.habbo.communication.messages.outgoing.sound.RemoveJukeboxDiskComposer;
    
    public class PlayListEditorWidgetHandler implements IRoomWidgetHandler
    {
@@ -68,9 +68,9 @@ package com.sulake.habbo.ui.handler
       
       public function set connection(param1:IConnection) : void
       {
-         var_2276 = new class_2432(onFurniListUpdated);
-         var_3506 = new class_2760(onFurniListUpdated);
-         var_1272 = new class_2662(onFurniListUpdated);
+         var_2276 = new FurniListEvent(onFurniListUpdated);
+         var_3506 = new FurniListRemoveEvent(onFurniListUpdated);
+         var_1272 = new FurniListAddOrUpdateEvent(onFurniListUpdated);
          var_37 = param1;
          var_37.addMessageEvent(var_2276);
          var_37.addMessageEvent(var_3506);
@@ -133,21 +133,21 @@ package com.sulake.habbo.ui.handler
                var _loc8_:RoomWidgetPlayListModificationMessage = param1 as RoomWidgetPlayListModificationMessage;
                if(var_37 != null)
                {
-                  var_37.send(new class_2329(null.diskId,null.slotNumber));
+                  var_37.send(new AddJukeboxDiskComposer(null.diskId,null.slotNumber));
                }
                break;
             case "RWPLAM_REMOVE_FROM_PLAYLIST":
                var _loc9_:RoomWidgetPlayListModificationMessage = param1 as RoomWidgetPlayListModificationMessage;
                if(var_37 != null)
                {
-                  var_37.send(new class_3412(null.slotNumber));
+                  var_37.send(new RemoveJukeboxDiskComposer(null.slotNumber));
                }
                break;
             case "RWPLPS_TOGGLE_PLAY_PAUSE":
                var _loc6_:RoomWidgetPlayListPlayStateMessage = param1 as RoomWidgetPlayListPlayStateMessage;
                if(var_37 != null)
                {
-                  var_37.send(new class_2945(null.furniId,null.position));
+                  var_37.send(new UseFurnitureMessageComposer(null.furniId,null.position));
                }
                break;
             case "RWPLUA_OPEN_CATALOGUE_BUTTON_PRESSED":
@@ -182,7 +182,7 @@ package com.sulake.habbo.ui.handler
       
       private function onFurniListUpdated(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2432 = param1 as class_2432;
+         var _loc2_:FurniListEvent = param1 as FurniListEvent;
          if(_loc2_ && _loc2_.getParser().fragmentNo == 0)
          {
             if(_container != null)

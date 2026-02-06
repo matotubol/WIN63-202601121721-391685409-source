@@ -8,7 +8,7 @@ package com.sulake.habbo.help
    import flash.events.TimerEvent;
    import flash.utils.Timer;
    import package_175.class_3018;
-   import package_39.class_1980;
+   import com.sulake.habbo.communication.messages.incoming.room.engine.RoomEntryInfoMessageEvent;
    
    public class GuideHelpManager implements class_13
    {
@@ -38,7 +38,7 @@ package com.sulake.habbo.help
          var_1496 = new HelpController(this);
          var_1268 = new GuideSessionController(this);
          var_1925 = new ChatReviewReporterFeedbackCtrl(_habboHelp);
-         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new class_1980(onRoomEnter));
+         _habboHelp.communicationManager.addHabboConnectionMessageEvent(new RoomEntryInfoMessageEvent(onRoomEnter));
       }
       
       public function get habboHelp() : HabboHelp

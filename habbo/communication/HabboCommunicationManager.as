@@ -24,7 +24,7 @@ package com.sulake.habbo.communication
    import flash.events.SecurityErrorEvent;
    import flash.events.TimerEvent;
    import flash.utils.Timer;
-   import package_31.class_2047;
+   import com.sulake.habbo.communication.messages.outgoing.handshake.DisconnectMessageComposer;
    
    public class HabboCommunicationManager extends class_17 implements class_57, class_58
    {
@@ -382,7 +382,7 @@ package com.sulake.habbo.communication
       {
          if(var_37)
          {
-            var_37.send(new class_2047());
+            var_37.send(new DisconnectMessageComposer());
          }
       }
       

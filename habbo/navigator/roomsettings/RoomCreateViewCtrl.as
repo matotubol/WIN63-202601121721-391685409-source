@@ -15,8 +15,8 @@ package com.sulake.habbo.navigator.roomsettings
    import flash.events.Event;
    import flash.geom.Rectangle;
    import flash.utils.Timer;
-   import package_1.class_2856;
-   import package_42.class_3364;
+   import com.sulake.habbo.communication.messages.outgoing.navigator.CreateFlatMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_3364;
    
    public class RoomCreateViewCtrl
    {
@@ -440,7 +440,7 @@ package com.sulake.habbo.navigator.roomsettings
          {
             return;
          }
-         _navigator.send(new class_2856(_loc8_,_loc3_,_loc5_,_loc9_,_loc2_,_loc6_));
+         _navigator.send(new CreateFlatMessageComposer(_loc8_,_loc3_,_loc5_,_loc9_,_loc2_,_loc6_));
       }
       
       private function close() : void

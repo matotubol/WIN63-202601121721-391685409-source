@@ -18,7 +18,7 @@ package com.sulake.habbo.quest.seasonalcalendar
    import flash.events.TimerEvent;
    import flash.net.URLRequest;
    import flash.utils.Timer;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class Calendar implements class_13, class_31
    {

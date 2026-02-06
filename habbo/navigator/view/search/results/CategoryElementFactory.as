@@ -4,7 +4,7 @@ package com.sulake.habbo.navigator.view.search.results
    import com.sulake.core.window.components.IItemListWindow;
    import com.sulake.core.window.events.WindowMouseEvent;
    import com.sulake.habbo.navigator.HabboNewNavigator;
-   import package_42.class_1945;
+   import com.sulake.habbo.communication.messages.incoming.navigator.class_1945;
    
    public class CategoryElementFactory
    {

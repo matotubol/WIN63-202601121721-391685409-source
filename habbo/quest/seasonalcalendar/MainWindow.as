@@ -9,7 +9,7 @@ package com.sulake.habbo.quest.seasonalcalendar
    import com.sulake.habbo.quest.events.QuestCompletedEvent;
    import com.sulake.habbo.quest.events.QuestsListEvent;
    import com.sulake.habbo.utils.WindowToggle;
-   import package_62.class_2098;
+   import com.sulake.habbo.communication.messages.incoming.quest.class_2098;
    
    public class MainWindow implements class_13
    {

@@ -10,8 +10,8 @@ package com.sulake.habbo.inventory.effects
    import com.sulake.habbo.localization.class_27;
    import com.sulake.habbo.window.class_38;
    import flash.display.BitmapData;
-   import package_116.class_2417;
-   import package_116.class_3506;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.avatareffect.AvatarEffectActivatedComposer;
+   import com.sulake.habbo.communication.messages.outgoing.inventory.avatareffect.AvatarEffectSelectedComposer;
    
    public class EffectsModel implements IInventoryModel
    {
@@ -161,7 +161,7 @@ package com.sulake.habbo.inventory.effects
       
       public function requestEffectActivated(param1:int) : void
       {
-         var_55.communication.connection.send(new class_2417(param1));
+         var_55.communication.connection.send(new AvatarEffectActivatedComposer(param1));
       }
       
       public function setEffectActivated(param1:int) : void
@@ -191,7 +191,7 @@ package com.sulake.habbo.inventory.effects
          if(_loc2_.isInUse == false)
          {
             _loc2_.isInUse = true;
-            var_55.communication.connection.send(new class_3506(param1));
+            var_55.communication.connection.send(new AvatarEffectSelectedComposer(param1));
             var_899 = param1;
             refreshViews();
          }
@@ -207,7 +207,7 @@ package com.sulake.habbo.inventory.effects
                _loc3_.isInUse = false;
                if(param2)
                {
-                  var_55.communication.connection.send(new class_3506(-1));
+                  var_55.communication.connection.send(new AvatarEffectSelectedComposer(-1));
                   var_899 = -1;
                }
                refreshViews();
@@ -228,7 +228,7 @@ package com.sulake.habbo.inventory.effects
          }
          if(param1)
          {
-            var_55.communication.connection.send(new class_3506(-1));
+            var_55.communication.connection.send(new AvatarEffectSelectedComposer(-1));
          }
          if(param2)
          {

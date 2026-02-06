@@ -1,11 +1,11 @@
 package com.sulake.habbo.ui.handler
 {
    import com.sulake.core.runtime.class_13;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_2076;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_3385;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_3473;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_3501;
-   import com.sulake.habbo.communication.messages.outgoing.camera.class_3596;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RenderRoomMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.camera.RequestCameraConfigurationMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.camera.PhotoCompetitionMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.camera.PurchasePhotoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.camera.PublishPhotoMessageComposer;
    import com.sulake.habbo.toolbar.events.HabboToolbarEvent;
    import com.sulake.habbo.ui.IRoomWidgetHandler;
    import com.sulake.habbo.ui.IRoomWidgetHandlerContainer;
@@ -14,11 +14,11 @@ package com.sulake.habbo.ui.handler
    import com.sulake.habbo.ui.widget.events.RoomWidgetUpdateEvent;
    import com.sulake.habbo.ui.widget.messages.RoomWidgetMessage;
    import flash.events.Event;
-   import package_147.class_2609;
-   import package_147.class_2801;
-   import package_147.class_2876;
-   import package_147.class_2987;
-   import package_147.class_3640;
+   import com.sulake.habbo.communication.messages.incoming.camera.CameraStorageUrlMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.CameraPublishStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.CompetitionStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.InitCameraMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.CameraPurchaseOKMessageEvent;
    
    public class CameraWidgetHandler implements IRoomWidgetHandler, class_13
    {
@@ -29,15 +29,15 @@ package com.sulake.habbo.ui.handler
       
       private var var_16:CameraWidget;
       
-      private var var_3093:class_2609;
+      private var var_3093:CameraStorageUrlMessageEvent;
       
-      private var var_3044:class_3640;
+      private var var_3044:CameraPurchaseOKMessageEvent;
       
-      private var var_3301:class_2801;
+      private var var_3301:CameraPublishStatusMessageEvent;
       
-      private var var_3042:class_2876;
+      private var var_3042:CompetitionStatusMessageEvent;
       
-      private var var_3096:class_2987;
+      private var var_3096:InitCameraMessageEvent;
       
       private var var_1099:RoomDesktop;
       
@@ -51,11 +51,11 @@ package com.sulake.habbo.ui.handler
       {
          super();
          var_1099 = param1;
-         var_3093 = new class_2609(onCameraStorageUrlEvent);
-         var_3044 = new class_3640(onPurchaseOK);
-         var_3301 = new class_2801(onPublishStatus);
-         var_3042 = new class_2876(onCompetitionStatus);
-         var_3096 = new class_2987(onInitCameraEvent);
+         var_3093 = new CameraStorageUrlMessageEvent(onCameraStorageUrlEvent);
+         var_3044 = new CameraPurchaseOKMessageEvent(onPurchaseOK);
+         var_3301 = new CameraPublishStatusMessageEvent(onPublishStatus);
+         var_3042 = new CompetitionStatusMessageEvent(onCompetitionStatus);
+         var_3096 = new InitCameraMessageEvent(onInitCameraEvent);
       }
       
       public function get creditPrice() : int
@@ -121,18 +121,18 @@ package com.sulake.habbo.ui.handler
       {
          if(_container.sessionDataManager.isPerkAllowed("CAMERA"))
          {
-            _container.connection.send(new class_3385());
+            _container.connection.send(new RequestCameraConfigurationMessageComposer());
          }
       }
       
-      private function onInitCameraEvent(param1:class_2987) : void
+      private function onInitCameraEvent(param1:InitCameraMessageEvent) : void
       {
          var_3230 = param1.getParser().getCreditPrice();
          var_3273 = param1.getParser().getDucketPrice();
          var_3114 = param1.getParser().getPublishDucketPrice();
       }
       
-      private function onPurchaseOK(param1:class_3640) : void
+      private function onPurchaseOK(param1:CameraPurchaseOKMessageEvent) : void
       {
          if(var_16)
          {
@@ -140,7 +140,7 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onPublishStatus(param1:class_2801) : void
+      private function onPublishStatus(param1:CameraPublishStatusMessageEvent) : void
       {
          if(var_16)
          {
@@ -148,7 +148,7 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onCompetitionStatus(param1:class_2876) : void
+      private function onCompetitionStatus(param1:CompetitionStatusMessageEvent) : void
       {
          if(var_16)
          {
@@ -156,7 +156,7 @@ package com.sulake.habbo.ui.handler
          }
       }
       
-      private function onCameraStorageUrlEvent(param1:class_2609) : void
+      private function onCameraStorageUrlEvent(param1:CameraStorageUrlMessageEvent) : void
       {
          if(!var_16)
          {
@@ -233,29 +233,29 @@ package com.sulake.habbo.ui.handler
       
       public function confirmPhotoPurchase() : void
       {
-         _container.connection.send(new class_3501());
+         _container.connection.send(new PurchasePhotoMessageComposer());
       }
       
       public function confirmPhotoPublish() : void
       {
-         _container.connection.send(new class_3596());
+         _container.connection.send(new PublishPhotoMessageComposer());
       }
       
       public function confirmPhotoCompetitionSubmit() : void
       {
-         _container.connection.send(new class_3473());
+         _container.connection.send(new PhotoCompetitionMessageComposer());
       }
       
-      public function collectPhotoData() : class_2076
+      public function collectPhotoData() : RenderRoomMessageComposer
       {
          if(var_1099 == null)
          {
             return null;
          }
-         return var_1099.roomEngine.getRenderRoomMessage(var_16.getViewPort(),var_1099.roomBackgroundColor) as class_2076;
+         return var_1099.roomEngine.getRenderRoomMessage(var_16.getViewPort(),var_1099.roomBackgroundColor) as RenderRoomMessageComposer;
       }
       
-      public function sendPhotoData(param1:class_2076) : void
+      public function sendPhotoData(param1:RenderRoomMessageComposer) : void
       {
          _container.connection.send(param1);
       }

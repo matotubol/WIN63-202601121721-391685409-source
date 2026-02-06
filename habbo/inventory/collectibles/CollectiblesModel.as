@@ -13,7 +13,7 @@ package com.sulake.habbo.inventory.collectibles
    import com.sulake.habbo.window.class_38;
    import flash.events.Event;
    import package_111.class_3106;
-   import package_156.class_2747;
+   import package_156.GetNftTradeInventoryComposer;
    
    public class CollectiblesModel implements IInventoryModel
    {
@@ -257,7 +257,7 @@ package com.sulake.habbo.inventory.collectibles
          if(!var_3106)
          {
             var_3106 = true;
-            _communication.connection.send(new class_2747());
+            _communication.connection.send(new GetNftTradeInventoryComposer());
          }
       }
       

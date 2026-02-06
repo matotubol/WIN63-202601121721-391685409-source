@@ -12,7 +12,7 @@ package com.sulake.habbo.ui.handler
    import com.sulake.room.utils.Vector3d;
    import flash.display.BitmapData;
    import flash.events.Event;
-   import package_105.class_2486;
+   import com.sulake.habbo.communication.messages.parser.inventory.pets.class_2486;
    
    public class PetPackageFurniWidgetHandler implements IRoomWidgetHandler, class_1829
    {

@@ -23,10 +23,10 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
    import flash.utils.Dictionary;
    import package_189.WiredVariable;
    import package_201.WiredUserPermanentVariablesList;
-   import package_201.class_3731;
-   import package_201.class_3948;
-   import package_89.class_2336;
-   import package_89.class_3579;
+   import package_201.WiredUserPermanentVariablesEventParser;
+   import package_201.WiredSetUserPermanentVariableResultEventParser;
+   import package_89.WiredSetUserPermanentVariableResultEvent;
+   import package_89.WiredUserPermanentVariablesEvent;
    
    public class VariableManagementDetailController extends class_17 implements IVariableManagementDetailController
    {
@@ -58,18 +58,18 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
          super(param2,param3,param4);
          _roomEvents = param1;
          _messageEvents = new Vector.<IMessageEvent>();
-         _messageEvents.push(new class_3579(onGetData));
-         _messageEvents.push(new class_2336(onGetResult));
+         _messageEvents.push(new WiredUserPermanentVariablesEvent(onGetData));
+         _messageEvents.push(new WiredSetUserPermanentVariableResultEvent(onGetResult));
          for each(var _loc5_ in _messageEvents)
          {
             addMessageEvent(_loc5_);
          }
       }
       
-      private function onGetData(param1:class_3579) : void
+      private function onGetData(param1:WiredUserPermanentVariablesEvent) : void
       {
-         var event:class_3579 = param1;
-         var parser:class_3731 = event.getParser();
+         var event:WiredUserPermanentVariablesEvent = param1;
+         var parser:WiredUserPermanentVariablesEventParser = event.getParser();
          roomEvents.variablesSynchronizer.getAllVariables((function():*
          {
             var variablesReceived:Function;
@@ -104,9 +104,9 @@ package com.sulake.habbo.roomevents.wired_menu.variables_management.detail
          }
       }
       
-      private function onGetResult(param1:class_2336) : void
+      private function onGetResult(param1:WiredSetUserPermanentVariableResultEvent) : void
       {
-         var _loc2_:class_3948 = param1.getParser();
+         var _loc2_:WiredSetUserPermanentVariableResultEventParser = param1.getParser();
          var _loc3_:Boolean = _loc2_.success;
          if(!_loc3_)
          {

@@ -2,11 +2,11 @@ package com.sulake.habbo.navigator.roomsettings
 {
    import com.sulake.core.communication.messages.IMessageEvent;
    import flash.utils.Dictionary;
-   import package_11.class_2166;
-   import package_11.class_2429;
-   import package_14.class_1915;
-   import package_14.class_1937;
-   import package_14.class_2083;
+   import com.sulake.habbo.communication.messages.parser.friendlist.FriendListFragmentMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.FriendListUpdateEventParser;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendListFragmentMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.FriendListUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.class_2083;
    
    public class class_3389
    {
@@ -22,7 +22,7 @@ package com.sulake.habbo.navigator.roomsettings
       
       public function onFriendsListFragment(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2166 = (param1 as class_1915).getParser();
+         var _loc2_:FriendListFragmentMessageEventParser = (param1 as FriendListFragmentMessageEvent).getParser();
          if(_loc2_ == null)
          {
             return;
@@ -35,7 +35,7 @@ package com.sulake.habbo.navigator.roomsettings
       
       public function onFriendListUpdate(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2429 = (param1 as class_1937).getParser();
+         var _loc2_:FriendListUpdateEventParser = (param1 as FriendListUpdateEvent).getParser();
          for each(var _loc3_ in _loc2_.removedFriendIds)
          {
             var_2104[_loc3_] = null;

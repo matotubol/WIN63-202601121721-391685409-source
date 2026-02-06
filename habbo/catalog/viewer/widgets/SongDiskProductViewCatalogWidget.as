@@ -13,8 +13,8 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.habbo.sound.ISongInfo;
    import com.sulake.habbo.sound.class_544;
    import com.sulake.habbo.sound.events.SongInfoReceivedEvent;
-   import package_154.class_3194;
-   import package_60.class_2394;
+   import com.sulake.habbo.communication.messages.incoming.sound.OfficialSongIdMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetOfficialSongIdMessageComposer;
    
    public class SongDiskProductViewCatalogWidget extends ProductViewCatalogWidget
    {
@@ -60,7 +60,7 @@ package com.sulake.habbo.catalog.viewer.widgets
          var_37 = param2.connection;
          if(var_37 && !_officialSongIdListener)
          {
-            _officialSongIdListener = new class_3194(onOfficialSongIdMessageEvent);
+            _officialSongIdListener = new OfficialSongIdMessageEvent(onOfficialSongIdMessageEvent);
             var_37.addMessageEvent(_officialSongIdListener);
          }
       }
@@ -150,7 +150,7 @@ package com.sulake.habbo.catalog.viewer.widgets
                _officialSongId = _loc2_.extraParam;
                if(var_37)
                {
-                  var_37.send(new class_2394(_officialSongId));
+                  var_37.send(new GetOfficialSongIdMessageComposer(_officialSongId));
                }
             }
             if(_playPreviewContainer != null)
@@ -234,7 +234,7 @@ package com.sulake.habbo.catalog.viewer.widgets
          }
       }
       
-      private function onOfficialSongIdMessageEvent(param1:class_3194) : void
+      private function onOfficialSongIdMessageEvent(param1:OfficialSongIdMessageEvent) : void
       {
          if(param1.getParser().officialSongId == _officialSongId)
          {

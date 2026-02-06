@@ -10,7 +10,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.habbo.catalog.class_1793;
    import com.sulake.habbo.catalog.viewer.widgets.events.CatalogWidgetRoomChangedEvent;
    import com.sulake.habbo.catalog.viewer.widgets.events.SelectProductEvent;
-   import package_167.class_2836;
+   import com.sulake.habbo.communication.messages.incoming.room.permissions.YouAreOwnerMessageEvent;
    
    public class BuilderCatalogWidget extends CatalogWidget implements class_2612, class_13
    {
@@ -19,13 +19,13 @@ package com.sulake.habbo.catalog.viewer.widgets
       
       private var _offer:class_1793;
       
-      private var var_2321:class_2836;
+      private var var_2321:YouAreOwnerMessageEvent;
       
       public function BuilderCatalogWidget(param1:class_1812, param2:HabboCatalog)
       {
          super(param1);
          _catalog = param2;
-         var_2321 = new class_2836(onYouAreOwner);
+         var_2321 = new YouAreOwnerMessageEvent(onYouAreOwner);
          _catalog.connection.addMessageEvent(var_2321);
       }
       
@@ -69,7 +69,7 @@ package com.sulake.habbo.catalog.viewer.widgets
          updateButtons(false);
       }
       
-      private function onYouAreOwner(param1:class_2836) : void
+      private function onYouAreOwner(param1:YouAreOwnerMessageEvent) : void
       {
          if(_catalog.catalogType != "BUILDERS_CLUB")
          {

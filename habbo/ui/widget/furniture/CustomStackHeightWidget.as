@@ -12,7 +12,7 @@ package com.sulake.habbo.ui.widget.furniture
    import com.sulake.habbo.ui.handler.class_2833;
    import com.sulake.habbo.ui.widget.RoomWidgetBase;
    import com.sulake.habbo.window.class_38;
-   import package_94.class_3326;
+   import com.sulake.habbo.communication.messages.outgoing.room.furniture.SetCustomStackingHeightComposer;
    
    public class CustomStackHeightWidget extends RoomWidgetBase
    {
@@ -64,7 +64,7 @@ package com.sulake.habbo.ui.widget.furniture
          {
             return;
          }
-         handler.container.connection.send(new class_3326([var_2536,currentHeight,multiWalkMode]));
+         handler.container.connection.send(new SetCustomStackingHeightComposer([var_2536,currentHeight,multiWalkMode]));
       }
       
       public function open(param1:int, param2:Number, param3:Boolean, param4:Boolean) : void
@@ -132,7 +132,7 @@ package com.sulake.habbo.ui.widget.furniture
                   sendCurrentHeight();
                   break;
                case "button_above_stack":
-                  handler.container.connection.send(new class_3326([var_2536,-100]));
+                  handler.container.connection.send(new SetCustomStackingHeightComposer([var_2536,-100]));
                   break;
                case "header_button_close":
                   destroyWindow();
@@ -182,7 +182,7 @@ package com.sulake.habbo.ui.widget.furniture
       
       private function sendCurrentHeight() : void
       {
-         handler.container.connection.send(new class_3326([var_2536,currentHeight]));
+         handler.container.connection.send(new SetCustomStackingHeightComposer([var_2536,currentHeight]));
       }
       
       private function get currentHeight() : int

@@ -3,11 +3,11 @@ package com.sulake.habbo.session
    import com.sulake.core.communication.messages.IMessageEvent;
    import com.sulake.core.runtime.class_13;
    import flash.utils.Dictionary;
-   import package_3.class_2558;
-   import package_3.class_3349;
-   import package_9.class_2516;
-   import package_9.class_3092;
-   import package_9.class_3430;
+   import com.sulake.habbo.communication.messages.incoming.users.BlockUserUpdateMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.BlockListMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.users.UnblockUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.BlockUserMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.BlockListInitComposer;
    
    public class BlockedUsersManager implements class_13
    {
@@ -27,8 +27,8 @@ package com.sulake.habbo.session
          var_960 = new Dictionary();
          if(_sessionDataManager.communication)
          {
-            var_3228 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_2558(onBlockUpdate));
-            var_3381 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new class_3349(onBlockList));
+            var_3228 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new BlockUserUpdateMessageEvent(onBlockUpdate));
+            var_3381 = _sessionDataManager.communication.addHabboConnectionMessageEvent(new BlockListMessageEvent(onBlockList));
          }
       }
       
@@ -51,10 +51,10 @@ package com.sulake.habbo.session
       
       public function initBlockList() : void
       {
-         _sessionDataManager.send(new class_3430());
+         _sessionDataManager.send(new BlockListInitComposer());
       }
       
-      private function onBlockList(param1:class_3349) : void
+      private function onBlockList(param1:BlockListMessageEvent) : void
       {
          var_960 = new Dictionary();
          var _loc2_:Array = param1.blockedUserIds;
@@ -64,7 +64,7 @@ package com.sulake.habbo.session
          }
       }
       
-      private function onBlockUpdate(param1:class_2558) : void
+      private function onBlockUpdate(param1:BlockUserUpdateMessageEvent) : void
       {
          var _loc2_:int = param1.userId;
          switch(param1.result)
@@ -91,12 +91,12 @@ package com.sulake.habbo.session
       
       public function blockUser(param1:int) : void
       {
-         _sessionDataManager.send(new class_3092(param1));
+         _sessionDataManager.send(new BlockUserMessageComposer(param1));
       }
       
       public function unblockUser(param1:int) : void
       {
-         _sessionDataManager.send(new class_2516(param1));
+         _sessionDataManager.send(new UnblockUserMessageComposer(param1));
       }
       
       public function isBlocked(param1:int) : Boolean

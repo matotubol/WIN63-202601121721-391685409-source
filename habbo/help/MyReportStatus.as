@@ -18,10 +18,10 @@ package com.sulake.habbo.help
    import flash.geom.Point;
    import flash.geom.Rectangle;
    import flash.globalization.DateTimeFormatter;
-   import package_18.class_2165;
-   import package_34.class_2858;
-   import package_40.class_2418;
-   import package_40.class_2748;
+   import com.sulake.habbo.communication.messages.incoming.callforhelp.MyCfhReportStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.help.AppealCfhMessageComposer;
+   import com.sulake.habbo.communication.messages.parser.callforhelp.MyCfhReportStatusMessageEventParser;
+   import com.sulake.habbo.communication.messages.parser.callforhelp.class_2748;
    
    public class MyReportStatus implements class_13
    {
@@ -89,7 +89,7 @@ package com.sulake.habbo.help
          return _disposed;
       }
       
-      public function openWindow(param1:class_2165) : void
+      public function openWindow(param1:MyCfhReportStatusMessageEvent) : void
       {
          dispose();
          _disposed = false;
@@ -101,7 +101,7 @@ package com.sulake.habbo.help
          _window.center();
          _window.procedure = windowEventHandler;
          createTable();
-         var _loc2_:class_2418 = param1.getParser() as class_2418;
+         var _loc2_:MyCfhReportStatusMessageEventParser = param1.getParser() as MyCfhReportStatusMessageEventParser;
          setTableObjects(_loc2_.messages);
       }
       
@@ -247,7 +247,7 @@ package com.sulake.habbo.help
          {
             return;
          }
-         _habboHelp.sendMessage(new class_2858(_shownObject.message.id));
+         _habboHelp.sendMessage(new AppealCfhMessageComposer(_shownObject.message.id));
          appealButton.disable();
       }
       

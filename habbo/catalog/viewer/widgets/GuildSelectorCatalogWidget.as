@@ -18,7 +18,7 @@ package com.sulake.habbo.catalog.viewer.widgets
    import com.sulake.habbo.room.object.data.StringArrayStuffData;
    import flash.display.BitmapData;
    import flash.geom.Rectangle;
-   import package_3.class_3489;
+   import com.sulake.habbo.communication.messages.incoming.users.class_3489;
    
    public class GuildSelectorCatalogWidget extends CatalogWidget implements class_2612
    {

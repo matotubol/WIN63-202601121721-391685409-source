@@ -25,8 +25,8 @@ package com.sulake.habbo.ui.widget.camera
    import flash.net.URLRequest;
    import flash.net.navigateToURL;
    import flash.utils.Timer;
-   import package_147.class_2801;
-   import package_147.class_2876;
+   import com.sulake.habbo.communication.messages.incoming.camera.CameraPublishStatusMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.camera.CompetitionStatusMessageEvent;
    
    internal class PhotoPurchaseConfirmationDialog
    {
@@ -298,7 +298,7 @@ package com.sulake.habbo.ui.widget.camera
          setState("rendering_failed");
       }
       
-      public function publishingStatus(param1:class_2801) : void
+      public function publishingStatus(param1:CameraPublishStatusMessageEvent) : void
       {
          var _loc4_:int = 0;
          var _loc3_:int = 0;
@@ -354,7 +354,7 @@ package com.sulake.habbo.ui.widget.camera
          }
       }
       
-      public function competitionStatus(param1:class_2876) : void
+      public function competitionStatus(param1:CompetitionStatusMessageEvent) : void
       {
          if(_window == null || _window.findChildByName("competition_wrapper") == null)
          {

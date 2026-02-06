@@ -29,21 +29,21 @@ package com.sulake.habbo.messenger
    import com.sulake.iid.IIDHabboTracking;
    import com.sulake.iid.IIDHabboWindowManager;
    import com.sulake.iid.IIDSessionDataManager;
-   import package_11.class_1825;
-   import package_11.class_1938;
-   import package_11.class_2025;
-   import package_11.class_2027;
-   import package_11.class_2137;
-   import package_14.class_1792;
-   import package_14.class_1870;
-   import package_14.class_1955;
-   import package_14.class_2002;
-   import package_14.class_2028;
-   import package_14.class_2090;
-   import package_14.class_2096;
-   import package_27.class_1809;
-   import package_3.class_2123;
-   import package_72.class_2203;
+   import com.sulake.habbo.communication.messages.parser.friendlist.RoomInviteEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.MiniMailUnreadCountEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.InstantMessageErrorEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.ConsoleMessageHistoryEventParser;
+   import com.sulake.habbo.communication.messages.parser.friendlist.NewConsoleMessageEventParser;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.RoomInviteEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.MiniMailUnreadCountEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.InstantMessageErrorEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.ConsoleMessageHistoryEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.NewConsoleMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.MiniMailNewMessageEvent;
+   import com.sulake.habbo.communication.messages.incoming.friendlist.MessengerInitEvent;
+   import com.sulake.habbo.communication.messages.incoming.preferences.AccountPreferencesEvent;
+   import com.sulake.habbo.communication.messages.incoming.users.HabboGroupDetailsMessageEvent;
+   import com.sulake.habbo.communication.messages.outgoing.room.session.OpenFlatConnectionMessageComposer;
    
    public class HabboMessenger extends class_17 implements class_46, ILinkEventTracker
    {
@@ -111,13 +111,13 @@ package com.sulake.habbo.messenger
       override protected function initComponent() : void
       {
          _messageEvents = new Vector.<IMessageEvent>(0);
-         addMessageEvent(new class_2096(onMessengerInit));
-         addMessageEvent(new class_1809(onAccountPreferences));
-         addMessageEvent(new class_2123(onHabboGroupDetails));
+         addMessageEvent(new MessengerInitEvent(onMessengerInit));
+         addMessageEvent(new AccountPreferencesEvent(onAccountPreferences));
+         addMessageEvent(new HabboGroupDetailsMessageEvent(onHabboGroupDetails));
          if(getBoolean("client.minimail.embed.enabled"))
          {
-            addMessageEvent(new class_2090(onMiniMailMessage));
-            addMessageEvent(new class_1870(onMiniMailUnreadCount));
+            addMessageEvent(new MiniMailNewMessageEvent(onMiniMailMessage));
+            addMessageEvent(new MiniMailUnreadCountEvent(onMiniMailUnreadCount));
          }
          context.addLinkEventTracker(this);
       }
@@ -152,21 +152,21 @@ package com.sulake.habbo.messenger
       
       private function onMiniMailUnreadCount(param1:IMessageEvent) : void
       {
-         var_1768 = (param1.parser as class_1938).unreadMessageCount;
+         var_1768 = (param1.parser as MiniMailUnreadCountEventParser).unreadMessageCount;
          events.dispatchEvent(new MiniMailMessageEvent("MMME_unread",var_1768));
       }
       
-      private function onAccountPreferences(param1:class_1809) : void
+      private function onAccountPreferences(param1:AccountPreferencesEvent) : void
       {
          var_2896 = param1.getParser().roomInvitesIgnored;
       }
       
-      private function onHabboGroupDetails(param1:class_2123) : void
+      private function onHabboGroupDetails(param1:HabboGroupDetailsMessageEvent) : void
       {
          if(_followingToGroupRoom)
          {
             _followingToGroupRoom = false;
-            send(new class_2203(param1.data.roomId));
+            send(new OpenFlatConnectionMessageComposer(param1.data.roomId));
          }
       }
       
@@ -183,10 +183,10 @@ package com.sulake.habbo.messenger
       private function onMessengerInit(param1:IMessageEvent) : void
       {
          var_172 = new MainView(this);
-         addMessageEvent(new class_2028(onNewConsoleMessage));
-         addMessageEvent(new class_2002(onConsoleHistory));
-         addMessageEvent(new class_1955(onInstantMessageError));
-         addMessageEvent(new class_1792(onRoomInvite));
+         addMessageEvent(new NewConsoleMessageEvent(onNewConsoleMessage));
+         addMessageEvent(new ConsoleMessageHistoryEvent(onConsoleHistory));
+         addMessageEvent(new InstantMessageErrorEvent(onInstantMessageError));
+         addMessageEvent(new RoomInviteEvent(onRoomInvite));
       }
       
       public function startConversation(param1:int) : void
@@ -250,9 +250,9 @@ package com.sulake.habbo.messenger
          return _localization.getLocalization(param1,param1);
       }
       
-      private function onNewConsoleMessage(param1:class_2028) : void
+      private function onNewConsoleMessage(param1:NewConsoleMessageEvent) : void
       {
-         var _loc2_:class_2137 = param1.getParser();
+         var _loc2_:NewConsoleMessageEventParser = param1.getParser();
          class_21.log("Received console msg: " + _loc2_.messageText + ", " + _loc2_.chatId);
          if(var_172 != null)
          {
@@ -264,18 +264,18 @@ package com.sulake.habbo.messenger
          }
       }
       
-      private function onConsoleHistory(param1:class_2002) : void
+      private function onConsoleHistory(param1:ConsoleMessageHistoryEvent) : void
       {
-         var _loc2_:class_2027 = param1.getParser();
+         var _loc2_:ConsoleMessageHistoryEventParser = param1.getParser();
          if(var_172 != null)
          {
             var_172.loadMessageHistory(_loc2_.chatId,_loc2_.historyFragment);
          }
       }
       
-      private function onRoomInvite(param1:class_1792) : void
+      private function onRoomInvite(param1:RoomInviteEvent) : void
       {
-         var _loc2_:class_1825 = param1.getParser();
+         var _loc2_:RoomInviteEventParser = param1.getParser();
          if(var_172 != null)
          {
             var_172.addRoomInvite(_loc2_.senderId,_loc2_.messageText);
@@ -296,7 +296,7 @@ package com.sulake.habbo.messenger
       
       private function onInstantMessageError(param1:IMessageEvent) : void
       {
-         var _loc2_:class_2025 = (param1 as class_1955).getParser();
+         var _loc2_:InstantMessageErrorEventParser = (param1 as InstantMessageErrorEvent).getParser();
          if(var_172 != null)
          {
             var_172.onInstantMessageError(_loc2_.userId,_loc2_.errorCode,_loc2_.message);

@@ -5,8 +5,8 @@ package com.sulake.habbo.toolbar.memenu
    import com.sulake.habbo.toolbar.HabboToolbar;
    import com.sulake.habbo.utils.HabboFaceFocuser;
    import flash.display.BitmapData;
-   import package_24.class_1795;
-   import package_4.class_2005;
+   import com.sulake.habbo.communication.messages.incoming.avatar.FigureUpdateEvent;
+   import com.sulake.habbo.communication.messages.incoming.handshake.UserObjectEvent;
    
    public class MeMenuNewIconLoader implements class_259
    {
@@ -19,16 +19,16 @@ package com.sulake.habbo.toolbar.memenu
       
       private var var_2965:BitmapData;
       
-      private var var_1875:class_2005;
+      private var var_1875:UserObjectEvent;
       
-      private var var_1871:class_1795;
+      private var var_1871:FigureUpdateEvent;
       
       public function MeMenuNewIconLoader(param1:HabboToolbar)
       {
          super();
          _toolbar = param1;
-         var_1875 = new class_2005(onUserObject);
-         var_1871 = new class_1795(onFigureUpdate);
+         var_1875 = new UserObjectEvent(onUserObject);
+         var_1871 = new FigureUpdateEvent(onFigureUpdate);
          _toolbar.communicationManager.addHabboConnectionMessageEvent(var_1875);
          _toolbar.communicationManager.addHabboConnectionMessageEvent(var_1871);
          setMeMenuToolbarIcon();
@@ -80,12 +80,12 @@ package com.sulake.habbo.toolbar.memenu
          setMeMenuToolbarIcon();
       }
       
-      private function onUserObject(param1:class_2005) : void
+      private function onUserObject(param1:UserObjectEvent) : void
       {
          setMeMenuToolbarIcon(param1.getParser().figure);
       }
       
-      private function onFigureUpdate(param1:class_1795) : void
+      private function onFigureUpdate(param1:FigureUpdateEvent) : void
       {
          if(disposed)
          {

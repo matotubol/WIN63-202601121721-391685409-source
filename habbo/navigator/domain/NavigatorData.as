@@ -3,9 +3,9 @@ package com.sulake.habbo.navigator.domain
    import com.sulake.habbo.navigator.*;
    import com.sulake.habbo.navigator.roomsettings.class_3389;
    import flash.utils.Dictionary;
-   import package_17.*;
-   import package_42.*;
-   import package_50.class_1996;
+   import com.sulake.habbo.communication.messages.parser.navigator.*;
+   import com.sulake.habbo.communication.messages.incoming.navigator.*;
+   import com.sulake.habbo.communication.messages.parser.room.engine.RoomEntryInfoMessageEventParser;
    
    public class NavigatorData
    {
@@ -90,7 +90,7 @@ package com.sulake.habbo.navigator.domain
          return _enteredGuestRoom != null && (var_1450 || _navigator.sessionData.hasSecurity(5));
       }
       
-      public function onRoomEnter(param1:class_1996) : void
+      public function onRoomEnter(param1:RoomEntryInfoMessageEventParser) : void
       {
          _enteredGuestRoom = null;
          var_1450 = false;
@@ -440,7 +440,7 @@ package com.sulake.habbo.navigator.domain
          return null;
       }
       
-      public function onFavourites(param1:class_3553) : void
+      public function onFavourites(param1:FavouritesEventParser) : void
       {
          this.var_5188 = param1.limit;
          this.var_3323 = param1.favouriteRoomIds.length;

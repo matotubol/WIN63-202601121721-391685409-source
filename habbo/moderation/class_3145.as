@@ -1,6 +1,6 @@
 package com.sulake.habbo.moderation
 {
-   import package_74.class_3770;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_3770;
    
    public interface class_3145
    {

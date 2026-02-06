@@ -2,8 +2,8 @@ package com.sulake.habbo.session
 {
    import com.sulake.core.communication.connection.IConnection;
    import com.sulake.core.utils.class_55;
-   import package_66.class_3048;
-   import package_9.class_3368;
+   import com.sulake.habbo.communication.messages.outgoing.room.pets.GetPetInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.users.GetSelectedBadgesMessageComposer;
    
    public class UserDataManager implements class_2309
    {
@@ -84,7 +84,7 @@ package com.sulake.habbo.session
       {
          if(var_37 != null)
          {
-            var_37.send(new class_3368(param1));
+            var_37.send(new GetSelectedBadgesMessageComposer(param1));
          }
          var _loc2_:Array = var_1522.getValue(param1) as Array;
          if(_loc2_ == null)
@@ -214,7 +214,7 @@ package com.sulake.habbo.session
          var _loc2_:class_2146 = getPetUserData(param1);
          if(_loc2_ != null && var_37 != null)
          {
-            var_37.send(new class_3048(_loc2_.webID));
+            var_37.send(new GetPetInfoMessageComposer(_loc2_.webID));
          }
       }
       

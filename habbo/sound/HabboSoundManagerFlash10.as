@@ -25,10 +25,10 @@ package com.sulake.habbo.sound
    import com.sulake.iid.IIDRoomEngine;
    import flash.events.Event;
    import flash.media.Sound;
-   import package_12.class_1987;
-   import package_27.class_1809;
-   import package_58.class_2063;
-   import package_60.class_2066;
+   import com.sulake.habbo.communication.messages.outgoing.preferences.SetSoundSettingsComposer;
+   import com.sulake.habbo.communication.messages.incoming.preferences.AccountPreferencesEvent;
+   import com.sulake.habbo.communication.messages.parser.preferences.AccountPreferencesEventParser;
+   import com.sulake.habbo.communication.messages.outgoing.sound.GetSoundSettingsComposer;
    
    public class HabboSoundManagerFlash10 extends class_17 implements class_544, class_31
    {
@@ -397,8 +397,8 @@ package com.sulake.habbo.sound
          var_1549 = new FurniSamplePlaybackManager(this,_roomEngine.events);
          _roomEngine.events.addEventListener("REPSE_PLAY_SOUND",onRoomEngineObjectPlaySound);
          _roomEngine.events.addEventListener("REPSE_PLAY_SOUND_AT_PITCH",onRoomEngineObjectPlaySound);
-         var_37.addMessageEvent(new class_1809(onSoundSettingsEvent));
-         var_37.send(new class_2066());
+         var_37.addMessageEvent(new AccountPreferencesEvent(onSoundSettingsEvent));
+         var_37.send(new GetSoundSettingsComposer());
       }
       
       protected function setMusicController(param1:class_1912) : void
@@ -431,7 +431,7 @@ package com.sulake.habbo.sound
       {
          if(var_37 != null)
          {
-            var_37.send(new class_1987(int(_traxVolume * 100),int(_furniVolume * 100),int(_genericVolume * 100)));
+            var_37.send(new SetSoundSettingsComposer(int(_traxVolume * 100),int(_furniVolume * 100),int(_genericVolume * 100)));
          }
       }
       
@@ -457,8 +457,8 @@ package com.sulake.habbo.sound
       
       private function onSoundSettingsEvent(param1:IMessageEvent) : void
       {
-         var _loc3_:class_1809 = param1 as class_1809;
-         var _loc2_:class_2063 = _loc3_.getParser() as class_2063;
+         var _loc3_:AccountPreferencesEvent = param1 as AccountPreferencesEvent;
+         var _loc2_:AccountPreferencesEventParser = _loc3_.getParser() as AccountPreferencesEventParser;
          var _loc4_:Number = _loc2_.uiVolume;
          if(_loc4_ == 1)
          {

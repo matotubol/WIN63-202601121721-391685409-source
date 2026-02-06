@@ -6,10 +6,10 @@ package com.sulake.habbo.moderation
    import com.sulake.core.window.components.ITextWindow;
    import com.sulake.core.window.components.class_2250;
    import com.sulake.core.window.events.class_1758;
-   import package_122.class_2642;
-   import package_122.class_3212;
-   import package_74.class_3770;
-   import package_79.class_3291;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetModeratorUserInfoMessageComposer;
+   import com.sulake.habbo.communication.messages.outgoing.moderator.GetUserChatlogMessageComposer;
+   import com.sulake.habbo.communication.messages.incoming.moderation.class_3770;
+   import com.sulake.habbo.communication.messages.parser.moderation.class_3291;
    
    public class UserInfoCtrl implements class_13, class_3145
    {
@@ -83,7 +83,7 @@ package com.sulake.habbo.moderation
          var_24 = null;
          refresh();
          _main.messageHandler.addUserInfoListener(this);
-         _main.connection.send(new class_2642(param2));
+         _main.connection.send(new GetModeratorUserInfoMessageComposer(param2));
       }
       
       public function onUserInfo(param1:class_3770) : void
@@ -202,7 +202,7 @@ package com.sulake.habbo.moderation
             return;
          }
          trackAction("chatLog");
-         _main.windowTracker.show(new ChatlogCtrl(new class_3212(var_24.userId),_main,5,var_24.userId),_callerFrame,_openToolsBelow,false,true);
+         _main.windowTracker.show(new ChatlogCtrl(new GetUserChatlogMessageComposer(var_24.userId),_main,5,var_24.userId),_callerFrame,_openToolsBelow,false,true);
       }
       
       private function onRoomVisitsButton(param1:class_1758, param2:class_1741) : void
